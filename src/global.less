@@ -1,0 +1,92 @@
+@import '~antd/es/style/themes/default.less';
+
+html,
+body
+#root {
+  height: 100%;
+}
+
+.colorWeak {
+  filter: invert(80%);
+}
+
+.ant-layout {
+  min-height: 100vh !important;
+}
+
+canvas {
+  display: block;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ant-pro-basicLayout {
+  width: 100%;
+  min-height: 100vh;
+  // 调整header样式
+  .ant-layout-header {
+    background: #1755c0;
+  }
+  .ant-menu-dark{
+    background: #1755c0;
+  }
+}
+
+.ant-menu-dark{
+  .ant-menu-sub{
+    background: #1755c0 !important;
+  }
+  .ant-menu-item-selected{
+    background: #1755c0 !important;
+  }
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+.modal {
+  .ant-modal-confirm-body {
+    .ant-modal-confirm-content {
+      margin: 0 !important;
+    }
+  }
+
+  .ant-modal-body .ant-modal-confirm-body .ant-modal-confirm-title {
+    margin: -32px -32px 0 -32px;
+    line-height: 48px;
+    text-indent: 2em;
+    border-bottom: 1px solid #ccc;
+  }
+} 
+
+.dib {
+  display: inline-block;
+}
+
+.hide {
+  display: none !important;
+}
+
+@media (max-width: @screen-xs) {
+  .ant-table {
+    width: 100%;
+    overflow-x: auto;
+    &-thead > tr,
+    &-tbody > tr {
+      > th,
+      > td {
+        white-space: pre;
+        > span {
+          display: block;
+        }
+      }
+    }
+  }
+}
+

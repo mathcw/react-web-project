@@ -1,0 +1,107 @@
+@import '~antd/lib/style/themes/default.less';
+
+:global {
+    .ant-pro-page-header-wrap-children-content {
+        margin: 0px !important;
+    }
+}
+
+.HeaderOperator {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    button {
+        margin-right: 8px;
+        border: 2px solid #5F6368;
+    }
+}
+
+.HeaderForm {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  :global {
+    .ant-form-item {
+      display: flex;
+      margin-right: 0;
+      // margin-bottom: px;
+      > .ant-form-item-label {
+        // width: auto;
+        padding-right: 8px;
+        line-height: 32px;
+      }
+      .ant-form-item-control {
+        line-height: 32px;
+      }
+    }
+    .ant-form-item-control-wrapper {
+      flex: 1;
+      width: 100%;
+    }
+  }
+  .submitButtons {
+    height: 32px;
+    line-height: 32px;
+    display: block;
+    // margin-bottom: 24px;
+    white-space: nowrap;
+  }
+
+  .rightSearch {
+    height: 32px;
+    line-height: 32px;
+    display: flex !important;
+    justify-content: flex-end;
+    align-items: center;
+    & > div > span {
+      white-space: nowrap;
+    }
+    :global {
+      .ant-select-selection__rendered {
+        // search前的select最多4个字,多了就省略
+        max-width: 76px;
+        min-width: 60px;
+        text-overflow: ellipsis;
+      }
+    }
+    .Icon {
+      width: 26px;
+      height: 26px;
+      font-size: 20px;
+      line-height: 26px;
+      text-align: center;
+      border-radius: 50%;
+      background: #fff;
+      margin: 0 4px;
+      display: inline-block;
+      cursor: pointer;
+    }
+    .Icon:hover {
+      background-color: #efefef;
+    }
+    .Icon:hover > i {
+      animation: RightFilterAndSearchAnimate 0.5s;
+    }
+    @keyframes RightFilterAndSearchAnimate {
+      from {
+        transform: rotate(0deg) scale(1);
+      }
+      to {
+        transform: rotate(180deg) scale(1);
+      }
+    }
+    .Icon:active i {
+      transform: scale(1.2);
+    }
+  }
+}
+
+@media screen and (max-width: @screen-lg) {
+  .tableListForm :global(.ant-form-item) {
+    margin-right: 24px;
+  }
+}
+
+@media screen and (max-width: @screen-md) {
+  .tableListForm :global(.ant-form-item) {
+    margin-right: 8px;
+  }
+}
