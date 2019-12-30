@@ -1,0 +1,6 @@
+node_modules
+src/components/.DS_Store
+src/pages/.umi/dva.js
+src/pages/.umi/LocaleWrapper.jsx
+src/pages/.umi/router.js
+src/pages/.umi/umi.js
