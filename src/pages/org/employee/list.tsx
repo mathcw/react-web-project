@@ -12,14 +12,14 @@ import {
 } from "@/utils/ListPageHooks";
 
 import styles from "./list.less";
-import { get } from "@/utils/req";
-import { Col, Button } from "antd";
-import { getEnum } from "@/utils/enum";
-import { getRowBtnArray } from "@/utils/utils";
+import { get, submit } from "@/utils/req";
+import { Col, Button, message, Modal } from "antd";
+import { getRowBtnArray,colDisplay } from "@/utils/utils";
+import ModalForm from "@/components/ModalForm";
 
 const defaultPng = require("@/assets/login-bg.png");
 
-function renderImg(photo: string) {
+function renderImg(photo?: string) {
   return (
     <div className={styles.imgWrapper}>
       <img src={photo || defaultPng} className={styles.img} alt="头像" />
@@ -41,9 +41,10 @@ interface IEmployeeItem {
 interface IEmployeeProps {
   data: IEmployeeItem;
   btns: IModBtn[];
+  load: ()=>void
 }
 
-const Employee: React.FC<IEmployeeProps> = ({ data, btns }) => {
+const Employee: React.FC<IEmployeeProps> = ({ data, btns,load }) => {
   const [show, setShow] = useState(false);
   const [detail, setDetail] = useState([]);
   let flowColor = {};
@@ -89,7 +90,7 @@ const Employee: React.FC<IEmployeeProps> = ({ data, btns }) => {
             <div>
               <span className={styles.lable}>性别： </span>{" "}
               <span className={[styles.text, "text-overflow"].join(" ")}>
-                {getEnum("Gender")[data.gender]}
+                {colDisplay(data.gender,'Gender',data)}
               </span>
             </div>
             <div>
@@ -109,7 +110,7 @@ const Employee: React.FC<IEmployeeProps> = ({ data, btns }) => {
             <div>
               <span className={styles.lable}>上级领导： </span>{" "}
               <span className={[styles.text, "text-overflow"].join(" ")}>
-                {getEnum("Account")[data.superior_id]}
+                {colDisplay(data.superior_id,'Account',data)}
               </span>
             </div>
             <div>
@@ -142,7 +143,7 @@ const Employee: React.FC<IEmployeeProps> = ({ data, btns }) => {
                 style={flowColor}
                 className={[styles.text, "text-overflow"].join(" ")}
               >
-                {getEnum("State")[data.state]}
+                {colDisplay(data.State,'State',data)}
               </span>
             </div>
           </Col>
@@ -154,7 +155,7 @@ const Employee: React.FC<IEmployeeProps> = ({ data, btns }) => {
                 size="small"
                 key={btn.text}
                 onClick={() => {
-                  if (btn.onClick) btn.onClick(data);
+                  if (btn.onClick) btn.onClick(data,load);
                 }}
               >
                 {btn.text || ""}
@@ -202,13 +203,13 @@ const Employee: React.FC<IEmployeeProps> = ({ data, btns }) => {
               detail.map(item => (
                 <Col className={styles.information}>
                   <Col span={4} className={styles.text}>
-                    {getEnum("LogType")[item["log_type"]]}
+                        {colDisplay(data.log_type,'LogType',data)}
                   </Col>
                   <Col span={4} className={styles.text}>
                     {item["last_update"]}
                   </Col>
                   <Col span={4} className={styles.text}>
-                    {getEnum("Account")[item["employee_id"]]}
+                    {colDisplay(data.employee_id,'Account',data)}
                   </Col>
                   <Col span={4} className={styles.text}>
                     {item["field"]}
@@ -228,6 +229,107 @@ const Employee: React.FC<IEmployeeProps> = ({ data, btns }) => {
   );
 };
 
+// 新增员工
+const add = (reload: () => void) => () => {
+    const modalRef = Modal.info({});
+    const list = {
+      company_id: { text: "公司名称", required: true, type: "Company" },
+      department_id:{ text:"部门名称",required:true,type:"Department",cascade:"company_id"},
+      name: { text: "姓名", required: true },
+      gender:{text:"性别",required:true,type:"Gender"},
+      mobile:{text:'电话',required:true},
+      account:{text:'账号',required:true}
+    };
+    const onSubmit = (data: any) => {
+      submit("/api/org/Employee/submit", data).then(r => {
+        message.success(r.message);
+        modalRef.destroy();
+        reload();
+      });
+    };
+    const onCancel = () => {
+      modalRef.destroy();
+    };
+    modalRef.update({
+      title: "新增员工",
+      icon: null,
+      content: <ModalForm list={list} onSubmit={onSubmit} onCancel={onCancel} />,
+      okButtonProps: { className: "hide" },
+      cancelButtonProps: { className: "hide" }
+    });
+};
+  
+// 修改员工
+const edit = (reload: () => void) => (ref: any) => {
+    const modalRef = Modal.info({});
+    const list = {
+        company_id: { text: "公司名称", required: true, type: "Company" },
+        department_id:{ text:"部门名称",required:true,type:"Department",cascade:"company_id"},
+        name: { text: "姓名", required: true },
+        gender:{text:"性别",required:true,type:"Gender"},
+        mobile:{text:'电话',required:true},
+        account:{text:'账号',required:true}
+    };
+    const onSubmit = (data: object | undefined) => {
+      submit("/api/org/Employee/submit", data).then(r => {
+        message.success(r.message);
+        modalRef.destroy();
+        reload();
+      });
+    };
+    const onCancel = () => {
+      modalRef.destroy();
+    };
+    modalRef.update({
+      title: "修改员工",
+      // eslint-disable-next-line max-len
+      icon: null,
+      content: (
+        <ModalForm
+          list={list}
+          onSubmit={onSubmit}
+          onCancel={onCancel}
+          data={{ ...ref }}
+        />
+      ),
+      okButtonProps: { className: "hide" },
+      cancelButtonProps: { className: "hide" }
+    });
+};
+
+// 设置员工权限
+const setAuth = (reload: () => void) => (ref: any) => {
+    const modalRef = Modal.info({});
+    const list = {
+        auth_id: { text: "权限", required: true, type: "EmpAuth" },
+    };
+    const onSubmit = (data: object | undefined) => {
+      submit("/api/org/Employee/set_auth", data).then(r => {
+        message.success(r.message);
+        modalRef.destroy();
+        reload();
+      });
+    };
+    const onCancel = () => {
+      modalRef.destroy();
+    };
+    modalRef.update({
+      title: "设置权限",
+      // eslint-disable-next-line max-len
+      icon: null,
+      content: (
+        <ModalForm
+          list={list}
+          onSubmit={onSubmit}
+          onCancel={onCancel}
+          data={{ ...ref }}
+        />
+      ),
+      okButtonProps: { className: "hide" },
+      cancelButtonProps: { className: "hide" }
+    });
+};
+
 const list: React.FC<IModPageProps> = ({ route }) => {
   const { authority } = route;
   const {
@@ -243,7 +345,11 @@ const list: React.FC<IModPageProps> = ({ route }) => {
     data
   } = useListPage(authority);
 
-  const actionMap = {};
+  const actionMap = {
+    新增员工: add(load),
+    修改员工: edit(load),
+    设置员工权限:setAuth(load)
+  };
 
   const { headerBtns, rowBtns } = useListPageBtn(authority, actionMap);
   const { dropDownSearch, textSearch } = useListPageSearch(authority);
@@ -283,6 +389,7 @@ const list: React.FC<IModPageProps> = ({ route }) => {
         <Employee
           data={item}
           btns={getRowBtnArray(item, rowBtns)}
+          load={load}
           key={item["id"]}
         />
       ))}

@@ -132,5 +132,10 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^/api': '' },
     },
+    '/zhongxing/':{
+      target: 'https://tispfiletest.utourworld.com/upload/op/xml/agentLine/',
+      changeOrigin: true,
+      pathRewrite: { '^/zhongxing': '' },
+    }
   },
 } as IConfig;

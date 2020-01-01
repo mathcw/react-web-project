@@ -17,6 +17,7 @@ import { Result, Button } from "antd";
 import { formatMessage } from "umi-plugin-react/locale";
 
 import Authorized from "@/utils/Authorized";
+import Footer from "@/components/Footer";
 import RightContent from "@/components/GlobalHeader/RightContent";
 import { ConnectState } from "@/models/connect";
 import { getAuthorityFromRouter } from "@/utils/utils";
@@ -68,7 +69,7 @@ const menuDataRender = (menuList: MenuDataItem[]): MenuDataItem[] => {
 };
 
 const footerRender: BasicLayoutProps["footerRender"] = () => {
-  return null;
+  return <Footer />;
 };
 
 const BasicLayout: React.FC<BasicLayoutProps> = props => {

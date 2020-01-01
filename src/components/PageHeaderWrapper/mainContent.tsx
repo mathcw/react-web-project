@@ -264,10 +264,19 @@ class MainContent extends React.Component<
             style={more ? { padding: 0 } : moreTrueStyle}
           >
             {rKeys &&
-              rKeys.map((key: string | number) => (
-                <Col xs={24} sm={12} md={6} lg={6} key={key}>
+              rKeys.map((key: string | number,index) => (
+                <>
+                {
+                  more && <Col xs={24} sm={12} md={6} lg={6} key={key}>
+                  {this.renderEnumSelect(dropDownSearch[key], key)}
+                  </Col>
+                }
+                {
+                  !more && (index <= rowColumns-1) && <Col xs={24} sm={12} md={6} lg={6} key={key}>
                   {this.renderEnumSelect(dropDownSearch[key], key)}
                 </Col>
+                }
+                </>
               ))}
           </Col>
           <Col xs={24} sm={6} md={6} lg={6} style={{ lineHeight: "32px" }}>

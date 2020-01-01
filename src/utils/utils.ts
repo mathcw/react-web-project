@@ -105,7 +105,6 @@ export function getBtnClickEvent(
         rj?: (arg0: any) => void
       ) => {
         if (cfg.submit) {
-          debugger;
           submit(cfg.submit.url, ref, cfg.submit.data).then(
             r => {
               message.success(r.message);
@@ -206,7 +205,10 @@ export function getRowBtnArray(data: object, btns: IModBtn[]) {
         const flag = Object.keys(btn.show)
           .map(item => {
             if (btn.show && btn.show[item].indexOf(data[item]) === -1) {
-              return false;
+              if(!Number(data[item]))
+                return false;
+              if(btn.show[item].indexOf(Number(data[item])) === -1)
+                return false;
             }
             return true;
           })
@@ -228,7 +230,7 @@ export function isNotUndefined<T>(arg: T | undefined): arg is T {
   return arg !== undefined;
 }
 
-export default function colDisplay(
+export function colDisplay(
   v: string | number | string[] | number[],
   cfg: string | IEnumCfg,
   row: any
@@ -263,4 +265,29 @@ export default function colDisplay(
     }
   }
   return "";
+}
+
+
+export function colorfun(item: { flow: string|number; }){
+  let flowColor = {}
+  switch (item.flow) {
+    case '0':
+      flowColor = { color: '#333' }
+      break;
+    case '1':
+      flowColor = { color: '#333' }
+      break;
+    case '2':
+      flowColor = { color: '#FFCC00' }
+      break;
+    case '3':
+    flowColor = { color: 'red' }
+      break;
+    case '4':
+      flowColor = { color: 'green' }
+      break;
+    default:
+      flowColor = { color: '#333' }
+  }
+  return flowColor;
 }

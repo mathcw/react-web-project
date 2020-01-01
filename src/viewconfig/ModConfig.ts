@@ -3,6 +3,7 @@ import { ButtonType, ButtonSize } from "antd/lib/button";
 
 import OfficeMod from "@/viewconfig/Mod/OfficeMod";
 import OrgMod from "@/viewconfig/Mod/OrgMod";
+import SupplierManagementMod from "@/viewconfig/Mod/SupplierManagementMod";
 
 export interface IModBtn {
   authority: string;
@@ -45,7 +46,7 @@ export interface ModConfigItem {
   };
 }
 
-export const config: ModConfigItem = { ...OfficeMod, ...OrgMod };
+export const config: ModConfigItem = { ...OfficeMod, ...OrgMod,...SupplierManagementMod };
 
 export function authMetaInit(authData: string[]) {
   // eslint-disable-next-line array-callback-return

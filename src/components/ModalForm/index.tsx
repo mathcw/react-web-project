@@ -67,7 +67,7 @@ const ModalForm: React.FC<IModalForm> = ({
         checkMap[field] = {
           ...checkMap[field],
           validateStatus: "error",
-          help: `请输入 ${list[field].text} !`
+          help: `请输入${list[field].text} !`
         };
         rst = false;
       } else {
@@ -125,7 +125,7 @@ const ModalForm: React.FC<IModalForm> = ({
         showSearch
         optionFilterProp="children"
         mode={mode}
-        onChange={val => onSelectChange(field, val)}
+        onChange={(val: any) => onSelectChange(field, val)}
         getPopupContainer={node => node}
         disabled={disabled}
         value={data[field]}
@@ -144,7 +144,7 @@ const ModalForm: React.FC<IModalForm> = ({
     field: string,
     disabled: boolean = false
   ) => {
-    const Enum = getEnum(cfg, { ...data }) || {};
+    const Enum = getEnum(cfg, data) || {};
     let mode: ModeOption = "default";
     if (cfg.multi) {
       mode = "multiple";
@@ -154,7 +154,7 @@ const ModalForm: React.FC<IModalForm> = ({
         showSearch
         optionFilterProp="children"
         mode={mode}
-        onChange={val => onSelectChange(field, val)}
+        onChange={(val: any) => onSelectChange(field, val)}
         getPopupContainer={node => node}
         disabled={disabled}
         value={data[field]}

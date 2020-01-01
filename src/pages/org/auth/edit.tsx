@@ -49,7 +49,9 @@ const Page:React.FC<IActionPageProps> = ({route,location})=>{
     const [selectModalCfg, setModalCfg] = useState({mod:'',field:'',regular:'',type:''});
 
     useEffect(() => {
-        load();
+        load().then((loadedData:typeof initData)=>{
+          setData(loadedData);
+        } );
     }, [])
 
     const onInfoChange = (value:string, field:string) => {

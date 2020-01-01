@@ -7,19 +7,32 @@ import router from 'umi/router';
 import { getActionConfig, btnClickEvent,getActionButton } from './utils';
 import { read, submit } from './req';
 import { IModBtn as IActionBtn } from '@/viewconfig/ModConfig';
+import { log } from './core';
 
 
 export function useActionPage<T extends object>(authority:string,initData:T,ref?:object){
     const [data, setData] = useState<T>(initData);
     const cfg = getActionConfig(authority); 
 
-    const load = () =>{
-        if(cfg.read){
-            read(cfg.read.url,{
-                action: authority
-            },{...ref},cfg.read.data).then(r => {
-                setData({ ...r.data});
-            })
+    const load = async () => {
+        try {
+            const rst:T = await new Promise<T>((resolve, reject) => {
+                if(cfg.read){
+                    read(cfg.read.url,{
+                        action: authority
+                    },{...ref},cfg.read.data).then(r => {
+                        resolve(r.data);
+                    }),(e:any)=>{
+                        reject(e);
+                    }
+                }else{
+                    resolve(data);
+                }
+            });
+            return rst;
+        } catch (e) {
+            log(e);
+            throw e;
         }
     }
 

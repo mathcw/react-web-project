@@ -34,6 +34,24 @@ const routes: Array<IRouteValue> = [
         path: "/org",
         routes: [
           {
+            path: "/org/company/list",
+            name: "公司管理",
+            authority: "公司管理",
+            component: "./org/company/list"
+          },
+          {
+            path: "/org/department/list",
+            name: "部门管理",
+            authority: "部门管理",
+            component: "./org/department/list"
+          },
+          {
+            path: "/org/employee/list",
+            name: "员工管理",
+            authority: "员工管理",
+            component: "./org/employee/list"
+          },
+          {
             path: "/org/auth/list",
             name: "权限管理",
             authority: "权限管理",
@@ -53,26 +71,97 @@ const routes: Array<IRouteValue> = [
             hideInMenu: true,
             component: "./org/auth/edit"
           },
+
           {
-            path: "/org/company/list",
-            name: "公司管理",
-            authority: "公司管理",
-            component: "./org/company/list"
+            path: "/org/announce/list",
+            name: "公告管理",
+            authority: "公告管理",
+            component: "./org/announce/list"
           },
           {
-            path: "/org/department/list",
-            name: "部门管理",
-            authority: "部门管理",
-            component: "./org/department/list"
+            path: "/org/announce/add",
+            name: "新增公告",
+            authority: "新增公告",
+            hideInMenu: true,
+            component: "./org/announce/edit"
           },
           {
-            path: "/org/employee/list",
-            name: "员工管理",
-            authority: "员工管理",
-            component: "./org/employee/list"
-          }
+            path: "/org/announce/edit",
+            name: "修改公告",
+            authority: "修改公告",
+            hideInMenu: true,
+            component: "./org/announce/edit"
+          },
+          {
+            path:"/org/announce/see",
+            name:"查看公告",
+            authority:"查看公告",
+            hideInMenu:true,
+            component:"./org/announce/see",
+          },
+          {
+            path:"/org/announce/approve",
+            name:"公告审批",
+            authority:"公告审批",
+            hideInMenu:true,
+            component:"./org/announce/approve",
+          },
+          {
+            path: "/org/photo/list",
+            name: "头像审批",
+            authority: "管理员头像审批",
+            component: "./org/photo/list"
+          },
+          {
+            path: "/org/photo/approve",
+            name: "头像审核",
+            authority: "审批管理员头像",
+            hideInMenu:true,
+            component: "./org/photo/approve"
+          },
         ]
-      }
+      },
+      {
+        name: "商家管理",
+        icon: "sitemap",
+        path: "/supplierManagement",
+        routes: [
+          {
+            path: "/supplierManagement/tbCompany/list",
+            name: "提报处理",
+            authority: "提报供应商管理",
+            component: "./supplierManagement/tbCompany/list"
+          },
+          // 提报相关action to do
+          {
+            path: "/supplierManagement/xnCompany/list",
+            name: "吸纳审核",
+            authority: "吸纳供应商管理",
+            component: "./supplierManagement/xnCompany/list"
+          },
+          // 吸纳相关action to do
+          {
+            path: "/supplierManagement/company/list",
+            name: "公司管理",
+            authority: "供应商公司管理",
+            component: "./supplierManagement/company/list"
+          },
+          // 供应商公司管理相关 action to do
+          {
+            path: "/supplierManagement/department/list",
+            name: "部门管理",
+            authority: "供应商部门管理",
+            component: "./supplierManagement/department/list"
+          },
+          // 供应商员工相关 action to do
+          {
+            path: "/supplierManagement/sales/list",
+            name: "账号管理",
+            authority: "供应商账号管理",
+            component: "./supplierManagement/sales/list"
+          },
+        ]
+      },
     ]
   }
 ];

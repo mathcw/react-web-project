@@ -60,6 +60,103 @@ export async function req(url:string, data?:object) {
     return r;
 }
 
+export async function upload(formData:FormData, type:string) {
+
+    let url  = `/api/PublicApi/upload/${type}`;
+
+    const headers = {
+        Authorization: sys.sid,
+    }
+
+    rootAction(ActionType.LOADING);
+
+    let resp:Response = new Response();
+
+    try {
+        resp = await fetch(url, {
+            method: 'POST',
+            headers: {
+                ...headers,
+            },
+            body: formData,
+        })  
+    } catch (e) {
+        notification.error({
+            message: '无法连接网络',
+            description: '无法连接网络',
+        });
+        log(e);
+    }
+
+    rootAction(ActionType.LOADED);
+
+    if (!resp) {
+        await Promise.reject('无法连接网络');
+    }
+
+    const r = await resp.json();
+    if (!r.success) {
+        log(r);
+        if (r.message) {
+            if (r.message == '-1') {
+                rootAction(ActionType.LAYOUT);
+            } else {
+                notification.error({
+                    message: '请求错误',
+                    description: r.message,
+                });
+            }
+        }
+        await Promise.reject(r.message);
+    }
+    if (r.enum && r.enum !== (dict.enum_ver || 0)) {
+        enumInit(r.enum);
+    }
+    return r;
+
+}
+
+// export async function text() {
+
+//     let url  = '/zhongxing/OPL00003578.xml';
+
+//     rootAction(ActionType.LOADING);
+
+//     let resp:Response = new Response();
+
+//     try {
+//         resp = await fetch(url, {
+//             method: 'get'
+//         })  
+//     } catch (e) {
+//         notification.error({
+//             message: '无法连接网络',
+//             description: '无法连接网络',
+//         });
+//         log(e);
+//     }
+
+//     rootAction(ActionType.LOADED);
+
+//     if (!resp) {
+//         await Promise.reject('无法连接网络');
+//     }
+
+//     const blob = await resp.blob();
+
+//     var reader = new FileReader();
+//     const text:string = await new Promise((rs,rj)=>{
+//         reader.readAsText(blob, 'GBK') 
+//         reader.onload = function(e) {
+//             if(typeof reader.result === 'string')
+//                 rs(reader.result);
+//         }
+//     })
+
+//     return text;
+
+// }
+
 export function encUrl(p:object) {
     if (!p) {
         return '';
@@ -97,17 +194,18 @@ export async function read(url:string, search:object, data?:object, rule?:string
 
 export function getReqData(data?:object, rule?:string|object) {
     if(!data){
-        return data;
+        return {};
     }
 
     if (!rule) {
         return data;
     }
-
-    if (typeof rule === 'string') {
-        return data[rule];
-    }
     const rst = {};
+    if (typeof rule === 'string') {
+        rst[rule] = data[rule];
+        return rst;
+    }
+    
     Object.keys(rule).forEach(k => {
         const item = rule[k];
         if (item.indexOf('.') > 0) {

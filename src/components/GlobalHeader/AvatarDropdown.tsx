@@ -21,7 +21,6 @@ const AvatarDropdown:React.FC<GlobalHeaderRightProps> = ({menu}) =>{
 
     if (key === 'logout') {
       rootAction(ActionType.LAYOUT);
-      return;
     }
   }; 
   const {user} = useRootState();

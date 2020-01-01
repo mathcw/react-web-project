@@ -81,8 +81,8 @@ const config: ModConfigItem = {
     },
     dropDownSearch: {
       company_id: { text: "创建公司", type: "Company" },
-      department_id: { text: "创建部门", type: "Department" },
-      employee_id: { text: "创建人", type: "Employee" }
+      department_id: { text: "创建部门", type: "Department",cascade:"company_id" },
+      employee_id: { text: "创建人", type: "Employee",cascade:"department_id" }
     },
     headerButtons: {
       新增员工: { text: "新增" }
@@ -93,6 +93,48 @@ const config: ModConfigItem = {
       设置员工权限: { text: "设置" },
       重置员工账号密码: { text: "重置" }
     }
+  },
+
+  公告管理: {
+    read: { url: "/api/org/Announce/read" },
+    title: "公告管理",
+    textSearch: {
+        title: { text: "公告标题" },
+    },
+    dropDownSearch: {
+      company_id: { text: "创建公司", type: "Company" },
+      department_id: { text: "创建部门", type: "Department",cascade:"company_id" },
+      employee_id: { text: "创建人", type: "Employee",cascade:"department_id" }
+    },
+    headerButtons: {
+      新增公告: { text: "新增" }
+    },
+    rowButtons: {    
+      修改公告: { text: "修改",show:{flow:[0,1,3]}},
+      删除公告: { text: "删除",show:{flow:[0,1,3]}},
+      提交公告: { text: "提交",show:{flow:[0,1,3]}},
+
+      查看公告: { text: "查看"},
+      公告审批: { text: "审批",show:{flow:[2]} },
+      撤回公告: { text: "撤回",show:{flow:[2]} },
+      发布公告: { text: "发布",show:{flow:[4]},publish_state:[0] }
+    }
+  },
+
+  管理员头像审批:{
+      read: {url: "/api/org/Employee/read_photo"},
+      title:"头像审批",
+      textSearch:{
+      },
+      dropDownSearch:{
+        flow:{text:'审批状态',type:'Flow'}
+      },
+      headerButtons:{
+
+      },
+      rowButtons:{
+        审批管理员头像:{text:'审批',show:{flow:[2]}}
+      }
   }
 };
 

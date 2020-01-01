@@ -13,7 +13,7 @@ import {
   useListPageSearch
 } from "@/utils/ListPageHooks";
 
-import colDisplay, { getModConfig } from "@/utils/utils";
+import { colDisplay,getModConfig } from "@/utils/utils";
 import { submit, read } from "@/utils/req";
 import { ListTable } from "@/components/Table";
 

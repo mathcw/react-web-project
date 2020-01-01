@@ -4,7 +4,7 @@ import Cell from "./Cell";
 import ActionModal from "./ActionModal";
 import styles from "./index.less";
 import { IModBtn, ICol } from "@/viewconfig/ModConfig";
-import colDisplay, { getRowBtnArray } from "@/utils/utils";
+import { colDisplay,getRowBtnArray } from "@/utils/utils";
 
 export interface IGrid {
   list: { [field: string]: ICol };
