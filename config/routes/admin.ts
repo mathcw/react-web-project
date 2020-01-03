@@ -153,13 +153,34 @@ const routes: Array<IRouteValue> = [
             authority: "供应商部门管理",
             component: "./supplierManagement/department/list"
           },
-          // 供应商员工相关 action to do
+          // 供应商部门相关 action to do
           {
             path: "/supplierManagement/sales/list",
             name: "账号管理",
             authority: "供应商账号管理",
             component: "./supplierManagement/sales/list"
           },
+          // 供应商员工相关 action to do
+          {
+            path: "/supplierManagement/auth/list",
+            name: "权限管理",
+            authority: "供应商权限管理",
+            component: "./supplierManagement/auth/list"
+          },
+          // 供应商权限相关 action to do
+          {
+            path: "/supplierManagement/bindCompany/list",
+            name: "绑定管理",
+            authority: "供应商绑定管理",
+            component: "./supplierManagement/bindCompany/list"
+          },
+          // 供应商绑定相关 action to do
+          {
+            path:"/supplierManagement/profilePhoto/list",
+            name:"头像审批",
+            authority:"供应商头像审批",
+            component:"./supplierManagement/profilePhoto/list"
+          }
         ]
       },
     ]

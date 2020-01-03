@@ -63,7 +63,7 @@ class MainContent extends React.Component<
     textQueryType: string;
     textQuery: string;
   }
-> {
+  > {
   static propTypes: {
     headerButton: PropTypes.Requireable<IModBtn[]>;
     dropDownSearch: PropTypes.Requireable<object>;
@@ -80,9 +80,9 @@ class MainContent extends React.Component<
     headerButton: [],
     dropDownSearch: {},
     textSearch: {},
-    reload: () => {},
+    reload: () => { },
     query: {},
-    setQuery: (e: any) => {},
+    setQuery: (e: any) => { },
     mod: ""
   };
 
@@ -264,19 +264,19 @@ class MainContent extends React.Component<
             style={more ? { padding: 0 } : moreTrueStyle}
           >
             {rKeys &&
-              rKeys.map((key: string | number,index) => (
-                <>
-                {
-                  more && <Col xs={24} sm={12} md={6} lg={6} key={key}>
-                  {this.renderEnumSelect(dropDownSearch[key], key)}
-                  </Col>
-                }
-                {
-                  !more && (index <= rowColumns-1) && <Col xs={24} sm={12} md={6} lg={6} key={key}>
-                  {this.renderEnumSelect(dropDownSearch[key], key)}
-                </Col>
-                }
-                </>
+              rKeys.map((key: string | number, index) => (
+                <React.Fragment key={key}>
+                  {
+                    more && <Col xs={24} sm={12} md={6} lg={6} >
+                      {this.renderEnumSelect(dropDownSearch[key], key)}
+                    </Col>
+                  }
+                  {
+                    !more && (index <= rowColumns - 1) && <Col xs={24} sm={12} md={6} lg={6}>
+                      {this.renderEnumSelect(dropDownSearch[key], key)}
+                    </Col>
+                  }
+                </React.Fragment>
               ))}
           </Col>
           <Col xs={24} sm={6} md={6} lg={6} style={{ lineHeight: "32px" }}>

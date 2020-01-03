@@ -129,6 +129,63 @@ const config: ModConfigItem = {
             设置供应商权限: { text: '设置' }
         }
     },
+
+    '供应商权限管理': {
+        read: { url: "/api/org/Auth/read" },
+        title: "权限管理",
+        textSearch: {
+            name: { text: '名称' },
+            scope: { text: '范围' }
+        },
+        dropDownSearch: {
+        },
+        headerButtons: {
+            新增供应商权限: { text: '新增' },
+        },
+        rowButtons: {
+            编辑供应商权限: { text: '修改' },
+            复制供应商权限: { text: '复制' },
+            启停供应商权限: { text: '启停' },
+            删除供应商权限: { text: '删除' }
+        }
+    },
+
+    '供应商绑定管理': {
+        read: { url: "/api/SupplierManagement/Company/bind_read" },
+        title: "绑定管理",
+        textSearch: {
+            retailer_name: { text: 'ERP客户' },
+            bind_dep_name: { text: '绑定部门' }
+        },
+        dropDownSearch: {
+            supp_id:{ text:'供应商',type:'AllSupplier' }
+        },
+        list: {
+            supp_id:{text:'供应商',type:'AllSupplier',width:200},
+            retailer_name:{text:'ERP客户',width:200},
+            bind_dep_name:{text:'绑定部门',width:200},
+            bind_state:{text:'绑定状态',type:'BindState'}
+        },
+        headerButtons: {
+        },
+        rowButtons: {
+            绑定部门: { text: '绑定',show:{bind_state:[1]} },
+        }
+    },
+
+    '供应商头像审批':{
+        read: { url: "/api/SupplierManagement/Sales/read_photo" },
+        title: "头像审批",
+        textSearch:{
+
+        },
+        dropDownSearch: {
+            flow:{ text:'审批状态',type:'Flow'}
+        },
+        rowButtons: {
+            审批供应商头像: {text: '审批', show:{flow:[2]}}
+        }
+    }
 }
 
 export default config;
