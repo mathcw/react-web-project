@@ -20,7 +20,7 @@ import Authorized from "@/utils/Authorized";
 import Footer from "@/components/Footer";
 import RightContent from "@/components/GlobalHeader/RightContent";
 import { ConnectState } from "@/models/connect";
-import { getAuthorityFromRouter } from "@/utils/utils";
+import { getAuthorityFromRouter, isNotNull } from "@/utils/utils";
 import logo from "@/assets/logo.png";
 
 const noMatch = (
@@ -64,8 +64,12 @@ const menuDataRender = (menuList: MenuDataItem[]): MenuDataItem[] => {
       ...item,
       children: item.children ? menuDataRender(item.children) : []
     };
+    // 有子路由 但权限过滤后没有 则整个父 无权限
+    if (item.children && item.children.length > 0 && (!localItem.children || localItem.children.length === 0)) {
+      return null;
+    }
     return Authorized.check(item.authority, localItem, null) as MenuDataItem;
-  });
+  }).filter(isNotNull);
 };
 
 const footerRender: BasicLayoutProps["footerRender"] = () => {
@@ -117,8 +121,8 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
         return first ? (
           <Link to={paths.join("/")}>{route.breadcrumbName}</Link>
         ) : (
-          <span>{route.breadcrumbName}</span>
-        );
+            <span>{route.breadcrumbName}</span>
+          );
       }}
       footerRender={footerRender}
       menuDataRender={menuDataRender}

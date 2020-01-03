@@ -1,5 +1,6 @@
 import admin from './routes/admin';
 import home from './routes/home';
+import supplier from './routes/supplier';
 
 export interface IRouteValue{
     path?: string,
@@ -36,7 +37,7 @@ const config: Array<IRouteValue> = [
 function init() {
     let subConfig : Array<IRouteValue>= [];
     let routes : Array<IRouteValue> = [];
-    subConfig = [...admin,...home];
+    subConfig = [...admin,...home,...supplier];
   
     subConfig.forEach(sub => {
       if (sub.parent && sub.parent === '/' && sub.routes) {
