@@ -16,7 +16,7 @@ const routes: Array<IRouteValue> = [
           },
           {
             path: "/office/announcement/list",
-            name: "公告管理",
+            name: "公告通知",
             authority: "公告通知",
             component: "./office/announcement/list"
           },
@@ -182,7 +182,7 @@ const routes: Array<IRouteValue> = [
             component:"./supplierManagement/profilePhoto/list"
           }
         ]
-      },
+      }
     ]
   }
 ];

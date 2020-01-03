@@ -37,7 +37,7 @@ const config: Array<IRouteValue> = [
 function init() {
     let subConfig : Array<IRouteValue>= [];
     let routes : Array<IRouteValue> = [];
-    subConfig = [...admin,...home,...supplier];
+    subConfig = [...admin,...supplier,...home];
   
     subConfig.forEach(sub => {
       if (sub.parent && sub.parent === '/' && sub.routes) {

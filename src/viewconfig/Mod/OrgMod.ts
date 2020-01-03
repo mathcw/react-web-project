@@ -43,7 +43,9 @@ const config: ModConfigItem = {
       employee_name: { text: "创建人", width: 200 },
       dep_num: { text: "旗下部门", width: 200 },
       state: { text: "启停状态", type: "State" }
-    }
+    },
+    pageSizeOptions: ["10", "20", "30", "50", "100"],
+    pageSize: 100
   },
   部门管理: {
     read: { url: "/api/org/Department/read" },
@@ -70,7 +72,9 @@ const config: ModConfigItem = {
       emp_num: { text: "旗下员工", width: 200 },
       employee_name: { text: "创建人", width: 200 },
       state: { text: "启停状态", type: "State" }
-    }
+    },
+    pageSizeOptions: ["10", "20", "30", "50", "100"],
+    pageSize: 100
   },
   员工管理: {
     read: { url: "/api/org/Employee/read" },
@@ -92,7 +96,9 @@ const config: ModConfigItem = {
       启停员工: { text: "启停" },
       设置员工权限: { text: "设置" },
       重置员工账号密码: { text: "重置" }
-    }
+    },
+    pageSizeOptions: ["10", "20", "30", "50", "100"],
+    pageSize: 100
   },
 
   公告管理: {
@@ -118,7 +124,9 @@ const config: ModConfigItem = {
       公告审批: { text: "审批",show:{flow:[2]} },
       撤回公告: { text: "撤回",show:{flow:[2]} },
       发布公告: { text: "发布",show:{flow:[4]},publish_state:[0] }
-    }
+    },
+    pageSizeOptions: ["10", "20", "30", "50", "100"],
+    pageSize: 100
   },
 
   管理员头像审批:{
@@ -134,7 +142,9 @@ const config: ModConfigItem = {
       },
       rowButtons:{
         审批管理员头像:{text:'审批',show:{flow:[2]}}
-      }
+      },
+      pageSizeOptions: ["10", "20", "30", "50", "100"],
+      pageSize: 100
   }
 };
 
