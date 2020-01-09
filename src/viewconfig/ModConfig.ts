@@ -1,19 +1,19 @@
 import { BasicLayoutProps as ProLayoutProps } from "@ant-design/pro-layout";
-import { ButtonType, ButtonSize } from "antd/lib/button";
-
+import { ButtonType, ButtonSize } from "antd/es/button";
+import { CompareFn } from 'antd/es/table';
 import OfficeMod from "@/viewconfig/Mod/OfficeMod";
 import OrgMod from "@/viewconfig/Mod/OrgMod";
 import SupplierManagementMod from "@/viewconfig/Mod/SupplierManagementMod";
 import ProductStoreMod from "@/viewconfig/Mod/ProductStoreMod";
 
-export interface IModBtn {
+export interface IModBtn<T = any> {
   authority: string;
   text?: string;
   icon?: string;
   type?: ButtonType;
   size?: ButtonSize;
   show?: object;
-  onClick?: (data?: object, rs?: () => void) => void;
+  onClick?: (data?: T, rs?: () => void) => void;
 }
 
 export interface IModPageProps extends ProLayoutProps {
@@ -22,12 +22,14 @@ export interface IModPageProps extends ProLayoutProps {
   };
 }
 
-export interface ICol {
+export interface ICol<T=any> {
   text: string;
   editable?: boolean;
   required?: boolean;
   type?: string;
   width?: number;
+  render?:(record:T, value:string | number, dataIndex:string | number, type:string)=>JSX.Element;
+  sorter?:CompareFn<T>
 }
 
 export interface ModConfigItem {

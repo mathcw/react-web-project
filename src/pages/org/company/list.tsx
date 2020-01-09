@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, message, Table } from "antd";
 import PageHeaderWrapper, {
   Extra,
@@ -15,7 +15,9 @@ import {
 
 import { colDisplay,getModConfig } from "@/utils/utils";
 import { submit, read } from "@/utils/req";
-import { ListTable } from "@/components/Table";
+import Grid, { getCols, actionColWidth, renderRowBtns } from '@/components/Table/Grid';
+import ActionModal from "@/components/Table/ActionModal";
+import { ColumnProps } from "antd/es/table";
 
 // 新增公司
 const add = (reload: () => void) => () => {
@@ -191,11 +193,41 @@ const list: React.FC<IModPageProps> = ({ route }) => {
 
   const { headerBtns, rowBtns } = useListPageBtn(authority, actionMap);
   const { dropDownSearch, textSearch } = useListPageSearch(authority);
+  const [opCol, setOpCol] = useState<ColumnProps<object>[]>([]);
 
   const cfg = getModConfig(authority);
+
   useEffect(() => {
     load();
   }, [pageSize, current]);
+
+  useEffect(()=>{
+    const rst:ColumnProps<object>[] = [
+      {
+        title: "操作",
+        key: "action",
+        fixed: "right",
+        className: "noOver",
+        width: 80,
+        onCell: (record: object, rowIndex: number) => ({
+          record,
+          rowIndex,
+          isOp: true,
+          render: (item: object) => {
+            return (
+              <ActionModal
+                btns={rowBtns}
+                data={item}
+                width={actionColWidth(rowBtns, data)}
+                renderRowBtns={() => renderRowBtns(rowBtns, item,load)}
+              />
+            );
+          }
+        })
+      }
+    ];
+    setOpCol(rst);
+  },[data])
 
   const pageNumChange = (page: number) => {
     setCurrent(page);
@@ -224,13 +256,13 @@ const list: React.FC<IModPageProps> = ({ route }) => {
         textSearch
       )}
     >
-      <ListTable
-        list={cfg.list || {}}
+      <Grid
+        columns={getCols(cfg.list||{})}
         dataSource={data}
         rowKey="id"
-        btns={rowBtns}
-        load={load}
         pagination={false}
+        className={'ListTableStyle'}
+        specCol={opCol}
       />
     </PageHeaderWrapper>
   );

@@ -9,7 +9,7 @@ export const dict = {
     PdDirection:{1:'出境',2:'国内'},
     NavLevel:{1:'一级',2:'二级'},
 
-    PdType:{1:'团队游',2:'单机票',3:'单订房',4:'单签证'},
+    PdType:{1:'团队游',2:'单机票',3:'单订房',4:'单签证',5:'自由行',6:'邮轮游'},
 
     Continent:{AF:'非洲',EU:'欧洲',AS:'亚洲',OA:'大洋洲',NA:'北美洲',SA:'南美洲',AN:'南极洲'},
     CountryBelong:{AO:'AF',AF:'AS',AL:'EU',DZ:'AF',AD:'EU',AI:'SA',AG:'NA',AR:'SA',AM:'AS',AU:'OA',AT:'EU',AZ:'AS',BS:'NA',BH:'AS',BD:'AS',BB:'NA',BY:'EU',BE:'EU',BZ:'NA',BJ:'AF',BM:'NA',BO:'SA',BW:'AF',BR:'SA',BN:'AS',BG:'EU',BF:'AF',MM:'AS',BI:'AF',CM:'AF',CA:'NA',CF:'AF',TD:'AF',CL:'SA',CN:'AS',CO:'SA',CG:'AF',CK:'OA',CR:'NA',CU:'NA',CY:'AS',CZ:'EU',DK:'EU',DJ:'AF',DO:'NA',EC:'SA',EG:'AF',SV:'NA',EE:'EU',ET:'AF',FJ:'OA',FI:'EU',FR:'EU',GF:'SA',GA:'AF',GM:'AF',GE:'AS',DE:'EU',GH:'AF',GI:'EU',GR:'EU',GD:'NA',GU:'OA',GT:'NA',GN:'AF',GY:'SA',HT:'NA',HN:'NA',HK:'AS',HR:'EU',HU:'EU',IS:'EU',IN:'AS',ID:'AS',IR:'AS',IQ:'AS',IE:'EU',IL:'AS',IT:'EU',JM:'NA',JP:'AS',JO:'AS',KH:'AS',KZ:'AS',KE:'AF',KR:'AS',KW:'AS',KG:'AS',LA:'AS',LV:'EU',LB:'AS',LS:'AF',LR:'AF',LY:'AF',LI:'EU',LT:'EU',LU:'EU',MO:'AS',MG:'AF',MW:'AF',MY:'AS',MV:'AS',ML:'AF',MT:'EU',MU:'AF',MX:'NA',MD:'EU',MC:'EU',MN:'AS',MS:'NA',MA:'AF',MZ:'AF',NA:'AF',NR:'OA',NP:'AS',NL:'EU',NZ:'OA',NI:'NA',NE:'AF',NG:'AF',KP:'AS',NO:'EU',OM:'AS',PK:'AS',PA:'NA',PG:'OA',PY:'SA',PE:'SA',PH:'AS',PL:'EU',PF:'OA',PT:'EU',PR:'NA',QA:'AS',RO:'EU',RU:'EU',LC:'NA',VC:'SA',SM:'EU',ST:'AF',SA:'AS',SN:'AF',SC:'AF',SL:'AF',SG:'AS',SK:'EU',SI:'EU',SB:'OA',SO:'AF',ZA:'AF',ES:'EU',LK:'AS',SD:'AF',SR:'SA',SZ:'AF',SE:'EU',CH:'EU',SY:'AS',TW:'AS',TJ:'AS',TZ:'AF',TH:'AS',TG:'AF',TO:'OA',TT:'NA',TN:'AF',TR:'AS',TM:'AS',UG:'AF',UA:'EU',AE:'AS',GB:'EU',US:'NA',UY:'SA',UZ:'AS',VE:'SA',VN:'AS',YE:'AS',YU:'EU',ZW:'AF',ZR:'AF',ZM:'AF'},
@@ -81,18 +81,32 @@ export async function enumInit(ver: string) {
 export interface IEnumCfg {
   type: string;
   cascade?: string;
+  cascade2?:string;
+  cascade3?:string;
   cascaded?: boolean;
   cascade_type?: string;
   mod?: string;
   text?: string;
 }
 
-export function searchChange(
-  cfg: string | IEnumCfg,
-  field: string,
-  data: object
-) {
-  return data;
+export function searchChange(cfg:{[key:string]:IEnumCfg},field:string,data:object){
+  const result = {...data};
+  const clearCascade = (checkField:string) =>{
+    let nField = null;
+    Object.keys(cfg).forEach((key)=>{
+      if( cfg[key].cascade && (cfg[key].cascade === checkField 
+        || cfg[key].cascade2 === checkField || cfg[key].cascade3 === checkField)){
+        nField = key;
+        result[key] = '';
+      }
+    })
+    return nField;
+  }
+  let cField = clearCascade(field);
+  while(cField){
+    cField = clearCascade(cField);
+  }
+  return result;
 }
 
 export function getEnum(

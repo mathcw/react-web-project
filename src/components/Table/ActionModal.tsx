@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, ReactNodeArray } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Icon } from "antd";
 
 import { IModBtn } from "@/viewconfig/ModConfig";
@@ -9,7 +9,7 @@ import "animate.css";
 interface IActionModal {
   btns: IModBtn[];
   data: object;
-  renderRowBtns: (btns: IModBtn[], data: object) => ReactNodeArray;
+  renderRowBtns: (btns: IModBtn[], data: object) => JSX.Element | JSX.Element[];
   width: number;
 }
 

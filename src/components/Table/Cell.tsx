@@ -1,29 +1,33 @@
-import React, { ReactNodeArray } from "react";
-import { Input, Select } from "antd";
+import React, { useEffect } from "react";
+import { Input, Select, DatePicker, TimePicker, InputNumber } from "antd";
 
 import { getEnum } from "@/utils/enum";
+import moment from "moment";
+
+import styles from './Cell.less';
 
 const { Option } = Select;
 
 interface ICell {
-  initValue: string | number;
+  initValue?: string | number;
   record: object;
   rowIndex: number;
   dataIndex: string | number;
   required: boolean;
   editable: boolean;
-  update: (
+  tableEditable: boolean;
+  update?: (
     row: number,
     dataIndex: string | number,
-    value: string | number
+    value?: string | number
   ) => void;
   title: string | number;
   type: string;
   render: (
     record: object,
-    value: string | number,
     dataIndex: string | number,
-    type: string
+    type: string,
+    value?: string | number,
   ) => JSX.Element;
   isOp: boolean;
 }
@@ -35,6 +39,7 @@ const Cell: React.FC<ICell> = ({
   dataIndex,
   required = false,
   editable = false,
+  tableEditable = false,
   update,
   title,
   type,
@@ -45,7 +50,7 @@ const Cell: React.FC<ICell> = ({
   const [error, setError] = React.useState(required && !initValue);
   const message = `${title}是必填项`;
 
-  const onChange = (newValue: string | number) => {
+  const onChange = (newValue?: string | number) => {
     setValue(newValue);
   };
 
@@ -53,46 +58,113 @@ const Cell: React.FC<ICell> = ({
     if (required && !value) {
       return true;
     }
+    if(type){
+      switch(type){
+        case 'date':
+        case 'time':
+          return !moment(value).isValid();
+      }
+    }
     return false;
   };
 
+  useEffect(()=>{
+    const rest = errorCheck()
+    setError(rest);
+  },[value])
+
   const save = () => {
-    setError(errorCheck());
-    if (!error && update) update(rowIndex, dataIndex, value);
+    if (update) update(rowIndex, dataIndex, value);
   };
 
+  const pickerChange = (v:string) =>{
+    setValue(v);
+    if(update) update(rowIndex, dataIndex, v);
+  }
+
   if (isOp) {
-    return <td>{render(record, value, dataIndex, type)}</td>;
+    return <td>{render(record, dataIndex, type, value)}</td>;
   }
   // 不可编辑
-  if (!editable) {
-    return <td>{render(record, value, dataIndex, type)}</td>;
+  if (!tableEditable || !editable) {
+    return <td>{render(record, dataIndex, type, value)}</td>;
   }
   if (type) {
-    let Enum = getEnum(type, record);
-    if (!Enum) {
-      Enum = {};
+    switch (type) {
+      case 'date':
+        return (
+          <td>
+            <DatePicker
+              format="YYYY-MM-DD"
+              onChange={(date: moment.Moment | null, v: string) => pickerChange(v)}
+              value={moment(value)}
+            />
+            {error && <span className={styles.ErrorMsg}>{message}</span>}
+          </td>
+        )
+      case 'time':
+        return (
+          <td>
+            <TimePicker
+              format="HH:mm:ss"
+              placeholder="请选择时间"
+              onChange={(time: moment.Moment, v: string) => pickerChange(v)}
+              value={moment(value)}
+            />
+            {error && <span className={styles.ErrorMsg}>{message}</span>}
+          </td>
+        )
+      case 'intNumber':
+        return (
+          <td>
+            <InputNumber
+              style={{ width: "100%" }}
+              onBlur={save}
+              onChange={(v: number | undefined) => onChange(v)}
+              value={value as number}
+            />
+            {error && <span className={styles.ErrorMsg}>{message}</span>}
+          </td>
+        )
+      case 'number':
+        return (
+          <td>
+            <InputNumber
+              step={0.01}
+              style={{ width: "100%" }}
+              onBlur={save}
+              onChange={(v: number | undefined) => onChange(v)}
+              value={value as number}
+            />
+            {error && <span className={styles.ErrorMsg}>{message}</span>}
+          </td>
+        )
+      default:
+        let Enum = getEnum(type, record);
+        if (!Enum) {
+          Enum = {};
+        }
+        return (
+          <td>
+            <Select
+              style={{ width: "100%" }}
+              getPopupContainer={node => node}
+              value={value}
+              optionFilterProp="children"
+              showSearch
+              onBlur={save}
+              onChange={(v: string | number) => onChange(v)}
+            >
+              {Object.keys(Enum).map(key => (
+                <Option key={key} value={key}>
+                  {Enum[key]}
+                </Option>
+              ))}
+            </Select>
+            {error && <span className={styles.ErrorMsg}>{message}</span>}
+          </td>
+        );
     }
-    return (
-      <td>
-        <Select
-          style={{ width: "100%" }}
-          getPopupContainer={node => node}
-          value={value}
-          optionFilterProp="children"
-          showSearch
-          onBlur={save}
-          onChange={(v: string | number) => onChange(v)}
-        >
-          {Object.keys(Enum).map(key => (
-            <Option key={key} value={key}>
-              {Enum[key]}
-            </Option>
-          ))}
-        </Select>
-        {error && <span>{message}</span>}
-      </td>
-    );
   }
 
   return (
@@ -103,7 +175,7 @@ const Cell: React.FC<ICell> = ({
         onChange={e => onChange(e.target.value)}
         value={value}
       ></Input>
-      {error && <span>{message}</span>}
+      {error && <span className={styles.ErrorMsg}>{message}</span>}
     </td>
   );
 };

@@ -14,6 +14,49 @@ const routes: Array<IRouteValue> = [
                 authority: "产品管理",
                 component: "./productStore/product/list"
               },
+              {
+                path: "/productStore/packageTour/add",
+                name: "新增跟团游",
+                authority: "新增跟团游",
+                hideInMenu: true,
+                component: "./productStore/packageTour/edit"
+              },
+              {
+                path: "/productStore/packageTour/modify",
+                name: "修改跟团游",
+                authority: "修改跟团游",
+                hideInMenu: true,
+                component: "./productStore/packageTour/edit"
+              },
+              {
+                path: "/productStore/packageTour/copy",
+                name: "复制跟团游",
+                authority: "复制跟团游",
+                hideInMenu: true,
+                component: "./productStore/packageTour/edit"
+              },
+              {
+                path: "/productStore/packageTour/maintain",
+                name: "维护跟团游",
+                authority: "维护跟团游",
+                hideInMenu: true,
+                component: "./productStore/packageTour/edit"
+              },
+              {
+                path: "/productStore/packageTour/read",
+                name: "查看跟团游",
+                authority: "查看跟团游",
+                hideInMenu: true,
+                component: "./productStore/packageTour/edit"
+              },
+              // 开团
+              {
+                path: "/productStore/packageTour/addGroup",
+                name:"跟团游开团",
+                authority:"跟团游开团",
+                hideInMenu: true,
+                component: "./productStore/packageTour/addGroup"
+              }
             ]
         },
     ]

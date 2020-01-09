@@ -192,7 +192,7 @@ export function btnClickEvent(btns?: object, actionMap?: object) {
   return newBtns;
 }
 
-export function getRowBtnArray(data: object, btns: IModBtn[]) {
+export const getRowBtnArray = function<T>(data: T, btns: IModBtn[]) {
   let rst: IModBtn[] = [];
   if (!btns) {
     return rst;
@@ -205,9 +205,9 @@ export function getRowBtnArray(data: object, btns: IModBtn[]) {
         const flag = Object.keys(btn.show)
           .map(item => {
             if (btn.show && btn.show[item].indexOf(data[item]) === -1) {
-              if(!Number(data[item]))
+              if (!Number(data[item]))
                 return false;
-              if(btn.show[item].indexOf(Number(data[item])) === -1)
+              if (btn.show[item].indexOf(Number(data[item])) === -1)
                 return false;
             }
             return true;
@@ -231,34 +231,32 @@ export function isNotUndefined<T>(arg: T | undefined): arg is T {
 }
 
 export function colDisplay(
-  v: string | number | string[] | number[],
-  cfg: string | IEnumCfg,
+  v: string | number | string[] | number[] |undefined,
+  type: string,
   row: any
 ) {
   const rst: any[] = [];
   if (!v) return "";
-  if (typeof cfg !== "string") {
-    switch (cfg.type) {
-      case "date":
-      case "number":
-      case "time":
-      case "ArrayEdit":
-        return v;
-      case "Specify":
-        if (Array.isArray(v)) {
-          v.forEach((i: string | number) => {
-            rst.push(getEnum("EmpAccount")[i]);
-          });
-        }
-        return rst.join(",");
-      case "ErpSuppId":
-        return v ? "ES0" + v : v;
-      default:
-        break;
-    }
+  switch (type) {
+    case "date":
+    case "number":
+    case "time":
+    case "ArrayEdit":
+      return v;
+    case "Specify":
+      if (Array.isArray(v)) {
+        v.forEach((i: string | number) => {
+          rst.push(getEnum("EmpAccount")[i]);
+        });
+      }
+      return rst.join(",");
+    case "ErpSuppId":
+      return v ? "ES0" + v : v;
+    default:
+      break;
   }
 
-  const e = getEnum(cfg, row, undefined);
+  const e = getEnum(type, row, undefined);
   if (e && (typeof v === "string" || typeof v === "number")) {
     if (e[v] || e[Number(v)]) {
       return e[v] || e[Number(v)];
@@ -268,7 +266,7 @@ export function colDisplay(
 }
 
 
-export function colorfun(item: { flow: string|number; }){
+export function colorfun(item: { flow: string | number; }) {
   let flowColor = {}
   switch (item.flow) {
     case '0':
@@ -281,7 +279,7 @@ export function colorfun(item: { flow: string|number; }){
       flowColor = { color: '#FFCC00' }
       break;
     case '3':
-    flowColor = { color: 'red' }
+      flowColor = { color: 'red' }
       break;
     case '4':
       flowColor = { color: 'green' }
