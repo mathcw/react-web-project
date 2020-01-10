@@ -109,7 +109,7 @@ const Cell: React.FC<ICell> = ({
         case 'date':
           return (
             <DatePicker
-              open={true}
+              open={true} // datepicker 需要默认展开弹窗 不然无法统一editing的控制
               format="YYYY-MM-DD"
               onChange={(date: moment.Moment | null, v: string) => pickerChange(v)}
               value={moment(value)}
@@ -119,7 +119,7 @@ const Cell: React.FC<ICell> = ({
         case 'time':
           return (
             <TimePicker
-              open={true}
+              open={true}// timepicker 需要默认展开弹窗 不然无法统一editing的控制
               format="HH:mm:ss"
               placeholder="请选择时间"
               onChange={(time: moment.Moment, v: string) => pickerChange(v)}
@@ -156,7 +156,6 @@ const Cell: React.FC<ICell> = ({
           return (
             <Select
               style={{ width: "100%" }}
-              getPopupContainer={node => node}
               value={value}
               optionFilterProp="children"
               showSearch
