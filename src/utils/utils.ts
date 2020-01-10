@@ -242,6 +242,7 @@ export function colDisplay(
     case "number":
     case "time":
     case "ArrayEdit":
+    case "intNumber":
       return v;
     case "Specify":
       if (Array.isArray(v)) {

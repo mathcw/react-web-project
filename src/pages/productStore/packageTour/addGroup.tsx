@@ -173,9 +173,9 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
   }, [])
 
   const list = {
-    // dep_date: { text: '出团日期', type: 'date', width: 180, editable: true },
-    // back_date: { text: '回团日期', type: 'date', width: 180, editable: true },
-    gp_total: { text: '计划总位', type: 'intNumber', width: 80, editable: true },
+    dep_date: { text: '出团日期', type: 'date', width: 180, editable: true },
+    back_date: { text: '回团日期', type: 'date', width: 180, editable: true },
+    gp_total: { text: '计划总位', width: 80, editable: true,required:true },
     stock: { text: '库存剩余', type: 'intNumber', width: 80, editable: true },
     person_limit: { text: '成团人数', type: 'intNumber', width: 80, editable: true },
     price_comment: { text: '价格名称', width: 150, editable: true },
@@ -260,13 +260,11 @@ return (
   >
     {renderGroupInfo(data)}
     <Grid<IGroupType>
-      columns={getCols<IGroupType>(list)}
+      columns={getCols<IGroupType>(list,update)}
       dataSource={data['跟团游开团团期详情']}
-      update={update}
       className={'OpTableStyle'}
       pagination={false}
       resizeable={true}
-      editable={true}
       specCol={opCol}
     />
   </PageHeaderWrapper>

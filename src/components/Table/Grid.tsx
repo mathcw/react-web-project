@@ -62,12 +62,11 @@ const ResizeableTitle = (props: any) => {
 //column
 export const getCols = function <T>(
     list: { [field: string]: ICol<T> },
-    cellRender: (
-        record: T,
+    update?: (
+        row: number,
         dataIndex: string | number,
-        type: string,
-        value?: string | number,
-    ) => JSX.Element = display
+        value?: string | number
+    ) => void
 ) {
     const rst: ColumnProps<T>[] = [];
     let colWidth: number = 0;
@@ -95,7 +94,8 @@ export const getCols = function <T>(
                 required: colCfg.required,
                 title: colCfg.text,
                 type: colCfg.type,
-                render: colCfg.render || cellRender
+                render: colCfg.render || display,
+                update:update
             }),
             sorter: (a: T, b: T) => {
                 if (colCfg.sorter) {
@@ -198,13 +198,9 @@ export const renderRowBtns = function <T>(btns: IModBtn[], data: T, rs?: () => v
 };
 
 interface IGridProp<T> {
-    editable?: boolean, resizeable?: boolean,
+    resizeable?: boolean,
     specCol?: ColumnProps<T>[],
-    dnd?: boolean, update?: (
-        row: number,
-        dataIndex: string | number,
-        value?: string | number
-    ) => void
+    dnd?: boolean
 }
 
 interface IGird {
@@ -212,7 +208,7 @@ interface IGird {
 }
 
 const Grid: IGird = function <T>(p: IGridProp<T> & TableProps<T>): JSX.Element {
-    const { editable, resizeable, dnd, update, columns, specCol, ...rst } = p;
+    const { resizeable, dnd, columns, specCol, ...rst } = p;
 
     const [SColumns, setColumns] = useState([...columns || []]);
 
@@ -246,7 +242,7 @@ const Grid: IGird = function <T>(p: IGridProp<T> & TableProps<T>): JSX.Element {
         components: {
             body: {
                 row: defaultRow,
-                cell: (props: any) => Cell({ tableEditable: editable, update: update, ...props })
+                cell:Cell
             }
         },
         columns: SColumns,
