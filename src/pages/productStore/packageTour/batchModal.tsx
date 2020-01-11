@@ -75,14 +75,15 @@ function Cell(props: ICell) {
 
 function InitState() {
     const basePrice: IPriceType = {
-        'price_type': 1, 'price_comment': '', 'peer_price': 1, 'retail_price': 1
+        'price_type': 1, 'price_comment': '', 'peer_price': 0, 'retail_price': 0
     }
-    const baseInfo: any = { 'gp_total': 1, 'stock': 1, 'person_limit': 1 }
+    const baseInfo: any = { 'gp_total': 0, 'stock': 0, 'person_limit': 0 }
+    const otherPrice:IPriceType[] = [];
     return {
         data: {
             '团期库存信息': [baseInfo],
             '团期基准价格': [basePrice],
-            '团期其他价格': []
+            '团期其他价格': otherPrice
         },
         showWarning: false
     }
@@ -108,7 +109,7 @@ class BatchModal extends React.Component<IProps, IState> {
 
     add_other_price = () => {
         const { data } = this.state;
-        data['团期其他价格'].push({ price_type: 2 });
+        data['团期其他价格'].push({ price_type: 2,'price_comment': '', 'peer_price': 0, 'retail_price': 0 });
         this.setState({ data });
     }
 
@@ -298,7 +299,7 @@ class BatchModal extends React.Component<IProps, IState> {
                                         <Col className={styles.modValue}>
                                             <Cell
                                                 initValue={row.price_comment}
-                                                title='同行价'
+                                                title='价格名称'
                                                 update={this.update('price_comment', '团期其他价格', index)}
                                                 showWarning={showWarning}
                                                 required

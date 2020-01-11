@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Icon, Divider, Button, Modal, Form } from 'antd';
+import { Col, Icon, Divider, Button, Modal } from 'antd';
 import { IActionPageProps } from '@/viewconfig/ActionConfig';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper/actionPageHeader';
 import renderHeaderBtns from '@/components/PageHeaderWrapper/headerBtns';
@@ -12,7 +12,6 @@ import Grid, { getCols } from '@/components/Table/Grid';
 import { ColumnProps } from 'antd/es/table';
 import { IModBtn } from '@/viewconfig/ModConfig';
 import moment from 'moment';
-import ModalForm from '@/components/ModalForm';
 import BatchModal from './batchModal';
 import MorePrice from './morePrice';
 
@@ -176,13 +175,13 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
     });
   }, [])
 
-  const rowSelChange = (Keys:string[]) =>{
-    setSelectedRowKeys(Keys);
+  const rowSelChange = (keys:string[]) =>{
+    setSelectedRowKeys(keys);
   }
 
   const rowSelection = {
     selectedRowKeys,
-    onChange: rowSelChange
+    onChange: (keys:string[]|number[]) => rowSelChange(keys as string[])
   }; 
 
   const list = {
