@@ -266,6 +266,9 @@ return (
       pagination={false}
       resizeable={true}
       specCol={opCol}
+      rowKey={(record:IGroupType,index:number)=>{
+        return index+'';
+      }}
     />
   </PageHeaderWrapper>
 )

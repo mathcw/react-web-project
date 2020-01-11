@@ -48,6 +48,12 @@ const Cell: React.FC<ICell> = ({
   const [error, setError] = React.useState(false);
   const [editing, setEditing] = React.useState(false);
 
+  const [openShow,setOpenShow] = React.useState(true); //select open /close 状态
+
+  const [initOpenPickerStatus,setInitOpenPickerStatus] = React.useState(true);//picker 的初始open状态
+  const [openPicker,setOpenPicker] = React.useState(false);
+  const CellRef = useRef<HTMLTableDataCellElement>(null);
+
   const oldRef = useRef<string | number | undefined>();
   useEffect(() => {
     oldRef.current = value;
@@ -75,27 +81,16 @@ const Cell: React.FC<ICell> = ({
     return false;
   };
 
+  const toggleEdit = () => {
+    setEditing(true);
+  }
+
   useEffect(() => {
-    if(oldValue !== value){
+    if (oldValue !== value) {
       const rest = errorCheck()
       setError(rest);
     }
   }, [value])
-
-  const save = () => {
-    setEditing(false);
-    if (update) update(rowIndex, dataIndex, value);
-  };
-
-  const pickerChange = (v: string) => {
-    setEditing(false);
-    setValue(v);
-    if (update) update(rowIndex, dataIndex, v);
-  }
-
-  const toggleEdit = () => {
-    setEditing(true);
-  }
 
   useEffect(() => {
     if (editing) {
@@ -103,35 +98,65 @@ const Cell: React.FC<ICell> = ({
     }
   }, [editing])
 
+  useEffect(() => {
+    const clickListen = (e: { target: any }) => {
+      if(editing){
+        if(type){
+          if (CellRef.current && CellRef.current !== e.target && !CellRef.current.contains(e.target)) {
+            if((type ==='date' ||type === 'time')){
+              if(!initOpenPickerStatus && !openPicker){
+                setEditing(false);
+                if (update) update(rowIndex, dataIndex, value);
+              }
+            }else if(!openShow){
+              setEditing(false);
+              if (update) update(rowIndex, dataIndex, value);
+            }
+          }
+        }else if(CellRef.current && CellRef.current !== e.target && !CellRef.current.contains(e.target)){
+          setEditing(false);
+          if (update) update(rowIndex, dataIndex, value);
+        }
+      }
+    };
+
+    document.addEventListener("click", clickListen, true);
+
+    return () => {
+      document.removeEventListener("click", clickListen, true);
+    };
+  }, [openPicker,initOpenPickerStatus,openShow,editing,type,value,update]);
+
   const renderEditing = () => {
     if (type) {
       switch (type) {
         case 'date':
           return (
-            <DatePicker
-              open={true} // datepicker 需要默认展开弹窗 不然无法统一editing的控制
-              format="YYYY-MM-DD"
-              onChange={(date: moment.Moment | null, v: string) => pickerChange(v)}
-              value={moment(value)}
-              ref={intputRef}
-            />
+              <DatePicker
+                open={initOpenPickerStatus}
+                format="YYYY-MM-DD"
+                onChange={(date: moment.Moment | null, v: string) => onChange(v)}
+                value={moment(value)}
+                ref={intputRef}
+                onOpenChange={(status:boolean)=>{setOpenPicker(status) ; setInitOpenPickerStatus(status)}}
+              />
           )
         case 'time':
           return (
             <TimePicker
-              open={true}// timepicker 需要默认展开弹窗 不然无法统一editing的控制
+              open={initOpenPickerStatus}
               format="HH:mm:ss"
               placeholder="请选择时间"
-              onChange={(time: moment.Moment, v: string) => pickerChange(v)}
+              onChange={(time: moment.Moment, v: string) => onChange(v)}
               value={moment(value)}
               ref={intputRef}
+              onOpenChange={(status:boolean)=>{setOpenPicker(status) ; setInitOpenPickerStatus(status)}}
             />
           )
         case 'intNumber':
           return (
             <InputNumber
               style={{ width: "100%" }}
-              onBlur={save}
               onChange={(v: number | undefined) => onChange(v)}
               value={value as number}
               ref={intputRef}
@@ -142,7 +167,6 @@ const Cell: React.FC<ICell> = ({
             <InputNumber
               step={0.01}
               style={{ width: "100%" }}
-              onBlur={save}
               onChange={(v: number | undefined) => onChange(v)}
               value={value as number}
               ref={intputRef}
@@ -160,7 +184,7 @@ const Cell: React.FC<ICell> = ({
               optionFilterProp="children"
               showSearch
               onChange={(v: string | number) => onChange(v)}
-              onDropdownVisibleChange={(open)=>{if(!open) save()}}
+              onDropdownVisibleChange={(status:boolean) =>setOpenShow(status)}
               ref={intputRef}
             >
               {Object.keys(Enum).map(key => (
@@ -180,14 +204,13 @@ const Cell: React.FC<ICell> = ({
           onChange={e => onChange(e.target.value)}
           value={value}
           ref={intputRef}
-          onBlur={save}
         ></Input>
       </>
     );
   }
 
   return (
-    <td className={styles.td}>
+    <td className={styles.td} ref={CellRef}>
       {
         isOp && render(record, dataIndex, type, value)
       }
