@@ -1,14 +1,20 @@
-import React, { useEffect } from 'react';
-import { Col, Icon } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Col, Icon, Divider, Button, Modal, Form } from 'antd';
 import { IActionPageProps } from '@/viewconfig/ActionConfig';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper/actionPageHeader';
 import renderHeaderBtns from '@/components/PageHeaderWrapper/headerBtns';
+import CalendarUtil from '@/components/CalendarUtil';
 import { useActionPage, useActionBtn } from '@/utils/ActionPageHooks';
 import { colDisplay, colorfun } from '@/utils/utils';
 
 import styles from './addGroup.less';
 import Grid, { getCols } from '@/components/Table/Grid';
 import { ColumnProps } from 'antd/es/table';
+import { IModBtn } from '@/viewconfig/ModConfig';
+import moment from 'moment';
+import ModalForm from '@/components/ModalForm';
+import BatchModal from './batchModal';
+import MorePrice from './morePrice';
 
 
 
@@ -53,13 +59,11 @@ const renderGroupInfo = (data: any) => {
                       `${colDisplay(data.dep_city_id, 'City', data)}出发`
                     }
                   </span>{'  '}  &nbsp;&nbsp;
-                                    {/* 天数晚数 */}
                   <span>
                     {
                       `${data.days}天${data.nights}晚`
                     }
                   </span>{'  '}&nbsp;&nbsp;
-                                    {/* 自费 */}
                   <span>
                     {
                       data.own_expense === '1' && '有自费'
@@ -68,7 +72,6 @@ const renderGroupInfo = (data: any) => {
                       data.own_expense !== '1' && '无自费'
                     }
                   </span>{'  '}&nbsp;&nbsp;
-                                    {/* 购物 */}
                   <span>
                     {
                       data.shopping === '1' && '有购物'
@@ -158,7 +161,8 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
   }
 
   const { data, setData, load, onOk, onCancel, cfg } = useActionPage<typeof initData>(authority, initData, ref);
-
+  const [calendarModal, setCalendarModal] = useState(false);
+  const [selectedRowKeys,setSelectedRowKeys] = useState<string[]>([]);
   const actionMap = {
     提交: onOk,
     关闭: onCancel,
@@ -168,14 +172,23 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
 
   useEffect(() => {
     load().then((loadedData: typeof initData) => {
-      setData({...data,...loadedData});
+      setData({ ...data, ...loadedData });
     });
   }, [])
+
+  const rowSelChange = (Keys:string[]) =>{
+    setSelectedRowKeys(Keys);
+  }
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: rowSelChange
+  }; 
 
   const list = {
     dep_date: { text: '出团日期', type: 'date', width: 180, editable: true },
     back_date: { text: '回团日期', type: 'date', width: 180, editable: true },
-    gp_total: { text: '计划总位', width: 80, editable: true,required:true },
+    gp_total: { text: '计划总位', width: 80, editable: true, required: true },
     stock: { text: '库存剩余', type: 'intNumber', width: 80, editable: true },
     person_limit: { text: '成团人数', type: 'intNumber', width: 80, editable: true },
     price_comment: { text: '价格名称', width: 150, editable: true },
@@ -183,16 +196,134 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
     retail_price: { text: '建议直客价', type: 'number', width: 80, editable: true },
   };
 
-  const addRow = () =>{
+  const tableBtns: IModBtn[] = [
+    {
+      text: '批量新增',
+      authority: '批量新增团期',
+      onClick: () => {
+        setCalendarModal(true);
+      }
+    },
+    {
+      text: '批量填充',
+      authority: '批量填充团期',
+      onClick: () => {
+        if(selectedRowKeys.length === 0 ){
+          Modal.error({
+            content:'您还没有勾选团期数据',
+            title:'请勾选团期数据'
+          })
+          return;
+        }
+        const modalRef = Modal.info({});
+        const onSubmit = (submitData: any) => {
+          const rst = {...data};
+          rst['跟团游开团团期详情'] = rst['跟团游开团团期详情'].map((item,index:any)=>{
+            if(selectedRowKeys.includes(index+'')){
+              item.gp_total = submitData['团期库存信息'][0].gp_total || 0;
+              item.stock = submitData['团期库存信息'][0].stock || 0;
+              item.person_limit = submitData['团期库存信息'][0].person_limit || 0;
+              item.peer_price = submitData['团期基准价格'][0].peer_price || 0;
+              item.retail_price = submitData['团期基准价格'][0].retail_price || 0;
+              item.price_comment = submitData['团期基准价格'][0].price_comment || 0;
+              
+              item['团期其他价格'] = [];
+              submitData['团期其他价格'].forEach((otherPrice:any)=>{
+                  item['团期其他价格'].push({...otherPrice});
+              })
+            }
+            return item;
+          })
+          setData(rst);
+          modalRef.destroy();
+        };
+        const onCancel = () => {
+          modalRef.destroy();
+        };
+        modalRef.update({
+          title: "填写团期数据",
+          icon: null,
+          content: <BatchModal OnOk={onSubmit} OnCancel={onCancel} />,
+          okButtonProps: { className: "hide" },
+          cancelButtonProps: { className: "hide" }
+        });
+      }
+    },
+    {
+      text: '批量删除',
+      authority: '批量删除团期',
+      onClick: () => {
+        if(selectedRowKeys.length === 0 ){
+          Modal.error({
+            content:'勾选团期数据',
+            title:'勾选团期数据'
+          })
+          return;
+        }
+        const rst = {...data};
+        rst['跟团游开团团期详情'] = rst['跟团游开团团期详情'].filter((v,index)=>{
+          return !selectedRowKeys.includes(index+'')
+        })
+        setSelectedRowKeys([]);
+        setData(rst);
+      }
+    },
+  ];
+
+  const addGroupDone = (dateArr:string[]) =>{
+    setCalendarModal(false);
     const rst = {...data};
+    dateArr.forEach( date =>{
+      const { days} = rst;
+      const backDate = moment(date).add(days,'days').format("YYYY-MM-DD");
+      if (rst['跟团游开团团期详情'].find(cell => cell.dep_date === date)) {
+        return false;
+      }
+      rst['跟团游开团团期详情'].push({ dep_date: date ,back_date: backDate});
+      return true;
+    })
+    setData(rst);
+  }
+
+  const closeModal = () =>{
+    setCalendarModal(false);
+  }
+
+  const addRow = () => {
+    const rst = { ...data };
     rst['跟团游开团团期详情'].push({});
     setData(rst);
   }
 
-  const deleteRow = (index:number) =>{
-    const rst = {...data};
-    rst['跟团游开团团期详情'].splice(index,1);
+  const deleteRow = (index: number) => {
+    const rst = { ...data };
+    rst['跟团游开团团期详情'].splice(index, 1);
     setData(rst);
+  }
+
+  const morePrice = (record:object,rowIndex:number) =>{
+    const modalRef = Modal.info({});
+    const onSubmit = (submitData: any) => {
+      const rst = {...data};
+
+      rst['跟团游开团团期详情'][rowIndex].peer_price = submitData['团期基准价格'][0].peer_price || 0;
+      rst['跟团游开团团期详情'][rowIndex].retail_price = submitData['团期基准价格'][0].retail_price || 0;
+      rst['跟团游开团团期详情'][rowIndex].price_comment = submitData['团期基准价格'][0].price_comment || 0;
+      rst['跟团游开团团期详情'][rowIndex]['团期其他价格'] = submitData['团期其他价格'];
+
+      setData(rst);
+      modalRef.destroy();
+    };
+    const onCancel = () => {
+      modalRef.destroy();
+    };
+    modalRef.update({
+      title: "填写团期数据",
+      icon: null,
+      content: <MorePrice data={record} OnOk={onSubmit} OnCancel={onCancel} />,
+      okButtonProps: { className: "hide" },
+      cancelButtonProps: { className: "hide" }
+    });
   }
 
   const opCol: ColumnProps<IGroupType>[] = [
@@ -207,7 +338,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
         isOp: true,
         render: (data: object) => {
           return (
-            <a onClick={()=>{console.log(1)}}>更多价格</a>
+            <a onClick={() => { morePrice(data,rowIndex) }}>更多价格</a>
           );
         }
       })
@@ -240,38 +371,66 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
               }}
             />
           );
-    }
+        }
       })
     },
   ]
 
-const update = (row: number,
-  dataIndex: string | number,
-  value?: string | number) => {
-  const rst = { ...data };
-  rst['跟团游开团团期详情'][row][dataIndex] = value;
-  setData(rst);
-}
+  const update = (row: number,
+    dataIndex: string | number,
+    value?: string | number) => {
+    const rst = { ...data };
+    rst['跟团游开团团期详情'][row][dataIndex] = value;
+    setData(rst);
+  }
 
-return (
-  <PageHeaderWrapper
-    title={cfg.title || ''}
-    extra={renderHeaderBtns(btns)}
-  >
-    {renderGroupInfo(data)}
-    <Grid<IGroupType>
-      columns={getCols<IGroupType>(list,update)}
-      dataSource={data['跟团游开团团期详情']}
-      className={'OpTableStyle'}
-      pagination={false}
-      resizeable={true}
-      specCol={opCol}
-      rowKey={(record:IGroupType,index:number)=>{
-        return index+'';
-      }}
-    />
-  </PageHeaderWrapper>
-)
+  return (
+    <PageHeaderWrapper
+      title={cfg.title || ''}
+      extra={renderHeaderBtns(btns)}
+    >
+      {renderGroupInfo(data)}
+
+      <Col className={styles.title}>
+        <Col className={styles.text}>团期价格</Col>
+        <Col className={styles.btns}>
+          {tableBtns.map(btn => (
+            <div key={btn.authority} className="dib" style={{ marginLeft: 8 }}>
+              <Button
+                icon={btn.icon}
+                type='primary'
+                size='small'
+                onClick={() => {
+                  if (btn.onClick) btn.onClick();
+                }}
+              >
+                {btn.text || ""}
+              </Button>
+            </div>
+          ))}
+        </Col>
+      </Col>
+      <Divider style={{ margin: 0 }} />
+      <Grid<IGroupType>
+        columns={getCols<IGroupType>(list, update)}
+        dataSource={data['跟团游开团团期详情']}
+        className={'OpTableStyle'}
+        pagination={false}
+        resizeable={true}
+        specCol={opCol}
+        rowKey={(record: IGroupType, index: number) => {
+          return index + '';
+        }}
+        rowSelection={rowSelection}
+      />
+      <CalendarUtil title="新增团期"
+        width={800}
+        visible={calendarModal}
+        onOk={addGroupDone}
+        onCancel={closeModal}
+      />
+    </PageHeaderWrapper>
+  )
 }
 
 export default Page;

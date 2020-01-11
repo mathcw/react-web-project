@@ -1,0 +1,45 @@
+.morePrice {
+    .add {
+      width: 14px;
+      height: 14px;
+      position: absolute;
+      right: 22%;
+      top: 20%;
+    }
+    .delete {
+      color: #ff4d4f;
+      display: inline;
+    }
+    .cell {
+      margin-bottom: 12px;
+      .modLabel {
+        font-size: 13px;
+        padding: 2px 4px;
+      }
+      .modLabel::after {
+        content: ":";
+        margin-right: 8px;
+      }
+      .modValue {
+        padding: 0 4px;
+        :global {
+          .ant-input-number {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+  
+  .footerBtnBox {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    .footerBtn {
+      display: inline-block;
+      margin-right: 16px;
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+  }
+  

@@ -29,6 +29,7 @@ interface ICell {
     value?: string | number,
   ) => JSX.Element;
   isOp: boolean;
+  [propName:string]:any;
 }
 
 const Cell: React.FC<ICell> = ({
@@ -42,7 +43,8 @@ const Cell: React.FC<ICell> = ({
   title,
   type,
   render,
-  isOp = false
+  isOp = false,
+  ...restProps
 }) => {
   const [value, setValue] = React.useState(initValue);
   const [error, setError] = React.useState(false);
@@ -58,7 +60,13 @@ const Cell: React.FC<ICell> = ({
   useEffect(() => {
     oldRef.current = value;
   });
-  const oldValue = oldRef.current;
+  const oldValue = oldRef.current; // 保存上次的value值 用于判断是否需要errorcheck
+
+  const oldInitValueRef = useRef<string | number | undefined>();
+  useEffect(() => {
+    oldInitValueRef.current = initValue;
+  },[initValue]);
+  const oldInitValue = oldInitValueRef.current; // 保存上次的initvalue值 用于判断是否需要setvalue
 
   const intputRef = useRef<any>(null);
   const message = `${title}是必填项`;
@@ -90,7 +98,13 @@ const Cell: React.FC<ICell> = ({
       const rest = errorCheck()
       setError(rest);
     }
-  }, [value])
+  }, [value]) // error check
+
+  useEffect(()=>{
+    if (oldInitValue !==initValue && value !== initValue) {
+      setValue(initValue);
+    }
+  },[value,initValue]) // initvalue发生变化 同时不等于value 则setvalue
 
   useEffect(() => {
     if (editing) {
@@ -108,6 +122,9 @@ const Cell: React.FC<ICell> = ({
                 setEditing(false);
                 if (update) update(rowIndex, dataIndex, value);
               }
+            }else if(type === 'intNumber' || type === 'number'){
+              setEditing(false);
+              if (update) update(rowIndex, dataIndex, value);
             }else if(!openShow){
               setEditing(false);
               if (update) update(rowIndex, dataIndex, value);
@@ -208,15 +225,14 @@ const Cell: React.FC<ICell> = ({
       </>
     );
   }
-
   return (
     <td className={styles.td} ref={CellRef}>
       {
-        isOp && render(record, dataIndex, type, value)
+        isOp && ( render ? render(record, dataIndex, type, value) : restProps.children)
       }
       {
         !isOp && !editable && <div className={styles.noEditble}>
-          {render(record, dataIndex, type, value)}
+          { render ?render(record, dataIndex, type, value): restProps.children}
         </div>
       }
       {
@@ -226,7 +242,7 @@ const Cell: React.FC<ICell> = ({
       }
       {
         editable && !editing && <div className={styles.noEditing} onClick={toggleEdit}>
-          {render(record, dataIndex, type, value)}
+          {render ? render(record, dataIndex, type, value) : restProps.children}
         </div>
       }
       {error && <span className={styles.ErrorMsg}>{message}</span>}
