@@ -56,7 +56,14 @@ const routes: Array<IRouteValue> = [
                 authority:"跟团游开团",
                 hideInMenu: true,
                 component: "./productStore/packageTour/addGroup"
-              }
+              },
+              // 团期
+              {
+                path: "/productStore/group/list",
+                name: "班期管理",
+                authority: "班期管理",
+                component: "./productStore/group/list"
+              },
             ]
         },
     ]

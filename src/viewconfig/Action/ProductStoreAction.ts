@@ -63,7 +63,7 @@ const config: ActionConfigItem = {
       关闭: { text: "关闭" },
       提交: { text: "提交" }
     }
-  }
+  },
 };
 
 export default config;

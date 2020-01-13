@@ -11,7 +11,7 @@ const initState:IRootState ={
     // 行为
     actions: {},
     // 权限
-    authority: {},
+    authority: {}
 }
 
 export default initState;

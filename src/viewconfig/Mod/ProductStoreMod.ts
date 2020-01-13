@@ -32,6 +32,33 @@ const config: ModConfigItem = {
         pageSizeOptions: ["10", "20", "30", "50", "100"],
         pageSize: 100
     },
+    '班期管理': {
+        read: { url: "/api/Group/Group/read" },
+        title: "班期管理",
+        textSearch: {
+            pd_name: { text: '产品名称' },
+            gp_num: { text: '团号' },
+            pd_id: { text: '产品编号' },
+        },
+        dropDownSearch: {
+            sup_id: { text: '开团公司', type: 'Supplier' },
+            supplier_department_id: { text: '开团部门', type: 'SupplierDepartment', cascade: 'sup_id' },
+            saler_id: { text: '开团人', type: 'SupplierSales', cascade: 'supplier_department_id' },
+            pd_type: { text: '产品类型', type: 'PdType' },
+            pd_direction: { text: '出游方向', type: 'PdDirection' },
+            primary_nav: { text: '一级导航', type: 'PrimaryNav', cascade: 'pd_direction' },
+            secondary_nav: { text: '二级导航', type: 'SecondaryNav', cascade: 'primary_nav' }
+        },
+        headerButtons: {
+        },
+        rowButtons: {
+            修改班期: { text: '修改', show: { shelf_state: [1] } },
+            下架班期: { text: '下架', show: { shelf_state: [1] } }
+        },
+        pageSizeOptions: ["10", "20", "30", "50", "100"],
+        pageSize: 100
+    },
+
 }
 
 export default config;

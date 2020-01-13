@@ -1,6 +1,6 @@
 
 import router from 'umi/router';
-import { sys,log,sysUpdate} from '@/utils/core';
+import { sys, log, sysUpdate } from '@/utils/core';
 
 export enum ActionType {
   LOADING,
@@ -10,24 +10,24 @@ export enum ActionType {
   UPDATEUSERAUTH
 }
 
-export interface IUser{
-  account_id:string;
+export interface IUser {
+  account_id: string;
 }
 
-export interface IRootState{
-  loading?:boolean;
-  user:IUser;
-  mods?:object;
-  actions?:object;
-  authority?:object;
+export interface IRootState {
+  loading?: boolean;
+  user: IUser;
+  mods?: object;
+  actions?: object;
+  authority?: object;
 }
 
-export interface IAction{
-  type:ActionType;
-  payload:IRootState;
+export interface IAction {
+  type: ActionType;
+  payload: IRootState;
 }
 
-export default (state:IRootState, action:IAction) => {
+export default (state: IRootState, action: IAction) => {
   switch (action.type) {
     case ActionType.LOADING:
       return {
@@ -43,8 +43,8 @@ export default (state:IRootState, action:IAction) => {
       delete localStorage[`${sys.APP_NAME}_sid`];
       sysUpdate({
         ...sys,
-        user:{account_id:''},
-        sid:''
+        user: { account_id: '' },
+        sid: ''
       })
       setTimeout(
         () => router.replace(
@@ -54,13 +54,13 @@ export default (state:IRootState, action:IAction) => {
 
       return {
         ...state,
-        user: {account_id:''},
+        user: { account_id: '' },
       };
 
     case ActionType.USERINIT:
       sysUpdate({
         ...sys,
-        user:action.payload.user
+        user: action.payload.user
       })
       return {
         ...state,
@@ -69,10 +69,10 @@ export default (state:IRootState, action:IAction) => {
         authority: action.payload.authority,
       }
     case ActionType.UPDATEUSERAUTH:
-        return {
-          ...state,
-          authority: action.payload.authority,
-        }
+      return {
+        ...state,
+        authority: action.payload.authority,
+      }
     default:
       log(action);
       throw new Error('Unexpected action');
