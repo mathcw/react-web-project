@@ -100,7 +100,7 @@ interface GroupTourProps {
 const GroupTour: React.FC<GroupTourProps> = ({ data,btns=[],load }) => {
 
     const showFlowInfo = (data: GroupTourProps['data']) => {
-        get('/api/comm/Flow/seeDetail', { flow_id: data.flow_id }).then((r) => {
+        get('/b2b-back/comm/Flow/seeDetail', { flow_id: data.flow_id }).then((r) => {
             if(r.data){
                 Modal.info({
                     title: '审批记录',

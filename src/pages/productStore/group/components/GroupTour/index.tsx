@@ -28,7 +28,7 @@ const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [],orderbtns=[], loa
 
     if (!packStatus) {
       setLoading(true);
-      get('/api/Group/Group/read_order_detail', { 'id': data.main_group_id }).then(r => {
+      get('/b2b-back/Group/Group/read_order_detail', { 'id': data.main_group_id }).then(r => {
         setLoading(false);
         setPackStatus(true);
         if (r.data) {

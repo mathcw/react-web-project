@@ -13,6 +13,7 @@ import { ConnectState } from '@/models/connect';
 import AppConst from '@/utils/AppConst';
 import { sys } from '@/utils/core';
 import { req } from '@/utils/req';
+import { router } from 'umi';
 
 const { Tab, UserName, Password,Submit } = LoginComponents;
 
@@ -30,9 +31,9 @@ interface LoginParam {
 }
 
 const loginFun = async (values:any, href:string) => {
-  const { user: r } = await req('/api/UserLogin/login', values);
+  const { user: r } = await req('/b2b-back/UserLogin/login', values);
   localStorage[`${sys.APP_NAME}_sid`] = r.sid;
-  window.location.href = href;
+  router.replace(href);
 }
 
 @connect(({ login, loading }: ConnectState) => ({

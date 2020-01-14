@@ -2,7 +2,7 @@ import {ModConfigItem} from '@/viewconfig/ModConfig';
 
 const config:ModConfigItem = {
     我的消息: {
-        read: { url : '/api/notice/MsgMain/read'},
+        read: { url : '/b2b-back/notice/MsgMain/read'},
         title: '我的消息',
         textSearch: {
         },
@@ -16,7 +16,7 @@ const config:ModConfigItem = {
         pageSize: 100,
     },
     公告通知: {
-        read: { url : '/api/notice/Announcement/read'},
+        read: { url : '/b2b-back/notice/Announcement/read'},
         title: '公告管理',
         textSearch: {
         },
@@ -30,7 +30,7 @@ const config:ModConfigItem = {
         pageSize: 100,
     },
     审批任务: {
-        read: { url: '/api/notice/MsgFlow/read' },
+        read: { url: '/b2b-back/notice/MsgFlow/read' },
         title: '审批任务',
         textSearch: {
         },

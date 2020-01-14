@@ -2,7 +2,7 @@ import { ModConfigItem } from '@/viewconfig/ModConfig';
 
 const config: ModConfigItem = {
     '提报供应商管理': {
-        read: { url: "/api/SupplierManagement/ErpCompany/read" },
+        read: { url: "/b2b-back/SupplierManagement/ErpCompany/read" },
         title: "提报处理",
         textSearch: {
             full_name: { text: '公司全称' }
@@ -22,7 +22,7 @@ const config: ModConfigItem = {
     },
 
     '吸纳供应商管理': {
-        read: { url: "/api/SupplierManagement/ErpCompany/read" },
+        read: { url: "/b2b-back/SupplierManagement/ErpCompany/read" },
         title: "吸纳审核",
         textSearch: {
             full_name: { text: '公司全称' }
@@ -39,7 +39,7 @@ const config: ModConfigItem = {
     },
 
     '供应商公司管理': {
-        read: { url: "/api/SupplierManagement/Company/read" },
+        read: { url: "/b2b-back/SupplierManagement/Company/read" },
         title: "公司管理",
         textSearch: {
             full_name: { text: '公司全称' }
@@ -65,7 +65,7 @@ const config: ModConfigItem = {
     },
 
     '供应商部门管理': {
-        read: { url: "/api/SupplierManagement/Department/read" },
+        read: { url: "/b2b-back/SupplierManagement/Department/read" },
         title: "部门管理",
         textSearch: {
             supplier_full_name: { text: '商家公司名称' },
@@ -101,7 +101,7 @@ const config: ModConfigItem = {
     },
 
     '供应商账号管理': {
-        read: { url: "/api/SupplierManagement/Sales/read" },
+        read: { url: "/b2b-back/SupplierManagement/Sales/read" },
         title: "账号管理",
         textSearch: {
             supplier_full_name: { text: '商家公司名称' },
@@ -131,7 +131,7 @@ const config: ModConfigItem = {
     },
 
     '供应商权限管理': {
-        read: { url: "/api/org/Auth/read" },
+        read: { url: "/b2b-back/org/Auth/read" },
         title: "权限管理",
         textSearch: {
             name: { text: '名称' },
@@ -151,7 +151,7 @@ const config: ModConfigItem = {
     },
 
     '供应商绑定管理': {
-        read: { url: "/api/SupplierManagement/Company/bind_read" },
+        read: { url: "/b2b-back/SupplierManagement/Company/bind_read" },
         title: "绑定管理",
         textSearch: {
             retailer_name: { text: 'ERP客户' },
@@ -174,7 +174,7 @@ const config: ModConfigItem = {
     },
 
     '供应商头像审批':{
-        read: { url: "/api/SupplierManagement/Sales/read_photo" },
+        read: { url: "/b2b-back/SupplierManagement/Sales/read_photo" },
         title: "头像审批",
         textSearch:{
 

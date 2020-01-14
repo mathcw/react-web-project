@@ -10,7 +10,7 @@ import { reloadAuthorized } from '@/utils/Authorized';
 import PageLoading from '@/components/PageLoading';
 
 async function init() {
-  const r = await req('/api/PublicApi/get_react_init');
+  const r = await req('/b2b-back/PublicApi/get_react_init');
   if (r.data.enum_ver) {
     enumInit(r.data.enum_ver)
   } else {

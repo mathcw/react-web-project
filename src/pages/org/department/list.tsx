@@ -27,7 +27,7 @@ const add = (reload: () => void) => () => {
     name: { text: "部门名称", required: true }
   };
   const onSubmit = (data: any) => {
-    submit("/api/org/Department/submit", data).then(r => {
+    submit("/b2b-back/org/Department/submit", data).then(r => {
       message.success(r.message);
       modalRef.destroy();
       reload();
@@ -53,7 +53,7 @@ const edit = (reload: () => void) => (ref: any) => {
     name: { text: "部门名称", required: true }
   };
   const onSubmit = (data: object | undefined) => {
-    submit("/api/org/Department/submit", data).then(r => {
+    submit("/b2b-back/org/Department/submit", data).then(r => {
       message.success(r.message);
       modalRef.destroy();
       reload();
@@ -85,7 +85,7 @@ const setLoader = (reload: () => void) => (ref: any) => {
     leader_ids: { text: "领导", multi: true, type: "EmpAccount" }
   };
   const onSubmit = (data: object | undefined) => {
-    submit("/api/org/Department/set_leader", data).then(r => {
+    submit("/b2b-back/org/Department/set_leader", data).then(r => {
       message.success(r.message);
       modalRef.destroy();
       reload();
@@ -157,7 +157,7 @@ const modalContent = (data: any[]) => {
 };
 // 部门日志
 const departmentLog = (reload: () => void) => (ref: any) => {
-  read("/api/org/Department/read_log", { action: "部门修改日志" }, ref, {
+  read("/b2b-back/org/Department/read_log", { action: "部门修改日志" }, ref, {
     id: "id"
   }).then((res: any) => {
     const data = res["data"]["数据日志"];
