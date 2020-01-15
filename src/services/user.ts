@@ -1,13 +1,13 @@
 import request from '@/utils/request';
 
 export async function query(): Promise<any> {
-  return request('/b2b-back/users');
+  return request('/users');
 }
 
 export async function queryCurrent(): Promise<any> {
-  return request('/b2b-back/currentUser');
+  return request('/currentUser');
 }
 
 export async function queryNotices(): Promise<any> {
-  return request('/b2b-back/notices');
+  return request('/notices');
 }

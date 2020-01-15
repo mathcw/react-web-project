@@ -2,7 +2,7 @@ import { ModConfigItem } from "@/viewconfig/ModConfig";
 
 const config: ModConfigItem = {
   权限管理: {
-    read: { url: "/b2b-back/org/Auth/read" },
+    read: { url: "/org/Auth/read" },
     title: "权限设置",
     textSearch: {
       name: { text: "权限名称" },
@@ -21,7 +21,7 @@ const config: ModConfigItem = {
     pageSize: 100
   },
   公司管理: {
-    read: { url: "/b2b-back/org/Company/read" },
+    read: { url: "/org/Company/read" },
     title: "公司管理",
     textSearch: {
       name: { text: "名称" }
@@ -48,7 +48,7 @@ const config: ModConfigItem = {
     pageSize: 100
   },
   部门管理: {
-    read: { url: "/b2b-back/org/Department/read" },
+    read: { url: "/org/Department/read" },
     title: "部门管理",
     textSearch: {
       name: { text: "名称" }
@@ -77,7 +77,7 @@ const config: ModConfigItem = {
     pageSize: 100
   },
   员工管理: {
-    read: { url: "/b2b-back/org/Employee/read" },
+    read: { url: "/org/Employee/read" },
     title: "员工管理",
     textSearch: {
       company_name: { text: "公司全称" },
@@ -102,7 +102,7 @@ const config: ModConfigItem = {
   },
 
   公告管理: {
-    read: { url: "/b2b-back/org/Announce/read" },
+    read: { url: "/org/Announce/read" },
     title: "公告管理",
     textSearch: {
         title: { text: "公告标题" },
@@ -130,7 +130,7 @@ const config: ModConfigItem = {
   },
 
   管理员头像审批:{
-      read: {url: "/b2b-back/org/Employee/read_photo"},
+      read: {url: "/org/Employee/read_photo"},
       title:"头像审批",
       textSearch:{
       },

@@ -35,21 +35,21 @@ const list: React.FC<IOrderList> = ({ data,btns,load }) => {
     const stringSplit = (str:string, index:number, split:string) => (str.split && str.split(split)[index]) ? str.split(split)[index] : str;
     const showDetail = (type:number, id:string) => {
         if (type === 1) {
-            get('/b2b-back/Sale/Order/read_creator_detail', { 'id': id }).then(r => {
+            get('/Sale/Order/read_creator_detail', { 'id': id }).then(r => {
                 const { data: res } = r;
                 setContent(res);
                 setModalKind(1);
                 setVisible(true);
             })
         } else if (type === 2) {
-            get('/b2b-back/Sale/Order/read_saler_detail', { 'id': id }).then(r => {
+            get('/Sale/Order/read_saler_detail', { 'id': id }).then(r => {
                 const { data: res } = r;
                 setContent(res);
                 setModalKind(2);
                 setVisible(true);
             })
         } else {
-            get('/b2b-back/Sale/Order/read_assitant_detail', { 'id': id }).then(r => {
+            get('/Sale/Order/read_assitant_detail', { 'id': id }).then(r => {
                 const { data: res } = r;
                 setContent(res);
                 setModalKind(3);

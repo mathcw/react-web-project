@@ -31,7 +31,7 @@ interface LoginParam {
 }
 
 const loginFun = async (values:any, href:string) => {
-  const { user: r } = await req('/b2b-back/UserLogin/login', values);
+  const { user: r } = await req('/UserLogin/login', values);
   localStorage[`${sys.APP_NAME}_sid`] = r.sid;
   router.replace(href);
 }

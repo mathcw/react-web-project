@@ -136,7 +136,7 @@ export default {
   // chainWebpack: webpackPlugin,
   proxy: {
     '/b2b-back/': {
-      target: 'http://localhost:8080/b2b-back/',
+      target: 'http://localhost:8080/react-web-project-back/',
       changeOrigin: true,
       pathRewrite: { '^/b2b-back': '' },
     },

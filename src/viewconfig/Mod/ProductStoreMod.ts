@@ -2,7 +2,7 @@ import { ModConfigItem } from '@/viewconfig/ModConfig';
 
 const config: ModConfigItem = {
     '产品管理': {
-        read: { url: "/b2b-back/ProductStore/Product/read" },
+        read: { url: "/ProductStore/Product/read" },
         title: "产品管理",
         textSearch: {
             pd_name: { text: '产品名称' },
@@ -33,7 +33,7 @@ const config: ModConfigItem = {
         pageSize: 100
     },
     '班期管理': {
-        read: { url: "/b2b-back/Group/Group/read" },
+        read: { url: "/Group/Group/read" },
         title: "班期管理",
         textSearch: {
             pd_name: { text: '产品名称' },

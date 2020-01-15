@@ -6,6 +6,11 @@ import { sys ,log} from './core';
 import { dict, enumInit } from './enum';
 
 export async function req(url:string, data?:object) {
+    let reqUrl = url
+    if(!url.includes('http')&& !url.includes('https')){
+        reqUrl = sys.HOST+reqUrl;
+    }
+
     const body = { ...data, enum_ver: dict.enum_ver, sid: sys.sid };
 
     const headers = {
@@ -18,7 +23,7 @@ export async function req(url:string, data?:object) {
     let resp:Response = new Response();
 
     try {
-        resp = await fetch(url, {
+        resp = await fetch(reqUrl, {
             method: 'POST',
             headers: {
                 ...headers,
@@ -62,7 +67,7 @@ export async function req(url:string, data?:object) {
 
 export async function upload(formData:FormData, type:string) {
 
-    let url  = `/api/PublicApi/upload/${type}`;
+    let url  = `/b2b-back/PublicApi/upload/${type}`;
 
     const headers = {
         Authorization: sys.sid,

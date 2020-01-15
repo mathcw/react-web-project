@@ -60,7 +60,7 @@ const Employee: React.FC<IEmployeeProps> = ({ data, btns,load }) => {
   }
   const showDetail = () => {
     if (!show) {
-      get("/b2b-back/org/Employee/read_log", { id: data.id }).then(r => {
+      get("/org/Employee/read_log", { id: data.id }).then(r => {
         setDetail(r.data["数据日志"]);
         setShow(true);
       });
@@ -241,7 +241,7 @@ const add = (reload: () => void) => () => {
       account:{text:'账号',required:true}
     };
     const onSubmit = (data: any) => {
-      submit("/b2b-back/org/Employee/submit", data).then(r => {
+      submit("/org/Employee/submit", data).then(r => {
         message.success(r.message);
         modalRef.destroy();
         reload();
@@ -271,7 +271,7 @@ const edit = (reload: () => void) => (ref: any) => {
         account:{text:'账号',required:true}
     };
     const onSubmit = (data: object | undefined) => {
-      submit("/b2b-back/org/Employee/submit", data).then(r => {
+      submit("/org/Employee/submit", data).then(r => {
         message.success(r.message);
         modalRef.destroy();
         reload();
@@ -304,7 +304,7 @@ const setAuth = (reload: () => void) => (ref: any) => {
         auth_id: { text: "权限", required: true, type: "EmpAuth" },
     };
     const onSubmit = (data: object | undefined) => {
-      submit("/b2b-back/org/Employee/set_auth", data).then(r => {
+      submit("/org/Employee/set_auth", data).then(r => {
         message.success(r.message);
         modalRef.destroy();
         reload();
