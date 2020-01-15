@@ -207,8 +207,7 @@ export function getReqData(data?:object, rule?:string|object) {
     }
     const rst = {};
     if (typeof rule === 'string') {
-        rst[rule] = data[rule];
-        return rst;
+        return data[rule];
     }
     
     Object.keys(rule).forEach(k => {

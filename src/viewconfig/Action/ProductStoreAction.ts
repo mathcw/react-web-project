@@ -34,7 +34,7 @@ const config: ActionConfigItem = {
     directlySubmit: true,
     submit: {
       url: "/ProductStore/PackageTour/submitFor",
-      data: "main_pd_id"
+      data:{main_pd_id:"main_pd_id"}
     }
   },
   取消跟团游:{
@@ -42,7 +42,7 @@ const config: ActionConfigItem = {
     confirm:'确认取消吗？',
     submit:{
       url:"/comm/Flow/cancel/产品审批",
-      data:"flow_id"
+      data:{flow_id:"flow_id"}
     }
   },
   删除跟团游:{
@@ -50,7 +50,7 @@ const config: ActionConfigItem = {
     confirm:'确认删除吗？',
     submit:{
       url:"/ProductStore/PackageTour/destroy",
-      data:"main_pd_id"
+      data:{main_pd_id:"main_pd_id"}
     }
   },
 

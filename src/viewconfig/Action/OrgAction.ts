@@ -26,7 +26,7 @@ const config: ActionConfigItem = {
     directlySubmit: true,
     submit: {
       url: "/org/Company/toggle/state",
-      data: { id: "id", state: "state" }
+      data: { id: "id", state: {state:"state"} }
     }
   },
   // 员工
@@ -41,7 +41,7 @@ const config: ActionConfigItem = {
     directlySubmit: true,
     submit: {
       url: "/org/Employee/toggle/state",
-      data: { id: "id", state: "state" }
+      data: { id: "id", state: {state:"state"} }
     }
   },
 
