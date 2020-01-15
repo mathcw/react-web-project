@@ -69,7 +69,7 @@ export const dict = {
 };
 
 export async function enumInit(ver: string) {
-  const r = await fetch(`/api/files/TY_B2B/cache/Enum.js?ver=${ver}`);
+  const r = await fetch(`/b2b-back/files/TY_B2B/cache/Enum.js?ver=${ver}`);
   const rst = await r.json();
 
   Object.keys(rst).forEach(key => {
