@@ -49,10 +49,12 @@ export interface ModConfigItem {
   };
 }
 
-export const config: ModConfigItem = { ...OfficeMod, ...OrgMod, ...SupplierManagementMod, ...ProductStoreMod };
+export let config: ModConfigItem = {};
 
 export function authMetaInit(authData: string[]) {
   // eslint-disable-next-line array-callback-return
+  config = {...OfficeMod, ...OrgMod, ...SupplierManagementMod, ...ProductStoreMod};
+  
   Object.keys(config).map(mod => {
     if (authData.indexOf(mod) === -1) {
       delete config[mod];
