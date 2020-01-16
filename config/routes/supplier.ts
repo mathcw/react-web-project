@@ -66,6 +66,19 @@ const routes: Array<IRouteValue> = [
               },
             ]
         },
+        {
+          name:'订单管理',
+          icon:'sitemap',
+          path:'/sale',
+          routes:[
+            {
+              path:"/sale/placeholder/list",
+              name:"占位确认",
+              authority:"占位管理",
+              component:"./sale/placeholder/list"
+            }
+          ]
+        }
     ]
   }
 ];

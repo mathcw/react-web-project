@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Col, Modal, Steps, Icon, Tag, Button } from 'antd';
 
 import styles from './index.less';
