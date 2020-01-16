@@ -219,6 +219,7 @@ class MainContent extends React.Component<
         if(query[field] && query[field] !== '' && moment.isMoment(moment(query[field]))){
           return (
             <DatePicker
+              style={{marginTop:'5px'}}
               placeholder={cfg.text}
               size="small"
               format="YYYY-MM-DD"
@@ -230,6 +231,7 @@ class MainContent extends React.Component<
         }
         return (
           <DatePicker
+            style={{marginTop:'5px'}}
             placeholder={cfg.text}
             size="small"
             format="YYYY-MM-DD"
@@ -249,6 +251,7 @@ class MainContent extends React.Component<
           value={query[field]}
           onChange={(value: any) => this.onDropDownChange(field, value)}
           placeholder={cfg.text}
+          style={{marginTop:'5px'}}
         >
           {Object.keys(Enum).map(key => (
             <SelectOption key={key} value={key}>
