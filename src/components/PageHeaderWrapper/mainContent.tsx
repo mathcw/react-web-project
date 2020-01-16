@@ -9,13 +9,15 @@ import {
   Tooltip,
   Icon,
   Form,
-  Modal
+  Modal,
+  DatePicker
 } from "antd";
 import * as PropTypes from "prop-types";
 
 import { getEnum, IEnumCfg } from "@/utils/enum";
 import { IModBtn } from "@/viewconfig/ModConfig";
 import styles from "./index.less";
+import moment from "moment";
 
 const InputGroup = Input.Group;
 const SelectOption = Select.Option;
@@ -102,6 +104,7 @@ class MainContent extends React.Component<
     this.textSearchChange = this.textSearchChange.bind(this);
     this.resizePageSize = this.resizePageSize.bind(this);
     this.onDropDownChange = this.onDropDownChange.bind(this);
+    this.onDateChange = this.onDateChange.bind(this);
   }
 
   componentDidMount() {
@@ -190,6 +193,17 @@ class MainContent extends React.Component<
     }
   };
 
+  onDateChange = (field:React.ReactText,value:any) => {
+    const { setQuery } = this.props;
+    if (setQuery) {
+      setQuery((preQuery: any) => {
+        const newQuery = { ...preQuery };
+        newQuery[field] = value;
+        return newQuery;
+      });
+    }
+  }
+
   toggleMore = () => {
     const { more } = this.state;
     this.setState({
@@ -197,9 +211,35 @@ class MainContent extends React.Component<
     });
   };
 
-  renderEnumSelect = (cfg: IEnumCfg, field: React.ReactText) => {
+  renderSelect = (cfg: IEnumCfg, field: React.ReactText) => {
     const { query } = this.props;
     if (query) {
+      if (cfg.type === 'date') {
+        const suffixIcon = <React.Fragment></React.Fragment>;
+        if(query[field] && query[field] !== '' && moment.isMoment(moment(query[field]))){
+          return (
+            <DatePicker
+              placeholder={cfg.text}
+              size="small"
+              format="YYYY-MM-DD"
+              suffixIcon={suffixIcon}
+              value={moment(query[field])}
+              onChange={(date: moment.Moment | null, value: string) => this.onDateChange(field,value)}
+            />
+          )
+        }
+        return (
+          <DatePicker
+            placeholder={cfg.text}
+            size="small"
+            format="YYYY-MM-DD"
+            suffixIcon={suffixIcon}
+            value={null}
+            onChange={(date: moment.Moment | null, value: string) => this.onDateChange(field,value)}
+          />
+        )
+      }
+
       const Enum = getEnum(cfg, query || {}) || {};
       return (
         <Select
@@ -268,12 +308,12 @@ class MainContent extends React.Component<
                 <React.Fragment key={key}>
                   {
                     more && <Col xs={24} sm={12} md={6} lg={6} >
-                      {this.renderEnumSelect(dropDownSearch[key], key)}
+                      {this.renderSelect(dropDownSearch[key], key)}
                     </Col>
                   }
                   {
                     !more && (index <= rowColumns - 1) && <Col xs={24} sm={12} md={6} lg={6}>
-                      {this.renderEnumSelect(dropDownSearch[key], key)}
+                      {this.renderSelect(dropDownSearch[key], key)}
                     </Col>
                   }
                 </React.Fragment>
