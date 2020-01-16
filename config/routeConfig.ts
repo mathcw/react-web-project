@@ -6,6 +6,7 @@ export interface IRouteValue{
     path?: string,
     component?: string,
     authority?: string,
+    viewConfig?:string,
     icon?: string,
     parent?: string,
     name?: string,
