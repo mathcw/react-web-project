@@ -5,6 +5,7 @@ import OfficeMod from "@/viewconfig/Mod/OfficeMod";
 import OrgMod from "@/viewconfig/Mod/OrgMod";
 import SupplierManagementMod from "@/viewconfig/Mod/SupplierManagementMod";
 import ProductStoreMod from "@/viewconfig/Mod/ProductStoreMod";
+import SaleMod from '@/viewconfig/Mod/SaleMod';
 
 export interface IModBtn<T = any> {
   authority: string;
@@ -53,8 +54,8 @@ export let config: ModConfigItem = {};
 
 export function authMetaInit(authData: string[]) {
   // eslint-disable-next-line array-callback-return
-  config = {...OfficeMod, ...OrgMod, ...SupplierManagementMod, ...ProductStoreMod};
-  
+  config = {...OfficeMod, ...OrgMod, ...SupplierManagementMod, ...ProductStoreMod,...SaleMod};
+
   Object.keys(config).map(mod => {
     if (authData.indexOf(mod) === -1) {
       delete config[mod];

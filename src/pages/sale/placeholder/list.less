@@ -1,0 +1,97 @@
+// 产品列表==============================================================
+.List {
+  .itemBox {
+    .children {
+      /* padding: 12px; */
+      background: rgba(242, 244, 248, 1);
+      border-radius: 4px;
+      .childrenMod {
+        margin-bottom: 10px;
+        padding: 0px 0px 4px 16px;
+        background: #fff;
+
+        .ModTitle {
+          font-size: 15px;
+          line-height: 28px;
+          width: 80px;
+          border: 1px solid #b1bcd4;
+          border-radius: 19px;
+          padding: 0px 8px;
+          margin-top: 3px;
+        }
+        .ModContent {
+          font-size: 12px;
+          .details {
+            /*  border: 1px solid black; */
+            background: #fff;
+            margin: 5px 10px;
+            padding: 0 15px;
+            /* text-align: center; */
+          }
+          .ModCell {
+            padding: 4px 0;
+            .button {
+              border: none;
+              color: #40a9ff;
+              outline: none;
+              cursor: pointer;
+            }
+            .detail {
+              outline: none;
+              border: none;
+              color: #40a9ff;
+              position: absolute;
+              left: 91%;
+              top: 0;
+              cursor: pointer;
+            }
+          }
+          .childrenother {
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            margin-top: 10px;
+            margin-right: 2%;
+            background: #fff;
+            margin-bottom: 5px;
+            .cTitle {
+              line-height: 44px;
+              font-weight: bold;
+              border-bottom: 1px dashed #d9d9d9;
+            }
+            .cCell {
+              line-height: 32px;
+              border-bottom: 1px dashed #d9d9d9;
+            }
+            .cCell:last-child {
+              border-bottom: none;
+            }
+          }
+        }
+        .ModContentoth {
+          font-size: 12px;
+          border: 1px solid #d9d9d9;
+          border-radius: 4px;
+          margin-top: 10px;
+          margin-right: 2%;
+          background: #fff;
+          margin-bottom: 5px;
+          padding: 3px 15px;
+          .ModCell {
+            padding: 4px 0;
+            line-height: 26px;
+            border-bottom: 1px dashed #d9d9d9;
+          }
+          .ModCell:last-child {
+            border-bottom: none;
+          }
+        }
+      }
+      .childrenMod:last-child {
+        margin-bottom: 0px;
+      }
+    }
+  }
+  .page {
+    text-align: center;
+  }
+}

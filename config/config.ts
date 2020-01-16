@@ -59,17 +59,6 @@ const plugins: IPlugin[] = [
   ],
 ];
 
-// if (isAntDesignProPreview) {
-//   // 针对 preview.pro.ant.design 的 GA 统计代码
-//   plugins.push([
-//     'umi-plugin-ga',
-//     {
-//       code: 'UA-72788897-6',
-//     },
-//   ]);
-//   plugins.push(['umi-plugin-antd-theme', themePluginConfig]);
-// }
-
 const productSetting = {};
 if(process.env.NODE_ENV === 'production') {
   productSetting['publicPath'] = '/react-web-project-build/'
