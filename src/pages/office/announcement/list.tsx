@@ -35,7 +35,7 @@ const del_html_tag = (html:string)=>{
 }
 
 const list:React.FC<IModPageProps> = ({ route }) => {
-    const { authority } = route;
+    const { viewConfig } = route;
     const {
         setCurrent,
         setPageSize,
@@ -45,7 +45,7 @@ const list:React.FC<IModPageProps> = ({ route }) => {
         pageSizeOptions,
         total,
         data
-    } = useListPage(authority)
+    } = useListPage(viewConfig)
 
     useEffect(() => {
         load();

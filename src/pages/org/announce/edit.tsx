@@ -27,10 +27,10 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
         'body_html': '',
         'xml': ''
     };
-    const { authority } = route;
+    const { viewConfig } = route;
     const { state: ref } = location;
 
-    const { data, setData, load, onCancel, cfg } = useActionPage<typeof initData>(authority, initData, ref);
+    const { data, setData, load, onCancel, cfg } = useActionPage<typeof initData>(viewConfig, initData, ref);
 
     const onOk = () => {
         if (cfg.submit) {
@@ -106,7 +106,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
         }
     ]
 
-    const { btns } = useActionBtn(authority, actionMap);
+    const { btns } = useActionBtn(viewConfig, actionMap);
 
     return (
         <PageHeaderWrapper

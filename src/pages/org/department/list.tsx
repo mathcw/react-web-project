@@ -172,7 +172,7 @@ const departmentLog = (reload: () => void) => (ref: any) => {
 };
 
 const list: React.FC<IModPageProps> = ({ route }) => {
-  const { authority } = route;
+  const { viewConfig } = route;
   const {
     setCurrent,
     setPageSize,
@@ -184,7 +184,7 @@ const list: React.FC<IModPageProps> = ({ route }) => {
     query,
     setQuery,
     data
-  } = useListPage(authority);
+  } = useListPage(viewConfig);
 
   const actionMap = {
     新增部门: add(load),
@@ -193,10 +193,10 @@ const list: React.FC<IModPageProps> = ({ route }) => {
     部门修改日志: departmentLog(load)
   };
 
-  const { headerBtns, rowBtns } = useListPageBtn(authority, actionMap);
-  const { dropDownSearch, textSearch } = useListPageSearch(authority);
+  const { headerBtns, rowBtns } = useListPageBtn(viewConfig, actionMap);
+  const { dropDownSearch, textSearch } = useListPageSearch(viewConfig);
   const [opCol, setOpCol] = useState<ColumnProps<object>[]>([]);
-  const cfg = getModConfig(authority);
+  const cfg = getModConfig(viewConfig);
   useEffect(() => {
     load();
   }, [pageSize, current]);

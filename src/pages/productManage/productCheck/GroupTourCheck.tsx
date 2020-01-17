@@ -6,7 +6,7 @@ import renderHeaderBtns from '@/components/PageHeaderWrapper/headerBtns';
 import { IActionPageProps } from '@/viewconfig/ActionConfig';
 import { useActionPage, useActionBtn } from '@/utils/ActionPageHooks';
 
-import styles from './edit.less';
+import styles from './GroupTourCheck.less';
 import { getEnum, IEnumCfg, searchChange } from '@/utils/enum';
 import FastSelect from '@/components/FastSelect';
 import { upload, submit } from '@/utils/req';
@@ -695,7 +695,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
           </Col>
           <Col className={styles.content1}>
             {
-              renderZjTheme()
+            //   renderZjTheme()
             }
           </Col>
         </Col>

@@ -13,7 +13,6 @@ import { log } from './core';
 export function useActionPage<T extends object>(authority:string,initData:T,ref?:object){
     const [data, setData] = useState<T>(initData);
     const cfg = getActionConfig(authority); 
-
     const load = async () => {
         try {
             const rst:T = await new Promise<T>((resolve, reject) => {

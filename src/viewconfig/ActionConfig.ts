@@ -1,5 +1,6 @@
 import OrgAction from "@/viewconfig/Action/OrgAction";
 import ProductStoreAction from "@/viewconfig/Action/ProductStoreAction";
+import ProductManageAction from "@/viewconfig/Action/ProductManageAction";
 import { BasicLayoutProps as ProLayoutProps } from "@ant-design/pro-layout";
 
 export interface IActionPageProps extends ProLayoutProps {
@@ -33,4 +34,4 @@ export interface ActionConfigItem {
   };
 }
 
-export const config: ActionConfigItem = { ...OrgAction,...ProductStoreAction };
+export const config: ActionConfigItem = { ...OrgAction, ...ProductStoreAction,...ProductManageAction };

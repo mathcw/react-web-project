@@ -11,7 +11,7 @@ import { useListPage ,useListPageBtn, useListPageSearch} from '@/utils/ListPageH
 const IconPng = require('@/assets/role.png');
 
 const list:React.FC<IModPageProps> = ({ route }) => {
-    const { authority } = route;
+    const { viewConfig } = route;
     const {
         setCurrent,
         setPageSize,
@@ -23,11 +23,11 @@ const list:React.FC<IModPageProps> = ({ route }) => {
         query,
         setQuery,
         data
-    } = useListPage(authority)
+    } = useListPage(viewConfig)
 
-    const { headerBtns, rowBtns} = useListPageBtn(authority);
+    const { headerBtns, rowBtns} = useListPageBtn(viewConfig);
 
-    const { dropDownSearch,textSearch } = useListPageSearch(authority);
+    const { dropDownSearch,textSearch } = useListPageSearch(viewConfig);
 
     useEffect(() => {
         load();

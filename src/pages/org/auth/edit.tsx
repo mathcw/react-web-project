@@ -35,7 +35,7 @@ interface IModAuthConfig{
 }
 
 const Page:React.FC<IActionPageProps> = ({route,location})=>{
-    const { authority } = route;
+    const { viewConfig } = route;
     const { state } = location;
 
     const initData:{
@@ -43,7 +43,7 @@ const Page:React.FC<IActionPageProps> = ({route,location})=>{
         auth:IAuthData
     } = { menu: [], auth: {name:'',scope:'',actions:[],filters:{}} }
 
-    const {data,setData,load,onOk,onCancel,cfg} = useActionPage<typeof initData>(authority,initData,state);
+    const {data,setData,load,onOk,onCancel,cfg} = useActionPage<typeof initData>(viewConfig,initData,state);
 
     const [filterModalShow, setModalShow] = useState(false);
     const [selectModalCfg, setModalCfg] = useState({mod:'',field:'',regular:'',type:''});
@@ -218,7 +218,7 @@ const Page:React.FC<IActionPageProps> = ({route,location})=>{
         关闭: onCancel,
     }
 
-    const {btns} = useActionBtn(authority,actionMap);
+    const {btns} = useActionBtn(viewConfig,actionMap);
 
     return <PageHeaderWrapper
             title={cfg.title || ''}

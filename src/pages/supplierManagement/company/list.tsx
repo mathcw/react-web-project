@@ -157,7 +157,7 @@ const Company: React.FC<ICompanyProps> = ({ data, btns, load }) => {
 
 
 const list: React.FC<IModPageProps> = ({ route }) => {
-    const { authority } = route;
+    const { viewConfig } = route;
     const {
         setCurrent,
         setPageSize,
@@ -169,7 +169,7 @@ const list: React.FC<IModPageProps> = ({ route }) => {
         query,
         setQuery,
         data
-    } = useListPage(authority);
+    } = useListPage(viewConfig);
 
     useEffect(() => {
         load();
@@ -185,8 +185,8 @@ const list: React.FC<IModPageProps> = ({ route }) => {
 
     const actionMap = {};
 
-    const { headerBtns, rowBtns } = useListPageBtn(authority, actionMap);
-    const { dropDownSearch, textSearch } = useListPageSearch(authority);
+    const { headerBtns, rowBtns } = useListPageBtn(viewConfig, actionMap);
+    const { dropDownSearch, textSearch } = useListPageSearch(viewConfig);
 
     return (
         <PageHeaderWrapper

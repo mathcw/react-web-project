@@ -331,7 +331,7 @@ const setAuth = (reload: () => void) => (ref: any) => {
 };
 
 const list: React.FC<IModPageProps> = ({ route }) => {
-  const { authority } = route;
+  const { viewConfig } = route;
   const {
     setCurrent,
     setPageSize,
@@ -343,7 +343,7 @@ const list: React.FC<IModPageProps> = ({ route }) => {
     query,
     setQuery,
     data
-  } = useListPage(authority);
+  } = useListPage(viewConfig);
 
   const actionMap = {
     新增员工: add(load),
@@ -351,8 +351,8 @@ const list: React.FC<IModPageProps> = ({ route }) => {
     设置员工权限:setAuth(load)
   };
 
-  const { headerBtns, rowBtns } = useListPageBtn(authority, actionMap);
-  const { dropDownSearch, textSearch } = useListPageSearch(authority);
+  const { headerBtns, rowBtns } = useListPageBtn(viewConfig, actionMap);
+  const { dropDownSearch, textSearch } = useListPageSearch(viewConfig);
 
   useEffect(() => {
     load();
