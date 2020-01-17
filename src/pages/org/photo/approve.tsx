@@ -21,10 +21,10 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
         '审批记录': [],
         'flow_id': '0'
     };
-    const { authority } = route;
+    const { viewConfig } = route;
     const { state: ref } = location;
 
-    const { data, setData, load, onCancel, cfg } = useActionPage<typeof initData>(authority, initData, ref);
+    const { data, setData, load, onCancel, cfg } = useActionPage<typeof initData>(viewConfig, initData, ref);
 
     const actionMap = {
         关闭: onCancel,
@@ -36,7 +36,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
         });
     }, [])
 
-    const { btns } = useActionBtn(authority, actionMap);
+    const { btns } = useActionBtn(viewConfig, actionMap);
 
     const passOk = (comment: string) => {
         if (cfg.submit) {

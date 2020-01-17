@@ -10,7 +10,7 @@ import { useListPage} from '@/utils/ListPageHooks';
 const IconPng = require('@/assets/new.png');
 
 const list:React.FC<IModPageProps> = ({ route }) => {
-    const { authority } = route;
+    const { viewConfig } = route;
     const {
         setCurrent,
         setPageSize,
@@ -20,7 +20,7 @@ const list:React.FC<IModPageProps> = ({ route }) => {
         pageSizeOptions,
         total,
         data
-    } = useListPage(authority)
+    } = useListPage(viewConfig)
 
     useEffect(() => {
         load();

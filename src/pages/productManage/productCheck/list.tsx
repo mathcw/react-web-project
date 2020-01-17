@@ -1,31 +1,49 @@
 import React, { useEffect } from 'react';
 import { IModPageProps, IModBtn } from '@/viewconfig/ModConfig';
-import { useListPage, useListPageBtn, useListPageSearch } from '@/utils/ListPageHooks';
-import PageHeaderWrapper,{ Extra, Content } from '@/components/PageHeaderWrapper';
-import { getRowBtnArray } from '@/utils/utils';
-import AppConst from '@/utils/AppConst';
+import {
+    useListPage,
+    useListPageBtn,
+    useListPageSearch
+} from "@/utils/ListPageHooks";
 
+import PageHeaderWrapper, {
+    Extra,
+    Content
+} from "@/components/PageHeaderWrapper";
+import { getRowBtnArray, getBtnClickEvent } from '@/utils/utils';
+
+import AppConst from '@/utils/AppConst';
 import GroupTour from './components/GroupTour';
 
-interface GroupItemProps{
+interface ProductItemProps {
     data: {
         type: string;
+        id: string;
+        list_pic: string;
+        flow: string;
         [key: string]: any;
     },
     btns?: IModBtn[],
-    orderbtns?:IModBtn[],
     load: () => void
 }
 
-const GroupItem: React.FC<GroupItemProps> = ({ data, btns = [],orderbtns=[], load }) => {
+const ProductItem: React.FC<ProductItemProps> = ({ data, btns = [], load }) => {
     if (data.type == AppConst.PRODUCT_PACKAGETOUR) {
-        return <GroupTour data={data} btns={btns} orderbtns={orderbtns} load={load} />
+        return <GroupTour data={data} btns={btns} load={load} />
     }
 
     return null
-} 
+}
 
-const list:React.FC<IModPageProps> = ({route})=>{
+const approveProduct = (reload: () => void) => (ref: any) => {
+    switch(ref.type){
+        case AppConst.PRODUCT_PACKAGETOUR:
+            getBtnClickEvent('跟团游审批')(ref)
+            break;
+    }
+};
+
+const list: React.FC<IModPageProps> = ({ route }) => {
     const { viewConfig } = route;
     const {
         setCurrent,
@@ -53,6 +71,7 @@ const list:React.FC<IModPageProps> = ({route})=>{
     };
 
     const actionMap = {
+        '审核产品': approveProduct(load)
     };
 
     const { headerBtns, rowBtns } = useListPageBtn(viewConfig, actionMap);
@@ -78,16 +97,15 @@ const list:React.FC<IModPageProps> = ({route})=>{
             )}
         >
             {data.map((item: any) => (
-                <GroupItem
+                <ProductItem
                     data={item}
                     btns={getRowBtnArray(item, rowBtns)}
-                    orderbtns={[]}
                     load={load}
                     key={item["id"]}
                 />
             ))}
-        </PageHeaderWrapper>)
-    
-}
+        </PageHeaderWrapper>
+    )
+};
 
 export default list;
