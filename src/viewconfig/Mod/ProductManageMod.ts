@@ -16,7 +16,7 @@ const config: ModConfigItem = {
             审核产品: { text: '审核', show: { flow: [2] } },
         },
         pageSizeOptions: ["10", "20", "30", "50", "100"],
-        pageSize: 100
+        pageSize: 100,
     },
     '产品维护': {
         read: { url: "/ProductStore/Product/read" },
