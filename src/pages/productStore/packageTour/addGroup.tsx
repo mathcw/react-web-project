@@ -149,7 +149,7 @@ interface IGroupType {
 }
 
 const Page: React.FC<IActionPageProps> = ({ route, location }) => {
-  const { authority } = route;
+  const { viewConfig } = route;
   const { state: ref } = location;
 
   const initData: {
@@ -159,7 +159,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
     跟团游开团团期详情: []
   }
 
-  const { data, setData, load, onOk, onCancel, cfg } = useActionPage<typeof initData>(authority, initData, ref);
+  const { data, setData, load, onOk, onCancel, cfg } = useActionPage<typeof initData>(viewConfig, initData, ref);
   const [calendarModal, setCalendarModal] = useState(false);
   const [selectedRowKeys,setSelectedRowKeys] = useState<string[]>([]);
   const actionMap = {
@@ -167,7 +167,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
     关闭: onCancel,
   }
 
-  const { btns } = useActionBtn(authority, actionMap);
+  const { btns } = useActionBtn(viewConfig, actionMap);
 
   useEffect(() => {
     load().then((loadedData: typeof initData) => {
@@ -198,14 +198,14 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
   const tableBtns: IModBtn[] = [
     {
       text: '批量新增',
-      authority: '批量新增团期',
+      viewConfig: '批量新增团期',
       onClick: () => {
         setCalendarModal(true);
       }
     },
     {
       text: '批量填充',
-      authority: '批量填充团期',
+      viewConfig: '批量填充团期',
       onClick: () => {
         if(selectedRowKeys.length === 0 ){
           Modal.error({
@@ -250,7 +250,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
     },
     {
       text: '批量删除',
-      authority: '批量删除团期',
+      viewConfig: '批量删除团期',
       onClick: () => {
         if(selectedRowKeys.length === 0 ){
           Modal.error({
@@ -394,7 +394,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
         <Col className={styles.text}>团期价格</Col>
         <Col className={styles.btns}>
           {tableBtns.map(btn => (
-            <div key={btn.authority} className="dib" style={{ marginLeft: 8 }}>
+            <div key={btn.viewConfig} className="dib" style={{ marginLeft: 8 }}>
               <Button
                 icon={btn.icon}
                 type='primary'

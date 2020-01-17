@@ -100,7 +100,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ data, btns = [], load }) => {
 }
 
 const list: React.FC<IModPageProps> = ({ route }) => {
-    const { authority } = route;
+    const { viewConfig } = route;
     const {
         setCurrent,
         setPageSize,
@@ -112,7 +112,7 @@ const list: React.FC<IModPageProps> = ({ route }) => {
         query,
         setQuery,
         data
-    } = useListPage(authority);
+    } = useListPage(viewConfig);
 
     useEffect(() => {
         load();
@@ -135,8 +135,8 @@ const list: React.FC<IModPageProps> = ({ route }) => {
         '产品开团':addGroup(load)
     };
 
-    const { headerBtns, rowBtns } = useListPageBtn(authority, actionMap);
-    const { dropDownSearch, textSearch } = useListPageSearch(authority);
+    const { headerBtns, rowBtns } = useListPageBtn(viewConfig, actionMap);
+    const { dropDownSearch, textSearch } = useListPageSearch(viewConfig);
 
     return (
         <PageHeaderWrapper
