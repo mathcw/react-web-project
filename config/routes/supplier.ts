@@ -83,10 +83,18 @@ const routes: Array<IRouteValue> = [
               path:"/sale/placeholder/list",
               name:"占位确认",
               authority:"占位管理",
+              viewConfig:"占位管理",
               component:"./sale/placeholder/list"
+            },
+            {
+              path:"/sale/order/list",
+              name:"实报管理",
+              authority:"实报管理",
+              viewConfig:"实报管理",
+              component:"./sale/order/list"
             }
           ]
-        }
+        },
     ]
   }
 ];
