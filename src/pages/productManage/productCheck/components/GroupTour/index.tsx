@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import { Col, Modal, Steps, Icon, Tag, Button } from 'antd';
+import React from 'react';
+import { Col, Modal, Tag, Button } from 'antd';
 
 import styles from './index.less';
 import { colDisplay, colorfun } from '@/utils/utils';
 import { get } from '@/utils/req';
 import { IModBtn } from '@/viewconfig/ModConfig';
 import FlowSteps from '@/components/FlowStep';
-const { Step } = Steps;
 
 const defaultPng = require('@/assets/login-bg.png');
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Modal, Icon, Tag, Button } from 'antd';
+import { Col, Modal, Tag, Button } from 'antd';
 
 import styles from './index.less';
 import { colDisplay, colorfun } from '@/utils/utils';

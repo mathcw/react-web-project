@@ -92,7 +92,35 @@ const routes: Array<IRouteValue> = [
               authority:"实报管理",
               viewConfig:"实报管理",
               component:"./sale/order/list"
+            },
+            {
+              path:"/sale/orderChange/list",
+              name:"变更管理",
+              authority:"订单变更",
+              viewConfig:"订单变更",
+              component:"./sale/orderChange/list"
             }
+          ]
+        },
+        {
+          name:'对账管理',
+          icon:'sitemap',
+          path:'/saleCheck',
+          routes:[
+            {
+              path:"/saleCheck/ysCheck/list",
+              name:"应收对账",
+              authority:"对账管理",
+              viewConfig:"对账管理",
+              component:"./saleCheck/ysCheck/list"
+            },
+            {
+              path:"/saleCheck/yzCheck/list",
+              name:"内转对账",
+              authority:"应转对账管理",
+              viewConfig:"应转对账管理",
+              component:"./saleCheck/yzCheck/list"
+            },
           ]
         },
     ]
