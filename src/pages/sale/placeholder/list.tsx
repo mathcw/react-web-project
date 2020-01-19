@@ -15,6 +15,62 @@ import { getRowBtnArray } from '@/utils/utils';
 
 import AppConst from '@/utils/AppConst';
 import GroupTour from './components/GroupTour';
+import Zw from './components/Zw';
+import { Modal } from 'antd';
+import { submit, get } from '@/utils/req';
+
+const sx = (reload:()=>void) =>(ref:any)=>{
+    get('/Sale/Order/read_set_sx', { id: ref.id }).then((r:any)=>{
+        const modalRef = Modal.info({});
+
+        const onOk = (data: any) => {
+            submit('/Sale/Order/zw',{id:ref.id,end_date:data.end_date,hour:data.hour,timer_end_date:data.timer_end_date}).then(
+                (r:any)=>{
+                    modalRef.destroy();
+                    reload();
+                }
+            )
+        };
+        const onCancel = () => {
+          modalRef.destroy();
+        };
+        modalRef.update({
+          title: "时限",
+          icon: null,
+          width:520,
+          className: 'modal-confirm-body',
+          content: <Zw info={r.data} onOk={onOk} onCancel={onCancel}/>,
+          okButtonProps: { className: "hide" },
+          cancelButtonProps: { className: "hide" }
+        });
+    })
+
+}
+
+const lw = (reload:()=>void)=>(ref:any)=>{
+    const modalRef = Modal.info({});
+
+    const onOk = (data: any) => {
+        submit('/Sale/Order/zw',{id:ref.id,end_date:data.end_date,hour:data.hour,timer_end_date:data.timer_end_date}).then(
+            (r:any)=>{
+                modalRef.destroy();
+                reload();
+            }
+        )
+    };
+    const onCancel = () => {
+      modalRef.destroy();
+    };
+    modalRef.update({
+      title: "留位",
+      icon: null,
+      width:520,
+      className: 'modal-confirm-body',
+      content: <Zw info={ref} onOk={onOk} onCancel={onCancel}/>,
+      okButtonProps: { className: "hide" },
+      cancelButtonProps: { className: "hide" }
+    });
+}
 
 interface OrderItemProps {
     data: {
@@ -63,6 +119,8 @@ const list: React.FC<IModPageProps> = ({ route }) => {
     };
 
     const actionMap = {
+        '留位':lw(load),
+        '占位时限':sx(load)
     };
 
     const { headerBtns, rowBtns } = useListPageBtn(viewConfig, actionMap);

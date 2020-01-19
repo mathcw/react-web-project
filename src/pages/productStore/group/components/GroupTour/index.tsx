@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Col, Spin, Icon, Button, Tag } from 'antd';
+import { Col, Icon, Button, Tag } from 'antd';
 
 import styles from './index.less';
 import { IModBtn } from '@/viewconfig/ModConfig';

@@ -19,7 +19,6 @@ const config: ModConfigItem = {
         },
         headerButtons: {
             新增跟团游: { text: '新增团队游' },
-            新增邮轮: { text: '新增邮轮' },
         },
         rowButtons: {
             修改产品: { text: '修改', show: { flow: [1, 3] } },
