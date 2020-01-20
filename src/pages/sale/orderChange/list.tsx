@@ -11,10 +11,21 @@ import PageHeaderWrapper, {
     Content
 } from "@/components/PageHeaderWrapper";
 
-import { getRowBtnArray } from '@/utils/utils';
+import { getRowBtnArray, getBtnClickEvent } from '@/utils/utils';
 
 import AppConst from '@/utils/AppConst';
 import GroupTour from './components/GroupTour';
+
+const approveCheck = (reload: () => void) => (ref: any) => {
+    if(ref.change_flow == 2){
+        const fn = getBtnClickEvent('报名确认变更');
+        fn(ref,reload,reload);
+    }
+    if(ref.jd_change_flow == 2){
+        const fn = getBtnClickEvent('接单确认变更');
+        fn(ref,reload,reload);
+    }
+}
 
 interface OrderItemProps {
     data: {
@@ -63,6 +74,7 @@ const list: React.FC<IModPageProps> = ({ route }) => {
     };
 
     const actionMap = {
+        '确认变更':approveCheck(load)
     };
 
     const { headerBtns, rowBtns } = useListPageBtn(viewConfig, actionMap);

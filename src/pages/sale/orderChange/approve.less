@@ -1,0 +1,392 @@
+.children {
+  background: rgba(242, 244, 248, 1);
+  border-radius: 4px;
+  .childrenMod {
+    margin-bottom: 10px;
+    padding: 0px 0px 4px 16px;
+    background: #fff;
+
+    .ModTitle {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 16px;
+      font-weight: 600;
+      color: #2e3a4e;
+    }
+    .ModContent {
+      font-size: 12px;
+      border: 1px solid #edf1f5;
+      border-radius: 4px;
+      .details {
+        background: #fff;
+        margin: 5px 10px;
+        padding: 0 15px;
+      }
+      .ModCell {
+        padding: 4px 0;
+        .detail {
+          outline: none;
+          border: none;
+          color: #40a9ff;
+          position: absolute;
+          left: 91%;
+          top: 0;
+          cursor: pointer;
+        }
+      }
+      .childrenother {
+        border: 1px solid #d9d9d9;
+        border-radius: 4px;
+        margin-top: 10px;
+        margin-right: 2%;
+        background: #fff;
+        margin-bottom: 5px;
+        .cTitle {
+          line-height: 44px;
+          font-weight: bold;
+          border-bottom: 1px dashed #d9d9d9;
+        }
+        .cCell {
+          line-height: 32px;
+          border-bottom: 1px dashed #d9d9d9;
+        }
+        .cCell:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+}
+.approve {
+  background-color: white;
+}
+
+.Schedule {
+  border-radius: 4px;
+  margin-bottom: 12px;
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  &:hover {
+    box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+      0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+    background: #fff;
+  }
+  .title {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2e3a4e;
+  }
+  .top {
+    padding: 30px;
+    border: 1px solid #edf1f5;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    .imgBox {
+      .imgWrapper {
+        width: 100%;
+        height: 109px;
+        position: relative;
+        .img {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          border-radius: 4px 4px 0 0;
+        }
+        .imgText {
+          font-size: 11px;
+          width: 100%;
+          height: 24px;
+          line-height: 24px;
+          text-align: center;
+          border: 1px solid #d9d9d9;
+          border-radius: 0 0 4px 4px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          position: absolute;
+          bottom: -24px;
+          left: 0;
+          right: 0;
+          z-index: 10;
+        }
+      }
+    }
+    .RTop {
+      display: flex;
+      align-items: center;
+      .name {
+        max-width: 500px;
+        font-size: 16px;
+        line-height: 24px;
+        margin-left: 10px;
+      }
+      .tag {
+        font-size: 12px;
+        line-height: 20px;
+        padding: 0px 8px;
+        border-radius: 9px;
+        border: 1px solid rgba(90, 125, 230, 1);
+        font-weight: 400;
+        color: rgba(86, 121, 225, 1);
+      }
+    }
+    .RCenter {
+      font-size: 12px;
+      // color: #999;
+      padding-top: 16px;
+      text-align: left;
+      display: flex;
+      .RCenterL {
+        line-height: 24px;
+        padding-right: 8px;
+        .cell {
+          display: flex;
+          overflow: hidden;
+        }
+        .lable {
+          // width: 64px;
+          color: #b1bcd1;
+          display: inline-block;
+        }
+        .text {
+          // width: 96px;
+          display: inline-block;
+          vertical-align: bottom;
+        }
+      }
+    }
+    .RCenterR {
+      line-height: 24px;
+      position: absolute;
+      top: 0;
+      left: 73%;
+      .infoRow {
+        display: flex;
+        justify-content: flex-end;
+        .infoCell {
+          width: 70px;
+          margin-right: 24px;
+          .lable {
+            width: 64px;
+            font-size: 14px;
+            font-weight: 400;
+            color: rgba(72, 87, 113, 1);
+            line-height: 20px;
+          }
+          .text {
+            width: 64px;
+            font-size: 14px;
+            font-weight: 400;
+            /* color:rgba(0,163,106,1); */
+            line-height: 20px;
+          }
+        }
+      }
+    }
+    .RBtm {
+      height: 32px;
+      line-height: 32px;
+      clear: both;
+      .RBtmL {
+        height: 32px;
+        overflow: hidden;
+        & > div {
+          line-height: 20px;
+          color: #55a8ff;
+          border: 1px solid #55a8ff;
+          border-radius: 20px;
+          padding: 0 8px;
+          margin-right: 16px;
+          display: inline-block;
+          cursor: pointer;
+        }
+        & > div:hover {
+          color: #1890ff;
+          border: 1px solid #1890ff;
+        }
+      }
+      .btns {
+        margin: 0 4px;
+      }
+    }
+  }
+  .topActive {
+    border: 1px solid #3d81ea;
+  }
+}
+.tourist {
+  width: 450px;
+  .tableDiv {
+    width: 450px;
+    max-height: 200px;
+    overflow: auto;
+  }
+  .ListTitle {
+    text-align: left;
+    font-weight: 500;
+    font-size: 15px;
+    color: #2e3a4e;
+    padding-top: 5px;
+  }
+  .tableTitle {
+    text-align: center;
+    font-weight: 420;
+    font-size: 14px;
+    color: #2e3a4e;
+  }
+  .tableBody {
+    text-align: center;
+    font-size: 12px;
+  }
+
+  .tableBorder {
+    line-height: 32px;
+    border-bottom: 1px dashed #d9d9d9;
+  }
+  .TableButtton {
+    float: right;
+    padding-top: 10px;
+  }
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    .changeDetail{
+        display: flex;
+        .changeleft{
+            display: flex;
+            flex-direction: column;
+            padding: 0px 16px;
+            .title{
+                font-size: 14px;
+                font-weight: bolder;
+            }
+            .content{
+                display: flex;
+                flex-direction: column;
+                .people{
+                    width: 70px;
+                    height: 24px;
+                    margin-top: 5px;
+                }
+                .teamtake{
+                    width: 70px;
+                    height: 24px;
+                    margin-top: 5px;
+                    padding:  1px 2px;
+                    font-size:14px;
+                    font-weight: bolder;
+                }
+                .listtable{
+                    margin-top: 5px;
+                    padding:5px;
+                    border:1px solid #d9d9d9;
+                    border-radius: 5px;
+                    .navigation{
+                      height: 20px;
+                      padding: 1px 2px;
+                    }
+                    .information{
+                        height: 24px;
+                        border:1px solid #BBBBBB;
+                        margin:5px 4px;
+                        padding:0px 4px;
+                    }
+                    .adjustment{
+                      border: 1px solid #BBBBBB;
+                      height:24px;
+                      width: 65px;
+                      padding: 0 3px;
+                      margin-left: 4px;
+                      border-radius: 3px;
+                      font-size: 14px;
+                      font-weight: bolder;
+                    }
+                }
+            }
+        }
+        .changeright{
+            display: flex;
+            flex-direction: column;
+            padding: 0px 16px;
+            .title{
+                font-size: 14px;
+                font-weight: bolder;
+            }
+            .content{
+                display: flex;
+                flex-direction: column;
+                .people{
+                    display: flex;
+                    .number{
+                        width: 70px;
+                        height: 24px;
+                        margin-top: 5px;
+                    }
+                }
+                .teamtake{
+                    width: 70px;
+                    height: 24px;
+                    margin-top: 5px;
+                    padding:  1px 2px;
+                    font-size:14px;
+                    font-weight: bolder;
+                }
+                .listtable{
+                    margin-top: 5px;
+                    padding:5px;
+                    border:1px solid #d9d9d9;
+                    border-radius: 5px;
+                    .navigation{
+                      height: 20px;
+                      padding: 1px 2px;
+                    }
+                    .information{
+                        height: 24px;
+                        border:1px solid #BBBBBB;
+                        margin:5px 4px;
+                        padding:0px 4px;
+                    }
+                    .adjustment{
+                      border: 1px solid #BBBBBB;
+                      height:24px;
+                      width: 65px;
+                      padding: 0 3px;
+                      margin-left: 4px;
+                      border-radius: 3px;
+                      font-size: 14px;
+                      font-weight: bolder;
+                    }
+                }
+            }
+        }
+    }
+}
+.bottom{
+    display: flex;
+    margin-top:10px;
+    .bottomtake{
+        font-size: 12px;
+        font-weight: 600;
+        margin-left:5px;
+        display: flex;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
+
+
+

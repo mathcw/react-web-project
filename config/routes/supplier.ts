@@ -94,12 +94,36 @@ const routes: Array<IRouteValue> = [
               component:"./sale/order/list"
             },
             {
+              path:"/sale/order/approve",
+              name:"实报审批",
+              authority:"审批订单",
+              viewConfig:"审批订单",
+              component:"./sale/order/approve",
+              hideInMenu:true
+            },
+            {
               path:"/sale/orderChange/list",
               name:"变更管理",
               authority:"订单变更",
               viewConfig:"订单变更",
               component:"./sale/orderChange/list"
-            }
+            },
+            {
+              path:"/sale/orderChange/check",
+              name:"变更审批",
+              authority:"确认变更",
+              viewConfig:"报名确认变更",
+              component:"./sale/orderChange/approve",
+              hideInMenu:true
+            },
+            {
+              path:"/sale/orderChange/jdCheck",
+              name:"变更审批",
+              authority:"确认变更",
+              viewConfig:"接单确认变更",
+              component:"./sale/orderChange/jdApprove",
+              hideInMenu:true
+            },
           ]
         },
         {
