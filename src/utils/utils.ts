@@ -205,7 +205,7 @@ export const getRowBtnArray = function<T>(data: T, btns: IModBtn[]) {
         const flag = Object.keys(btn.show)
           .map(item => {
             if (btn.show && btn.show[item].indexOf(data[item]) === -1) {
-              if (!Number(data[item]))
+              if (Number(data[item])!==0 && !Number(data[item]))
                 return false;
               if (btn.show[item].indexOf(Number(data[item])) === -1)
                 return false;
