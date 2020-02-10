@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, notification,message } from 'antd';
 import { ButtonProps } from 'antd/lib/button';
+import { getBtnClickEvent } from './utils';
 
 message.config({
   maxCount: 1,
@@ -10,14 +11,17 @@ interface Imsg{
     title:string,
     extra?:{
         action:string,
-        assoc:any
+        assoc_id:string
     }
 }
 
 const openActionNotification = (msg:Imsg,buttonType:ButtonProps['type'],buttonSize:ButtonProps['size']) => {
   const key = `open${Date.now()}`;
   const click = () =>{
-    // trigger(msg.extra.action,msg.extra.assoc,null);
+      if(msg.extra){
+        getBtnClickEvent(msg.extra.action)({id:msg.extra.assoc_id});
+      }
+
     notification.close(key);
   }
   const btn = (
@@ -50,7 +54,7 @@ export default function msgPush(msg:Imsg,type?:ButtonProps['type'],size?:ButtonP
     const buttonType = type||"primary";
     const buttonSize = size||"small";
 
-    if(msg.extra && msg.extra.action && msg.extra.assoc){
+    if(msg.extra && msg.extra.action && msg.extra.assoc_id){
       openActionNotification(msg,buttonType,buttonSize);
       return ;
     }

@@ -36,6 +36,11 @@ const list:React.FC<IModPageProps> = ({ route }) => {
         setPageSize(size);
     }
 
+    const fastApprove = (item:object)=>{
+      if(item['action'] && item['assoc_id']){
+        getBtnClickEvent(item['action'])({id:item['assoc_id']},load);
+      }
+    } 
     
 
     return <PageHeaderWrapper
@@ -70,7 +75,7 @@ const list:React.FC<IModPageProps> = ({ route }) => {
                       </Col>
                       <Col span={3} className={styles.right3}>
                         <Col className={styles.name}>操作</Col>
-                        <Button className={styles.look} size="small" onClick={()=>{getBtnClickEvent('快捷审批')(item)}}>审批</Button>
+                        <Button className={styles.look} size="small" onClick={()=>{fastApprove(item)}}>审批</Button>
                       </Col>
                 </Col>)
             }
