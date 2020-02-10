@@ -17,7 +17,7 @@ import AppConst from '@/utils/AppConst';
 import { submit, get } from '@/utils/req';
 import GroupTour from './components/GroupTour';
 import CheckModal from './components/CheckModal';
-import NzCheckModal from './components/CheckModal/Nz';
+import NzCheckModal from './components/CheckModal/nz';
 import { Modal } from 'antd';
 
 

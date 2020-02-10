@@ -8,6 +8,7 @@ import { authMetaInit } from '@/viewconfig/ModConfig';
 import { enumInit } from '@/utils/enum';
 import { reloadAuthorized } from '@/utils/Authorized';
 import PageLoading from '@/components/PageLoading';
+import { signalInit } from '@/utils/signal';
 
 async function init() {
   const r = await req('/PublicApi/get_react_init');
@@ -25,6 +26,10 @@ async function init() {
   rootAction(ActionType.USERINIT, r.data);
 }
 
+async function msgInit(){
+  await signalInit();
+}
+
 
 const Layout: React.FC = ({children}) => {
   if (!sys.sid) {
@@ -35,6 +40,10 @@ const Layout: React.FC = ({children}) => {
   useEffect(() => {
     init().catch(log);
   }, []);
+
+  useEffect(()=>{
+    msgInit().catch(log);
+  },[]);
 
   if (!user || !user.account_id) {
     return <PageLoading />
