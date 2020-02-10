@@ -9,6 +9,16 @@ const config: ActionConfigItem = {
         btns: {
             关闭: { text: '关闭' }
         }
+    },
+    跟团游维护: {
+        title: '跟团游维护',
+        path: '/productManage/productMaintain/GroupTourMaintain',
+        read: { url: "/ProductStore/PackageTour/read_edit", data: {main_pd_id:'main_pd_id'} },
+        submit: { url: "/ProductStore/PackageTour/submit_maintain" },
+        btns: {
+            关闭: { text: "关闭" },
+            提交: { text: "保存" }
+        }
     }
 };
 

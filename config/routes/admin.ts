@@ -229,6 +229,119 @@ const routes: Array<IRouteValue> = [
             hideInMenu:true,
             component: "./productManage/productCheck/GroupTourCheck"
           },
+          {
+            path: "/productManage/productMaintain/list",
+            name: "产品维护",
+            authority: "产品维护",
+            viewConfig: "产品维护",
+            component: "./productManage/productMaintain/list"
+          },
+          {
+            path: "/productManage/productMaintain/GroupTourMaintain",
+            name: "跟团游维护",
+            authority: "维护产品",
+            viewConfig: "跟团游维护",
+            hideInMenu:true,
+            component: "./productManage/productMaintain/GroupTourMaintain"
+          },
+        ]
+      },
+      {
+        name: "业务配置",
+        icon: "sitemap",
+        path: "/business",
+        routes: [
+          {
+            path: "/business/packagetourNav/primaryNavList",
+            name: "一级导航",
+            authority: "跟团游导航",
+            viewConfig:"一级导航",
+            component: "./business/packagetourNav/primaryNavList"
+          },
+          {
+            path: "/business/packagetourNav/secondaryNavList",
+            name: "二级导航",
+            authority: "跟团游导航",
+            viewConfig:"二级导航",
+            component: "./business/packagetourNav/secondaryNavList"
+          },
+          {
+            path: "/business/cruise/cruiseCompany",
+            name: "邮轮公司",
+            authority: "邮轮游导航",
+            viewConfig:"邮轮公司",
+            component: "./business/cruise/cruiseCompany"
+          },
+          {
+            path: "/business/cruise/cruiseShip",
+            name: "船舶名称",
+            authority: "邮轮游导航",
+            viewConfig:"船舶名称",
+            component: "./business/cruise/cruiseShip"
+          },
+          {
+            path: "/business/cruise/cruiseLine",
+            name: "邮轮航线",
+            authority: "邮轮游导航",
+            viewConfig:"邮轮航线",
+            component: "./business/cruise/cruiseLine"
+          },
+          {
+            path: "/business/productTheme/list",
+            name: "特色标签",
+            authority: "特色标签",
+            viewConfig:"特色标签",
+            component: "./business/productTheme/list"
+          },
+          {
+            path: "/business/commDct/list",
+            name: "数据字典",
+            authority: "数据字典",
+            viewConfig:"数据字典",
+            component: "./business/commDct/list"
+          },
+          {
+            path: "/business/city/list",
+            name: "城市设置",
+            authority: "城市设置",
+            viewConfig:"城市设置",
+            component: "./business/city/list"
+          },
+          {
+            path: "/business/suppDct/list",
+            name: "协议设置",
+            authority: "协议设置",
+            viewConfig:"协议设置",
+            component: "./business/suppDct/list"
+          },
+        ]
+      },
+      {
+        name: "系统设置",
+        icon: "sitemap",
+        path: "/sys",
+        routes: [
+          {
+            path: "/sys/flow/list",
+            name: "业务流程",
+            authority: "业务流程",
+            viewConfig: "业务流程",
+            component: "./sys/flow/list"
+          },
+          {
+            path: "/sys/api/list",
+            name: "api管理",
+            authority: "api管理",
+            viewConfig: "api管理",
+            component: "./sys/api/list"
+          },
+          {
+            path: "/sys/config/setting",
+            name: "参数设置",
+            authority: "系统参数设置",
+            viewConfig: "系统参数设置",
+            component: "./sys/config/setting"
+          },
         ]
       },
     ]

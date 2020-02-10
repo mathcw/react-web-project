@@ -770,17 +770,6 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
         </Col>
       </Col>
     </Row>
-    <Modal
-      title='新增主题'
-      visible={themeModalOpen}
-      okButtonProps={{ className: 'hide' }}
-      cancelButtonProps={{ className: 'hide' }}
-      onCancel={themeModalCancel}
-      footer={null}
-      destroyOnClose
-    >
-      <ThemeContent onOk={themeModalOK} onCancel={themeModalCancel} />
-    </Modal>
   </PageHeaderWrapper>
 }
 

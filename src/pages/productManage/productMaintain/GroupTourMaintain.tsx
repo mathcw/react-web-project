@@ -6,21 +6,198 @@ import renderHeaderBtns from '@/components/PageHeaderWrapper/headerBtns';
 import { IActionPageProps } from '@/viewconfig/ActionConfig';
 import { useActionPage, useActionBtn } from '@/utils/ActionPageHooks';
 
-import styles from './GroupTourCheck.less';
+import styles from './GroupTourMaintain.less';
 import { getEnum, IEnumCfg, searchChange } from '@/utils/enum';
 import FastSelect from '@/components/FastSelect';
 import { upload, submit } from '@/utils/req';
 import { prePage, nextPage, loadPdf } from '@/utils/pdf';
+import { IModBtn } from '@/viewconfig/ModConfig';
+import ImgCropper from '@/components/ImgCropper';
 import { router } from 'umi';
-import { ApproveModal } from '@/components/ApproveBtns';
 
 const { Option } = Select;
+const { Dragger } = Upload;
 
 const selectCfg = {
   pd_direction: { 'text': '出境/国内', 'type': 'PdDirection' },
   primary_nav: { 'text': '一级导航', 'type': 'PrimaryNav', 'cascade': 'pd_direction' },
   secondary_nav: { 'text': '二级导航', 'type': 'SecondaryNav', 'cascade': 'primary_nav' }
 };
+
+const renderButtonOther = (btns: IModBtn[]) => {
+  return (
+    <div>
+      {btns.map(btn => (
+        <div key={btn.text} className={[styles.btns, 'dib'].join(' ')}>
+          <Button
+            icon={btn.icon}
+            type={btn.type}
+            size={btn.size}
+            onClick={() => {
+              if (!btn.onClick) {
+                Modal.error({
+                  title: `${btn.text}未配置`,
+                  content: `${btn.text}未配置`
+                });
+                return;
+              }
+              btn.onClick();
+            }}
+          >
+            {btn.text || ""}
+          </Button>
+        </div>
+      ))}
+    </div>);
+
+}
+
+const ThemeContent = (props: {
+  onOk: (name: string) => void,
+  onCancel: () => void
+}) => {
+  const [name, setName] = useState('');
+  const { onOk, onCancel } = props;
+
+  const ok = () => {
+    onOk(name)
+  }
+  const cancel = () => {
+    onCancel();
+  }
+
+  return (
+    <>
+      <Input
+        placeholder="请输入标签名称（最长不超过6个字符！）"
+        value={name}
+        onChange={e => setName(e.target.value)}
+        style={{ marginBottom: 24 }}
+        maxLength={6}
+      />
+      <Col style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Button
+          onClick={() => {
+            cancel();
+          }}
+          style={{ marginRight: 16 }}
+        >
+          取消
+        </Button>
+        <Button
+          onClick={() => {
+            ok();
+          }}
+        >
+          确定
+        </Button>
+      </Col>
+    </>
+  )
+}
+
+interface IUpdateImg {
+  type: string,
+  photo?: string,
+  update?: (url: string) => void
+}
+const UploadImg = (props: IUpdateImg) => {
+  const [photoLoading, setPhotoLoading] = useState(false);
+  const [originFile, setOriginFile] = useState(null);
+  const [visiable, setVisiable] = useState(false);
+  const { type, photo, update } = props;
+
+  const imgUploadCheck = (file: File) => {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+      message.error('请上传 JPG/PNG 图片!');
+      return isJpgOrPng;
+    }
+    const isLt1M = (file.size / 1024 / 1024) < 1;
+    if (!isLt1M) {
+      message.error('图片不能超过 1MB!');
+      return isLt1M;
+    }
+    return isJpgOrPng && isLt1M;
+  }
+
+  const uploadButton = (
+    <div>
+      <p className="ant-upload-drag-icon">
+        <Icon type={photoLoading ? 'loading' : 'plus'} />
+      </p>
+      <p className="ant-upload-text">点击或者拖拽到本区域进行上传</p>
+    </div>
+  );
+
+  const handleChange = (info: any) => {
+    if (info.file.status === 'uploading') {
+      setPhotoLoading(true);
+      return;
+    }
+    if (info.file.status === 'done') {
+      if (update) update(info.file.url);
+      setPhotoLoading(false);
+    } else if (info.file.status === 'error') {
+      message.error(`${info.file.name} 文件上传失败.`);
+    } else if (info.file.status === 'removed') {
+      setPhotoLoading(false);
+    }
+  };
+
+  const handleCustomRequest = (prop: { file: File }) => {
+    const { file } = prop;
+    setOriginFile(file);
+    setVisiable(true);
+  };
+
+  const afterCropped = (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    setVisiable(false);
+    upload(formData, type).then(res => {
+      if (res.success && res.save_path) {
+        const fileinfo = { file: { status: 'done', url: res.save_path } }
+        handleChange(fileinfo);
+      } else {
+        handleChange({ file: { status: 'error', name: file.name } });
+      }
+    }, () => {
+      handleChange({ file: { status: 'error', name: file.name } });
+    })
+  }
+
+  const onCancel = () => {
+    setVisiable(false);
+    handleChange({ file: { status: 'removed' } });
+  }
+  return (
+    <React.Fragment>
+      <Dragger
+        name="photo"
+        multiple={false}
+        showUploadList={false}
+        beforeUpload={imgUploadCheck}
+        onChange={info => handleChange(info)}
+        customRequest={({ file }) => handleCustomRequest({ file })}
+        className='upload-dragger'
+      >
+        {photo ? <img src={photo} alt="图片" className={styles.picUpload} /> : uploadButton}
+      </Dragger>
+      {
+        visiable && <ImgCropper
+          title="裁剪图片以达到最佳的展示效果 宽高比16：9 (如您不愿裁剪图片 点击确认即可)"
+          cropSetting={{ aspect: 16 / 9 }}
+          width={1080}
+          originFile={originFile}
+          visiable={visiable}
+          onOk={afterCropped}
+          onCancel={onCancel}
+        />
+      }
+    </React.Fragment>
+  );
+}
 
 const Page: React.FC<IActionPageProps> = ({ route, location }) => {
   const { viewConfig } = route;
@@ -42,6 +219,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
 
   let canvas = useRef<HTMLCanvasElement>(null);
 
+  const [themeModalOpen, setThemeModalOpen] = useState(false);
   const [pdfPageNum, setPdfPageNum] = useState(1);
   const [pdfLoading, setPdfLoading] = useState(false);
   const [pdfUploading, setPdfUploading] = useState(false);
@@ -92,6 +270,14 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
 
   const { btns } = useActionBtn(viewConfig, actionMap);
 
+  // 图片上传cb
+  const handlePicUpload = (imageUrl: string) => {
+    const rst = { ...data };
+    rst['产品图片'][0] = imageUrl;
+    setData(rst);
+  }
+
+
   // 上传按钮
   const uploadButton = (
     <div>
@@ -99,6 +285,24 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
       <div className="ant-upload-text">Upload</div>
     </div>
   );
+
+  // 关闭主题modal(取消)
+  const themeModalCancel = () => {
+    setThemeModalOpen(false);
+  }
+
+  // 关闭主题modal(确定)
+  const themeModalOK = (value: any) => {
+    const rst = { ...data };
+    rst['自建主题'].push(value);
+    setThemeModalOpen(false);
+    setData(rst);
+  }
+
+  // 打开主题modal
+  const addTheme = () => {
+    setThemeModalOpen(true);
+  }
 
   // 改变产品信息
   const changeProInfo = (field: string, val: any) => {
@@ -126,7 +330,6 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
         placeholder={cfg.text || ''}
         value={data[field]}
         key={field}
-        disabled
       >
         {
           Object.keys(Enum).map(key =>
@@ -168,7 +371,6 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
     return (
       <Col>
         <FastSelect
-          disabled
           onChange={(value: any) => { changeProTheme(value) }}
           showSearch
           style={{ width: '100%' }}
@@ -200,7 +402,6 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
     return (
       <Col>
         <FastSelect
-          disabled
           onChange={(value: any) => { changeZjTheme(value) }}
           showSearch
           style={{ width: '100%' }}
@@ -279,36 +480,18 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
     setPdfPageNum(pages);
   }
 
+  const deletePdf = () => {
+    const rst = { ...data };
+    rst.pdfUrl = '';
+    setData(rst);
+  }
+
   const renderPdf = () => {
     return (
       <Col span={20} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <canvas ref={canvas} style={{ width: '80%' }} />
       </Col>
     );
-  }
-
-  const passOk = (comment: string) => {
-    if (cfg.submit) {
-      submit(cfg.submit.url, {
-        flow_id: data['产品信息']['flow_id']
-        , opinion: 1, comment: comment
-      }, cfg.submit.data).then((r: any) => {
-        message.success(r.message);
-        router.goBack();
-      })
-    }
-  }
-
-  const rejectOk = (comment: string) => {
-    if (cfg.submit) {
-      submit(cfg.submit.url, {
-        flow_id: data['产品信息']['flow_id']
-        , opinion: 2, comment: comment
-      }, cfg.submit.data).then((r: any) => {
-        message.success(r.message);
-        router.goBack();
-      })
-    }
   }
 
   return <PageHeaderWrapper
@@ -330,7 +513,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
           {/* 产品图片 */}
           <Col xs={24} sm={24} md={10} lg={10} className={styles.imgWrapper}>
             <Col className={styles.imgBox}>
-              <img src={data['产品图片'][0]} alt="图片" className={styles.picUpload} />
+              <UploadImg photo={data['产品图片'][0]} type='productPic' update={handlePicUpload} />
             </Col>
           </Col>
           {/* 产品信息 */}
@@ -346,12 +529,11 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
               <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
                 产品名称
                   </Col>
-
               <Col className={styles.cellInput} xs={24} sm={20} md={20} lg={20}>
                 <Input
                   placeholder="请输入产品名称"
                   value={data['产品信息']['pd_name'] || ''}
-                  disabled
+                  onChange={e => changeProInfo('pd_name', e.target.value)}
                 />
               </Col>
             </Col>
@@ -359,7 +541,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
             <Col className={[styles.cell, 'clear'].join(' ')}>
               <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
                 导航标签
-              </Col>
+                  </Col>
               <Col className={styles.cellInput} xs={24} sm={20} md={20} lg={20}>
                 {renderProductTag()}
               </Col>
@@ -368,10 +550,9 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
             <Col className={[styles.cell, 'clear'].join(' ')}>
               <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
                 途径地区
-              </Col>
+                  </Col>
               <Col className={styles.cellInput} xs={24} sm={20} md={20} lg={20}>
                 {data['产品信息'] && data['产品信息']['pd_direction'] && <FastSelect
-                  disabled
                   onChange={(value) => { changeProCity(value) }}
                   showSearch
                   style={{ width: '100%' }}
@@ -383,7 +564,6 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                   type={data['产品信息'] && data['产品信息']['pd_direction'] === '1' ? 'Country' : 'CNProvince'}
                 />}
                 {data['产品信息'] && !data['产品信息']['pd_direction'] && <FastSelect
-                  disabled
                   onChange={(value) => { changeProCity(value) }}
                   showSearch
                   style={{ width: '100%' }}
@@ -403,7 +583,6 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                   </Col>
               <Col className={styles.cellInput} xs={24} sm={8} md={8} lg={8}>
                 <FastSelect
-                  disabled
                   showSearch
                   value={data['产品信息']['dep_city_id'] || ''}
                   onChange={val => changeProInfo('dep_city_id', val)}
@@ -419,7 +598,6 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                   </Col>
               <Col className={styles.cellInput} xs={24} sm={8} md={8} lg={8}>
                 <FastSelect
-                  disabled
                   showSearch
                   value={data['产品信息']['back_city_id'] || ''}
                   onChange={val => changeProInfo('back_city_id', val)}
@@ -443,7 +621,6 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                   value={data['产品信息']['nights'] || 0}
                   onChange={val => changeProInfo('nights', val)}
                   style={{ width: '77%' }}
-                  disabled
                 />
                 &nbsp; 晚
                   </Col>
@@ -457,7 +634,6 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                   value={data['产品信息']['days'] || 0}
                   onChange={val => changeProInfo('days', val)}
                   style={{ width: '77%' }}
-                  disabled
                 />
                 &nbsp; 天
                   </Col>
@@ -476,7 +652,6 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                   maxTagTextLength={8}
                   options={getEnum('HaveNo')}
                   type='HaveNo'
-                  disabled
                 />
               </Col>
               <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
@@ -492,7 +667,6 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                   maxTagTextLength={8}
                   options={getEnum('HaveNo')}
                   type='HaveNo'
-                  disabled
                 />
               </Col>
             </Col>
@@ -515,6 +689,10 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
           <Col className={styles.title}>
             <Col className={styles.titleL}>
               <Col className={styles.text} style={{ margin: '2px' }}>自建标签</Col>
+              <Col className={styles.btns}>
+                <Button onClick={addTheme} style={{ padding: '0px 5px', height: '27px', fontSize: '12px' }}>自建标签</Button>
+              </Col>
+              <Col className={styles.backgroundtext}>(如果上述热卖标签没有适用您产品的,可在这里自建标签)</Col>
             </Col>
           </Col>
           <Col className={styles.content1}>
@@ -539,7 +717,6 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
               autoSize={{ minRows: 4, maxRows: 8 }}
               onChange={e => changeProInfo('feature', e.target.value)}
               value={data['产品信息']['feature']}
-              disabled
             />
           </Col>
         </Col>
@@ -554,6 +731,11 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
           </Col>
           <Col className={styles.content}>
             <Col className={styles.scheduling}>
+              <Col className={styles.schedulingT}>
+                <Col className={styles.schedulingTBtn}>
+                  <Button shape="circle" icon="delete" onClick={() => deletePdf()} />
+                </Col>
+              </Col>
               <Col className={styles.schedulingContent}>
                 <Col className={styles.backgroundBtn} span={2} onClick={() => minusPage()}>
                   <Button
@@ -563,7 +745,6 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                   />
                 </Col>
                 <Upload
-                  disabled
                   name="avatar"
                   listType="picture-card"
                   className="avatar-uploader"
@@ -579,14 +760,18 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                 </Col>
               </Col>
             </Col>
+            <Col className={styles.bottom}>
+              <Col className={styles.bottomContent}>
+                {
+                  renderButtonOther(btns)
+                }
+              </Col>
+            </Col>
           </Col>
 
         </Col>
       </Col>
     </Row>
-    <div className={styles.approve}>
-      <ApproveModal history={data['审批记录'] || []} passOk={passOk} rejectOk={rejectOk} />
-    </div>
   </PageHeaderWrapper>
 }
 

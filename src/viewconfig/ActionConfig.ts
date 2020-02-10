@@ -3,6 +3,7 @@ import ProductStoreAction from "@/viewconfig/Action/ProductStoreAction";
 import ProductManageAction from "@/viewconfig/Action/ProductManageAction";
 import SaleAction from "@/viewconfig/Action/SaleAction";
 import CheckAction from "@/viewconfig/Action/CheckAction";
+import SysAction from "@/viewconfig/Action/SysAction";
 import { BasicLayoutProps as ProLayoutProps } from "@ant-design/pro-layout";
 
 export interface IActionPageProps extends ProLayoutProps {
@@ -36,4 +37,4 @@ export interface ActionConfigItem {
   };
 }
 
-export const config: ActionConfigItem = { ...OrgAction, ...ProductStoreAction,...ProductManageAction,...SaleAction,...CheckAction };
+export const config: ActionConfigItem = { ...OrgAction, ...ProductStoreAction,...ProductManageAction,...SysAction,...SaleAction,...CheckAction };
