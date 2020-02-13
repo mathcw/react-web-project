@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Modal, message, Table } from "antd";
 import PageHeaderWrapper, {
   Extra,
   Content
@@ -15,7 +16,117 @@ import Grid, { getCols, actionColWidth, renderRowBtns } from '@/components/Table
 import ActionModal from "@/components/Table/ActionModal";
 import { ColumnProps } from "antd/es/table";
 
-import { getModConfig } from "@/utils/utils";
+import { colDisplay, getModConfig } from "@/utils/utils";
+import ModalForm from "@/components/ModalForm";
+import { submit, read } from "@/utils/req";
+
+// 新增邮轮公司
+const add = (reload: () => void) => () => {
+  const modalRef = Modal.info({});
+  const list = {
+    name: { text: "邮轮公司名称", required: true }
+  };
+  const onSubmit = (data: any) => {
+    submit("/business/CruiseCompany/submit", data).then(r => {
+      message.success(r.message);
+      modalRef.destroy();
+      reload();
+    });
+  };
+  const onCancel = () => {
+    modalRef.destroy();
+  };
+  modalRef.update({
+    title: "新增邮轮公司",
+    icon: null,
+    content: <ModalForm list={list} onSubmit={onSubmit} onCancel={onCancel} />,
+    okButtonProps: { className: "hide" },
+    cancelButtonProps: { className: "hide" }
+  });
+};
+
+// 修改邮轮公司
+const edit = (reload: () => void) => (ref: any) => {
+  const modalRef = Modal.info({});
+  const list = {
+    name: { text: "邮轮公司名称", required: true }
+  };
+  const onSubmit = (data: object | undefined) => {
+    submit("/business/CruiseCompany/submit", data).then(r => {
+      message.success(r.message);
+      modalRef.destroy();
+      reload();
+    });
+  };
+  const onCancel = () => {
+    modalRef.destroy();
+  };
+  modalRef.update({
+    title: "修改邮轮公司",
+    // eslint-disable-next-line max-len
+    icon: null,
+    content: (
+      <ModalForm
+        list={list}
+        onSubmit={onSubmit}
+        onCancel={onCancel}
+        data={{ ...ref }}
+      />
+    ),
+    okButtonProps: { className: "hide" },
+    cancelButtonProps: { className: "hide" }
+  });
+};
+
+// 邮轮公司日志
+const cruiselog = (reload: () => void) => (ref: any) => {
+  read("/business/CruiseCompany/read_log", { action: "邮轮公司日志" }, ref, {
+    id: "id"
+  }).then((res: any) => {
+    const data = res["data"];
+    const modalRef = Modal.info({});
+    modalRef.update({
+      title: "日志",
+      okText: "确定",
+      content: modalContent(data),
+      width: 750
+    });
+  });
+};
+
+const modalContent = (data: any[]) => {
+  const columns = [
+    {
+      title: "操作人",
+      dataIndex: "account_id",
+      width: 100,
+      render: (text: string) => <>{colDisplay(text, "Account", {})}</>
+    },
+    {
+      title: "操作时间",
+      dataIndex: "create_at",
+      width: 200
+    },
+    {
+      title: "动作",
+      dataIndex: "action",
+      width: 100,
+    },
+    {
+      title: "修改前",
+      dataIndex: "before",
+      width: 100
+    },
+    {
+      title: "修改后",
+      dataIndex: "after",
+      width: 100
+    }
+  ];
+  return (
+    <Table columns={columns} dataSource={data} pagination={false} rowKey="id" />
+  );
+};
 
 const list: React.FC<IModPageProps> = ({ route }) => {
   const { viewConfig } = route;
@@ -33,6 +144,9 @@ const list: React.FC<IModPageProps> = ({ route }) => {
   } = useListPage(viewConfig);
 
   const actionMap = {
+    新增邮轮公司: add(load),
+    修改邮轮公司: edit(load),
+    邮轮公司日志: cruiselog(load),
   };
 
   const { headerBtns, rowBtns } = useListPageBtn(viewConfig, actionMap);
