@@ -1,4 +1,5 @@
-import { Icon, Menu } from 'antd';
+import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { Menu } from 'antd';
 import { ClickParam } from 'antd/es/menu';
 import { FormattedMessage } from 'umi-plugin-react/locale';
 import React from 'react';
@@ -28,20 +29,20 @@ const AvatarDropdown:React.FC<GlobalHeaderRightProps> = ({menu}) =>{
     <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
       {menu && (
         <Menu.Item key="center">
-          <Icon type="user" />
+          <UserOutlined />
           <FormattedMessage id="menu.account.center" defaultMessage="account center" />
         </Menu.Item>
       )}
       {menu && (
         <Menu.Item key="settings">
-          <Icon type="setting" />
+          <SettingOutlined />
           <FormattedMessage id="menu.account.settings" defaultMessage="account settings" />
         </Menu.Item>
       )}
       {menu && <Menu.Divider />}
 
       <Menu.Item key="logout">
-        <Icon type="logout" />
+        <LogoutOutlined />
         <FormattedMessage id="menu.account.logout" defaultMessage="logout" />
       </Menu.Item>
     </Menu>

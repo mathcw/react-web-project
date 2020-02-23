@@ -1,17 +1,6 @@
 import React from "react";
-import {
-  Button,
-  Input,
-  Select,
-  Divider,
-  Col,
-  Row,
-  Tooltip,
-  Icon,
-  Form,
-  Modal,
-  DatePicker
-} from "antd";
+import { CloseOutlined, DownOutlined, SearchOutlined, SyncOutlined, UpOutlined } from '@ant-design/icons';
+import { Button, Input, Select, Divider, Col, Row, Tooltip, Modal, DatePicker } from "antd";
 import * as PropTypes from "prop-types";
 
 import { getEnum, IEnumCfg } from "@/utils/enum";
@@ -33,7 +22,6 @@ const renderHeaderBtns = (btns?: IModBtn[]) => {
         {btns.map(btn => (
           <div key={btn.authority} className="dib">
             <Button
-              icon={btn.icon}
               type={btn.type}
               size={btn.size}
               onClick={() => {
@@ -193,7 +181,7 @@ class MainContent extends React.Component<
     }
   };
 
-  onDateChange = (field:React.ReactText,value:any) => {
+  onDateChange = (field: React.ReactText, value: any) => {
     const { setQuery } = this.props;
     if (setQuery) {
       setQuery((preQuery: any) => {
@@ -216,28 +204,28 @@ class MainContent extends React.Component<
     if (query) {
       if (cfg.type === 'date') {
         const suffixIcon = <React.Fragment></React.Fragment>;
-        if(query[field] && query[field] !== '' && moment.isMoment(moment(query[field]))){
+        if (query[field] && query[field] !== '' && moment.isMoment(moment(query[field]))) {
           return (
             <DatePicker
-              style={{marginTop:'5px'}}
+              style={{ width: '100%' }}
               placeholder={cfg.text}
               size="small"
               format="YYYY-MM-DD"
               suffixIcon={suffixIcon}
               value={moment(query[field])}
-              onChange={(date: moment.Moment | null, value: string) => this.onDateChange(field,value)}
+              onChange={(date: moment.Moment | null, value: string) => this.onDateChange(field, value)}
             />
           )
         }
         return (
           <DatePicker
-            style={{marginTop:'5px'}}
+            style={{ width: '100%' }}
             placeholder={cfg.text}
             size="small"
             format="YYYY-MM-DD"
             suffixIcon={suffixIcon}
             value={null}
-            onChange={(date: moment.Moment | null, value: string) => this.onDateChange(field,value)}
+            onChange={(date: moment.Moment | null, value: string) => this.onDateChange(field, value)}
           />
         )
       }
@@ -251,7 +239,7 @@ class MainContent extends React.Component<
           value={query[field]}
           onChange={(value: any) => this.onDropDownChange(field, value)}
           placeholder={cfg.text}
-          style={{marginTop:'5px'}}
+          style={{ width: '100%' }}
         >
           {Object.keys(Enum).map(key => (
             <SelectOption key={key} value={key}>
@@ -297,40 +285,62 @@ class MainContent extends React.Component<
       overflow: "hidden"
     };
     return (
-      <Row gutter={16}>
-        <Form onSubmit={this.refresh} layout="inline">
-          <Col
-            xs={24}
-            sm={18}
-            md={18}
-            lg={18}
-            style={more ? { padding: 0 } : moreTrueStyle}
-          >
+      <Row >
+        <Col
+          xs={24}
+          sm={18}
+          md={18}
+          lg={18}
+          style={more ? { padding: 0 } : moreTrueStyle}
+        >
+          <Row className={styles.leftSearch}>
             {rKeys &&
               rKeys.map((key: string | number, index) => (
                 <React.Fragment key={key}>
                   {
-                    more && <Col xs={24} sm={12} md={6} lg={6} >
+                    more && <Col xs={24} sm={12} md={6} lg={6} style={{ paddingLeft: '10px' }}>
                       {this.renderSelect(dropDownSearch[key], key)}
                     </Col>
                   }
                   {
-                    !more && (index <= rowColumns - 1) && <Col xs={24} sm={12} md={6} lg={6}>
+                    !more && (index <= rowColumns - 1) && <Col xs={24} sm={12} md={6} lg={6} style={{ paddingLeft: '10px' }}>
                       {this.renderSelect(dropDownSearch[key], key)}
                     </Col>
                   }
                 </React.Fragment>
               ))}
-          </Col>
-          <Col xs={24} sm={6} md={6} lg={6} style={{ lineHeight: "32px" }}>
+          </Row>
+
+        </Col>
+        <Col xs={24} sm={6} md={6} lg={6} style={{ paddingLeft: '16px' }}>
+          <div className={styles.leftIcon}>
+            <Tooltip placement="top" title="搜索">
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="small"
+                shape="circle"
+                icon={<SearchOutlined />}
+                onClick={this.refresh}
+              />
+            </Tooltip>
+            <Tooltip placement="top" title="重置">
+              <Button
+                onClick={this.searchReset}
+                size="small"
+                icon={<CloseOutlined />}
+                shape="circle"
+                style={{ marginLeft: 8 }}
+              />
+            </Tooltip>
             {showDownIcon && !more && (
               <Tooltip placement="top" title="展开">
                 <Button
                   onClick={this.toggleMore}
                   size="small"
-                  icon="down"
+                  icon={<DownOutlined />}
                   shape="circle"
-                  style={{ marginRight: 8 }}
+                  style={{ marginLeft: 8 }}
                 />
               </Tooltip>
             )}
@@ -339,33 +349,14 @@ class MainContent extends React.Component<
                 <Button
                   onClick={this.toggleMore}
                   size="small"
-                  icon="up"
+                  icon={<UpOutlined />}
                   shape="circle"
-                  style={{ marginRight: 8 }}
+                  style={{ marginLeft: 8 }}
                 />
               </Tooltip>
             )}
-            <Tooltip placement="top" title="搜索">
-              <Button
-                type="primary"
-                htmlType="submit"
-                size="small"
-                shape="circle"
-                icon="search"
-                onClick={this.refresh}
-              />
-            </Tooltip>
-            <Tooltip placement="top" title="重置">
-              <Button
-                onClick={this.searchReset}
-                size="small"
-                icon="close"
-                shape="circle"
-                style={{ marginLeft: 8 }}
-              />
-            </Tooltip>
-          </Col>
-        </Form>
+          </div>
+        </Col>
       </Row>
     );
   };
@@ -378,18 +369,19 @@ class MainContent extends React.Component<
         <Divider style={{ margin: 0 }} />
         {headerButton && renderHeaderBtns(headerButton)}
         <Divider style={{ margin: 0 }} />
-        <div className={[styles.HeaderForm, "clear"].join(" ")}>
-          <Col xs={24} sm={24} md={16} lg={16}>
-            {this.renderMoreSerach()}
-          </Col>
-          <Col className={styles.rightSearch}>
-            <Col>
-              <InputGroup compact size="small">
+        <div className={styles.HeaderForm}>
+          <Row>
+            <Col xs={24} sm={24} md={16} lg={16}>
+              {this.renderMoreSerach()}
+            </Col>
+            <Col xs={24} sm={24} md={8} lg={8}>
+              <div className={styles.rightSearch}>
                 {textSearch && (
                   <Select
                     defaultValue={textQueryType}
                     size="small"
                     onChange={this.textSearchTypeChange}
+                    style={{ width: "35%" }}
                   >
                     {Object.keys(textSearch).map((key: string | number) => (
                       <SelectOption value={key} key={key}>
@@ -399,23 +391,26 @@ class MainContent extends React.Component<
                   </Select>
                 )}
                 <Input
-                  style={{ width: "50%" }}
+                  style={{ width: "50%", padding: 0 }}
                   value={textQuery}
                   onChange={this.textSearchChange}
                   placeholder="请输入搜索条件"
                   allowClear
                 />
-                <Button type="primary" size="small" onClick={this.refresh}>
+                <Button type="primary" size="small" onClick={this.refresh} className={styles.searchButton}>
                   搜索
-                </Button>
-              </InputGroup>
+                  </Button>
+                <div className={styles.Icon} style={{ color: "#3FB50B" }}>
+                  <Tooltip placement="top" title="刷新">
+                    <SyncOutlined onClick={this.refresh} />
+                  </Tooltip>
+                </div>
+              </div>
+
+
             </Col>
-            <Col className={styles.Icon} style={{ color: "#3FB50B" }}>
-              <Tooltip placement="top" title="刷新">
-                <Icon type="sync" onClick={this.refresh} />
-              </Tooltip>
-            </Col>
-          </Col>
+          </Row>
+
         </div>
       </div>
     );

@@ -5,7 +5,6 @@ const routes: Array<IRouteValue> = [
     routes: [
         {
             name: "产品班期",
-            icon: "sitemap",
             path: "/productStore",
             routes: [
               {
@@ -76,7 +75,6 @@ const routes: Array<IRouteValue> = [
         },
         {
           name:'订单管理',
-          icon:'sitemap',
           path:'/sale',
           routes:[
             {
@@ -128,7 +126,6 @@ const routes: Array<IRouteValue> = [
         },
         {
           name:'对账管理',
-          icon:'sitemap',
           path:'/saleCheck',
           routes:[
             {

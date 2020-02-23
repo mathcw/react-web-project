@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Modal } from "antd";
-import { ColumnProps, TableProps } from 'antd/es/table';
+import { ColumnType, TableProps } from 'antd/es/table';
 import { Resizable,ResizeCallbackData } from 'react-resizable';
 
 import { colDisplay, getRowBtnArray } from "@/utils/utils";
@@ -59,16 +59,21 @@ const ResizeableTitle = (props: any) => {
     );
 };
 
+interface IDataType{
+    uuid:string,
+    [key:string]:any
+}
+
 //column
-export const getCols = function <T>(
+export const getCols = function <T extends IDataType>(
     list: { [field: string]: ICol<T> },
     update?: (
-        row: number,
+        row: string,
         dataIndex: string | number,
         value?: string | number
     ) => void
 ) {
-    const rst: ColumnProps<T>[] = [];
+    const rst: ColumnType<T>[] = [];
     let colWidth: number = 0;
 
     const windowWidth = window.innerWidth;
@@ -80,17 +85,17 @@ export const getCols = function <T>(
     Object.keys(list).forEach(v => {
         const colCfg = list[v];
         // 设置column基础属性
-        const col: ColumnProps<T> = {
+        const col: ColumnType<T> = {
             title: colCfg.text,
             dataIndex: v,
             key: v,
             width: colCfg.width ? colCfg.width : colWidth,
-            onCell: (record: T, rowIndex: number) => ({
+            onCell: (record: T) => ({
                 record,
                 initValue: record[v],
                 editable: colCfg.editable,
                 dataIndex: v,
-                rowIndex,
+                rowIndex:record.uuid,
                 required: colCfg.required,
                 title: colCfg.text,
                 type: colCfg.type,
@@ -176,7 +181,6 @@ export const renderRowBtns = function <T>(btns: IModBtn[], data: T, rs?: () => v
     return rst.map((item, index) => (
         <div key={item.authority} className="dib">
             <Button
-                icon={item.icon || ""}
                 onClick={() => {
                     if (!item.onClick) {
                         Modal.error({
@@ -199,21 +203,21 @@ export const renderRowBtns = function <T>(btns: IModBtn[], data: T, rs?: () => v
 
 interface IGridProp<T> {
     resizeable?: boolean,
-    specCol?: ColumnProps<T>[],
+    specCol?: ColumnType<T>[],
     dnd?: boolean
 }
 
 interface IGird {
-    <T>(p: IGridProp<T> & TableProps<T>): JSX.Element;
+    <T extends IDataType>(p: IGridProp<T> & TableProps<T>): JSX.Element;
 }
 
-const Grid: IGird = function <T>(p: IGridProp<T> & TableProps<T>): JSX.Element {
+const Grid: IGird = function <T extends IDataType>(p: IGridProp<T> & TableProps<T>): JSX.Element {
     const { resizeable, dnd, columns, specCol, ...rst } = p;
 
-    const [SColumns, setColumns] = useState([...columns || []]);
+    const [SColumns, setColumns] = useState([...(columns || [])]);
 
     useEffect(()=>{
-        let initCols:ColumnProps<T>[] = [];
+        let initCols:ColumnType<T>[] = [];
         if(columns){
             initCols = [...columns];
         }
@@ -242,12 +246,18 @@ const Grid: IGird = function <T>(p: IGridProp<T> & TableProps<T>): JSX.Element {
         components: {
             body: {
                 row: defaultRow,
-                cell:Cell
+                cell: Cell
             }
         },
         columns: SColumns,
         ...rst
     };
+
+    const rowKey = (record: T, index?: number) => {
+        return record.uuid;
+    }
+
+    config['rowKey'] = rowKey;
 
     const handleResize = (index: number) => (e: any, cbData:ResizeCallbackData) => {
         if (SColumns) {
@@ -279,9 +289,10 @@ const Grid: IGird = function <T>(p: IGridProp<T> & TableProps<T>): JSX.Element {
             },
         }
         config['columns'] = ResizeableCols;
-        if (!config['scroll']) {
-            config['scroll'] = { x: "max-content" }
-        }
+    }
+
+    if (!config['scroll']) {
+        config['scroll'] = { x: "max-content" }
     }
 
     if (dnd) {

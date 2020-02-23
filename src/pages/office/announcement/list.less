@@ -34,7 +34,9 @@
         }
     }
     .middle{
-        margin-left: 20px;
+        padding-left: 20px;
+        display: flex;
+        flex-direction: column;
         .title{
             height:20px;
             font-size:14px;
@@ -55,16 +57,8 @@
             color:rgba(72,87,113,1);
             line-height:20px;
             margin-top: 10px;
-
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;            /*设置p元素最大4行，父元素需填写宽度才明显*/
             text-overflow: ellipsis;
             overflow: hidden;
-            /* autoprefixer: off */
-            -webkit-box-orient: vertical;
-            /* autoprefixer: on */
-             /*因为代码环境的关系-webkit-box-orient被过滤掉了 autoprefixer 这个关键字可以免除被过滤的动作*/
         }
         .bottom{
             width: 100%;
@@ -75,12 +69,7 @@
             color:rgba(177,188,209,1);
             line-height:17px;
             position: absolute;
-            top: 125%;
-            .datetime{
-                position: absolute;
-                left: 30%;
-                top: 0%;
-            }
+            bottom: 1%;
         }
     }
     .title2{

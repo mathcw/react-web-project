@@ -5,6 +5,7 @@
   height: 304px;
 }
 .add {
+  width: 100%;
   .breadcrumb {
     height: 44px;
     display: flex;
@@ -12,6 +13,7 @@
   }
   .addMod {
     margin-top: 10px;
+    
     // 产品图片
     .imgWrapper {
       background: #fff;
@@ -77,7 +79,6 @@
       background: #fff;
       padding: 5px 16px;
       margin-top: 1px;
-      height: 82px;
       overflow: hidden;
     }
     .content2 {
@@ -193,6 +194,68 @@
         justify-content: center;
         align-items: center;
       }
+    }
+  }
+}
+
+.zjTheme{
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 1px 4px;
+  .placeholder{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    opacity: 0.4;
+  }
+  .item{
+    position: relative;
+    display: flex;
+    flex: none;
+    box-sizing: border-box;
+    max-width: 100%;
+    height: 24px;
+    margin-top: 2px;
+    margin-right: 4px;
+    margin-bottom: 2px;
+    padding: 0 4px 0 8px;
+    line-height: 22px;
+    background: #f5f5f5;
+    border: 1px solid #f0f0f0;
+    border-radius: 2px;
+    cursor: default;
+    transition: font-size 0.3s, line-height 0.3s, height 0.3s;
+    .itemContent{
+      display: inline-block;
+      margin-right: 4px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      transform: translateY(-1px);
+    }
+    .remove{
+      color: inherit;
+      font-style: normal;
+      line-height: 0;
+      text-align: center;
+      text-transform: none;
+      vertical-align: -0.125em;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      color: rgba(0, 0, 0, 0.45);
+      font-weight: bold;
+      font-size: 12px;
+      line-height: inherit;
+      cursor: pointer;
+      display: inline-block;
+      font-size: 10px;
     }
   }
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, message, Tag, Modal, Button } from 'antd';
+import { Col, message, Tag, Modal, Button, Row } from 'antd';
 import { IActionPageProps } from '@/viewconfig/ActionConfig';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper/actionPageHeader';
 import renderHeaderBtns from '@/components/PageHeaderWrapper/headerBtns';
@@ -111,106 +111,101 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
         }
 
         return (
-            <Col className={styles.Schedule}>
-                <Col className={styles.title} >
+            <div className={styles.Schedule}>
+                <div className={styles.title} >
                     团期信息
-              </Col>
-                <Col className={styles.top}>
-                    <Col className={styles.imgBox} xs={3} sm={3} md={3} lg={3}>
+                </div>
+                <Row className={styles.item}>
+                    <Col className={styles.imgBox} xs={24} sm={24} md={3} lg={3}>
                         <div className={styles.imgWrapper}>
                             <img
                                 src={group.list_pic || defaultPng}
                                 className={styles.img}
                                 alt="产品图片"
                             />
-                            <span className={[styles.imgText, 'text-overflow'].join(' ')}>{`产品编号P0${group.pd_id}`}</span>
+                            <div className={styles.imgText}>
+                                {`产品编号P0${group.pd_id}`}
+                            </div>
                         </div>
                     </Col>
-                    <Col style={{ paddingLeft: '20px', flex: '1' }} xs={21} sm={21} md={21} lg={21}>
-                        <Col className={styles.RTop}>
-                            <Tag color="blue">团队游</Tag>
-                            <span className={[styles.name, 'text-overflow'].join(' ')}>
-                                {group.pd_name}
-                            </span>
-
-                        </Col>
-                        <Col className={styles.RCenter}>
-                            <Col span={18} className={styles.RCenterL}>
+                    <Col xs={24} sm={24} md={18} lg={18}>
+                        <div className={styles.content}>
+                            <Col span={24} className={styles.contentTop}>
+                                <Tag color="blue">团队游</Tag>
+                                <span className={styles.name}>
+                                    {group.pd_name}
+                                </span>
+                            </Col>
+                            <Col span={24} className={styles.contentCenter}>
                                 <Col span={6}>
                                     <div className={styles.cell}>
-                                        <span className={styles.lable}>出团日期：</span>{' '}
+                                        <span className={styles.lable}>出团日期：</span>
                                         <span className={[styles.text, 'text-overflow'].join(' ')}>{group.dep_date}</span>
                                     </div>
                                     <div className={styles.cell}>
-                                        <span className={styles.lable}>回团日期：</span>{' '}
-                                        <span className={[styles.text, 'text-overflow'].join(' ')}>{group.back_date}</span>{' '}
+                                        <span className={styles.lable}>回团日期：</span>
+                                        <span className={[styles.text, 'text-overflow'].join(' ')}>{group.back_date}</span>
                                     </div>
                                     <div className={styles.cell}>
-                                        <span className={styles.lable}>出发城市：</span>{' '}
-                                        <span className={[styles.text, 'text-overflow'].join(' ')}>{colDisplay(group.dep_city_id, 'City', data)}</span>{' '}
+                                        <span className={styles.lable}>出发城市：</span>
+                                        <span className={[styles.text, 'text-overflow'].join(' ')}>{colDisplay(group.dep_city_id, 'City', data)}</span>
                                     </div>
                                 </Col>
                                 <Col span={6}>
                                     <div className={styles.cell}>
-                                        <span className={styles.lable} style={{ display: 'inline-block', minWidth: '48px' }}>供应商：</span>{' '}
-                                        <span className={[styles.text, 'text-overflow'].join(' ')}>{group.brand}</span>{' '}
+                                        <span className={styles.lable}>供应商：</span>
+                                        <span className={[styles.text, 'text-overflow'].join(' ')}>{group.brand}</span>
                                     </div>
                                     <div className={styles.cell}>
-                                        <span className={styles.lable}>团&nbsp;&nbsp;&nbsp;号：</span>{' '}
+                                        <span className={styles.lable}>团&nbsp;&nbsp;&nbsp;号：</span>
                                         <span className={[styles.text, 'text-overflow'].join(' ')}>{group.gp_num}</span>
                                     </div>
-                                    <div className={styles.infoCell} style={{ margin: 0 }}>
+                                    <div className={styles.cell}>
                                         <span className={styles.lable}>控团人： </span>
-                                        <span className={[styles.text, 'text-overflow'].join(' ')}>
-                                            {colDisplay(group.saler_id, 'SupplierSales', data)}
-                                        </span>
+                                        <span className={[styles.text, 'text-overflow'].join(' ')}>{colDisplay(group.saler_id, 'SupplierSales', data)}</span>
                                     </div>
                                 </Col>
                                 <Col span={6}>
                                     <div className={styles.cell}>
-                                        <span className={styles.lable}>同行价：</span>{' '}
+                                        <span className={styles.lable}>同行价：</span>
                                         <span className={[styles.text, 'text-overflow'].join(' ')}>{group.peer_price}</span>
                                     </div>
                                     <div className={styles.cell}>
-                                        <span className={styles.lable}>计划位：</span>{' '}
-                                        <span className={[styles.text, 'text-overflow'].join(' ')}>{group.gp_total}</span>{' '}
+                                        <span className={styles.lable}>计划位：</span>
+                                        <span className={[styles.text, 'text-overflow'].join(' ')}>{group.gp_total}</span>
                                     </div>
                                     <div className={styles.cell}>
-                                        <span className={styles.lable}>库&nbsp;&nbsp;&nbsp;存：</span>{' '}
-                                        <span className={[styles.text, 'text-overflow'].join(' ')}>{group.stock}</span>{' '}
+                                        <span className={styles.lable}>库&nbsp;&nbsp;&nbsp;存： </span>
+                                        <span className={[styles.text, 'text-overflow'].join(' ')}>{group.stock}</span>
                                     </div>
-
-
                                 </Col>
                                 <Col span={6}>
                                     <div className={styles.cell}>
-                                        <span className={styles.lable}>实报：</span>{' '}
+                                        <span className={styles.lable}>实报：</span>
                                         <span className={[styles.text, 'text-overflow'].join(' ')}>{group.confirmation_num}</span>
                                     </div>
                                     <div className={styles.cell}>
-                                        <span className={styles.lable}>占位：</span>{' '}
-                                        <span className={[styles.text, 'text-overflow'].join(' ')}>{group.reservation_num}</span>{' '}
+                                        <span className={styles.lable}>占位：</span>
+                                        <span className={[styles.text, 'text-overflow'].join(' ')}>{group.reservation_num}</span>
                                     </div>
                                     <div className={styles.cell}>
-                                        <span className={styles.lable}>剩余：</span>{' '}
-                                        <span className={[styles.text, 'text-overflow'].join(' ')}>{group.remain}</span>{' '}
+                                        <span className={styles.lable}>剩余： </span>
+                                        <span className={[styles.text, 'text-overflow'].join(' ')}>{group.remain}</span>
                                     </div>
                                 </Col>
                             </Col>
-                        </Col>
-                        <Col span={6} className={styles.RCenterR}>
-                            <Col span={24} className={styles.infoRow}>
-                                <Col className={styles.infoCell} style={{ margin: 0 }}>
-                                    <div className={styles.lable}>团态 </div>
-                                    <div style={flowColor} className={[styles.text, 'text-overflow'].join(' ')}>
-                                        {colDisplay(group.state, 'GroupState', data)}
-                                    </div>
-                                </Col>
-                            </Col>
-                        </Col>
+                        </div>
                     </Col>
-                </Col>
-            </Col>
+                    <Col xs={24} sm={24} md={3} lg={3}>
+                        <Row className={styles.right}>
+                            <Col className={styles.rightlable} span={24}>团态</Col>
+                            <Col className={styles.rightstate} span={24} style={flowColor}>
+                                {colDisplay(group.state, 'GroupState', data)}
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+            </div>
         );
     }
 
@@ -221,8 +216,8 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
             className: 'modal-confirm-body',
             icon: <></>,
             content: (
-                <Col className={styles.tourist}>
-                    <Col span={24} className={styles.tableBorder}>
+                <div className={styles.tourist}>
+                    <Row className={styles.tableBorder}>
                         <Col span={4} className={styles.tableTitle}>
                             <span className={styles.key}>姓名 </span>
                         </Col>
@@ -238,10 +233,10 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                         <Col span={6} className={styles.tableTitle}>
                             <span className={styles.key}>证件号码 </span>
                         </Col>
-                    </Col>
+                    </Row>
                     <div className={styles.tableDiv}>
                         {data['原名单'] && data['原名单'].map((val: any, mdkey: number) => (
-                            <Col span={24} className={styles.tableBorder} key={'名单'+mdkey}>
+                            <Row className={styles.tableBorder} key={'名单' + mdkey}>
                                 <Col span={4} className={styles.tableBody}>
                                     <span className={styles.key}>{val.name} </span>
                                 </Col>
@@ -257,10 +252,10 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                                 <Col span={6} className={styles.tableBody}>
                                     <span className={styles.key}>{val.certificate_num} </span>
                                 </Col>
-                            </Col>
+                            </Row>
                         ))}
                     </div>
-                </Col>
+                </div>
             ),
             onOk() { },
             okText: '关闭',
@@ -270,35 +265,37 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
     const baseInfo = () => {
         const detail = data['订单信息'];
         return (
-            <Col className={[styles.childrenMod, 'clear'].join(' ')}>
-                <Col className={styles.ModTitle}>基础信息</Col>
-                <Col className={styles.ModContent}>
-                    <Col className={[styles.ModCell, 'clear'].join(' ')}>
+            <div className={[styles.childrenMod, 'clear'].join(' ')}>
+                <div className={styles.ModTitle}>基础信息</div>
+                <div className={styles.ModContent}>
+                    <Row className={[styles.ModCell, 'clear'].join(' ')}>
                         <Col span={6}>客户简称： {detail.retailer_name}</Col>
                         <Col span={7}>订单编号： D0{detail.retailer_order_id}</Col>
                         <Col span={9}>报名人： {detail.retailer_name}-{detail.creator.split('-')[2]}-{detail.creator.split('-')[3]}</Col>
-                    </Col>
-                    <Col className={[styles.ModCell, 'clear'].join(' ')}>
+                    </Row>
+                    <Row className={[styles.ModCell, 'clear'].join(' ')}>
                         <Col span={6}>产品编号： P0{detail.pd_id}</Col>
                         <Col span={7}>
-                            <Col span={11}>
-                                订单人数： <span>{detail.num_of_people}人</span>
-                            </Col>
-                            <Col span={11}>
-                                <Button type='primary' size='small' onClick={()=>lookOver()}>名单详情</Button>
-                            </Col>
+                            <Row>
+                                <Col span={11}>
+                                    订单人数： <span>{detail.num_of_people}人</span>
+                                </Col>
+                                <Col span={11}>
+                                    <Button type='primary' size='small' onClick={() => lookOver()}>名单详情</Button>
+                                </Col>
+                            </Row>
                         </Col>
                         <Col span={9}>确认人： {`${detail.supplier_brand}-${detail.name}-${detail.mobile}`}</Col>
-                    </Col>
-                    <Col className={[styles.ModCell, 'clear'].join(' ')}>
+                    </Row>
+                    <Row className={[styles.ModCell, 'clear'].join(' ')}>
                         <Col span={6}>团&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号： {detail.gp_num}</Col>
                         <Col span={7}>订单状态：
                         {colDisplay(detail.state, 'OrderState', detail)}
                         </Col>
                         <Col span={9}>接单人： {detail.retailer_name}-{detail.assitant.split('-')[2]}-{detail.assitant.split('-')[3]}</Col>
-                    </Col>
-                </Col>
-            </Col>
+                    </Row>
+                </div>
+            </div>
         );
     }
 
@@ -306,18 +303,18 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
         const detail = data['订单信息'];
         const settle_detail = data['应转费用'];
         return (
-            <Col className={[styles.childrenMod, 'clear'].join(' ')}>
-                <Col className={styles.ModTitle}>应转明细</Col>
-                <Col className={styles.ModContent}>
-                    <Col className={[styles.ModCell, 'clear'].join(' ')}>
+            <div className={[styles.childrenMod, 'clear'].join(' ')}>
+                <div className={styles.ModTitle}>应转明细</div>
+                <div className={styles.ModContent}>
+                    <Row className={[styles.ModCell, 'clear'].join(' ')}>
                         <Col span={6}>转入对象： {detail.assitant}</Col>
                         <Col span={6}>应转金额： {detail.settle_amount}</Col>
                         <Col span={6}>已转金额： {detail.settled_amount}</Col>
                         <Col span={6}>未转金额： {detail.settle_amount - detail.settled_amount}</Col>
                         <span className={styles.detail} onClick={() => setOpen(!open)}> {open ? '收起' : '详情'}</span>
-                    </Col>
-                    <Col className={styles.childrenother} style={open ? { display: 'block' } : { display: 'none' }}>
-                        <Col className={[styles.cTitle, 'clear'].join(' ')}>
+                    </Row>
+                    <div className={styles.childrenother} style={open ? { display: 'block' } : { display: 'none' }}>
+                        <Row className={[styles.cTitle, 'clear'].join(' ')}>
                             <Col span={6} className="text-center">
                                 价格类型
                             </Col>
@@ -330,46 +327,46 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                             <Col span={6} className="text-center">
                                 小计
                             </Col>
-                        </Col>
+                        </Row>
                         {
-                            settle_detail && settle_detail.map((snap: any,yzIndex:number) => (
-                                <Col className={[styles.cCell, 'clear'].join(' ')} key={'应转'+yzIndex}>
+                            settle_detail && settle_detail.map((snap: any, yzIndex: number) => (
+                                <Row className={[styles.cCell, 'clear'].join(' ')} key={'应转' + yzIndex}>
                                     <Col span={6} className="text-center">{snap.price_comment}</Col>
                                     <Col span={6} className="text-center">{snap.peer_price}</Col>
                                     <Col span={6} className="text-center">{snap.number}</Col>
                                     <Col span={6} className="text-center">{snap.total}</Col>
-                                </Col>
+                                </Row>
                             ))
                         }
-                    </Col>
-                </Col>
-            </Col>
+                    </div>
+                </div>
+            </div>
         );
     }
 
     const commentInfo = () => {
         return (
-            <Col className={[styles.childrenMod, 'clear'].join(' ')}>
-                <Col className={styles.ModTitle}>订单备注</Col>
-                <Col className={styles.ModContent}>
-                    <Col className={styles.childrenother}>
-                        <Col className={[styles.cTitle, 'clear'].join(' ')}>
+            <div className={[styles.childrenMod, 'clear'].join(' ')}>
+                <div className={styles.ModTitle}>订单备注</div>
+                <div className={styles.ModContent}>
+                    <div className={styles.childrenother}>
+                        <Row className={[styles.cTitle, 'clear'].join(' ')}>
                             <Col span={4} className="text-center">备注人</Col>
                             <Col span={6} className="text-center">备注时间</Col>
                             <Col span={14} className="text-center">备注内容</Col>
-                        </Col>
+                        </Row>
                         {
-                            data['订单备注'] && data['订单备注'].map((val: any,cIndex:number) => (
-                                <Col className={[styles.cCell, 'clear'].join(' ')} key={'备注'+cIndex}>
+                            data['订单备注'] && data['订单备注'].map((val: any, cIndex: number) => (
+                                <Row className={[styles.cCell, 'clear'].join(' ')} key={'备注' + cIndex}>
                                     <Col span={4} className="text-center">{val.creator.split('-')[2]}</Col>
                                     <Col span={6} className="text-center">{val.create_at}</Col>
                                     <Col span={14} className="text-center">{val.comment}</Col>
-                                </Col>
+                                </Row>
                             ))
                         }
-                    </Col>
-                </Col>
-            </Col>
+                    </div>
+                </div>
+            </div>
         );
     }
 
@@ -394,7 +391,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                 {baseInfo()}
                 {nzInfo()}
                 {commentInfo()}
-                
+
             </Col>
             <Col className={styles.approve}>
                 <ApproveModal history={data['审批记录'] || []} passOk={passOk} rejectOk={rejectOk} />

@@ -1,19 +1,11 @@
 import React, { useState } from "react";
-import {
-  Form,
-  Select,
-  Input,
-  DatePicker,
-  TimePicker,
-  Col,
-  InputNumber,
-  Button
-} from "antd";
+import '@ant-design/compatible/assets/index.css';
+import { Select, Input, DatePicker, TimePicker, Col, InputNumber, Button,Form } from "antd";
+import { FormItemProps } from "antd/lib/form";
 import { getEnum } from "@/utils/enum";
 
 import styles from "./index.less";
-import { ModeOption } from "antd/lib/select";
-import { FormItemProps } from "antd/lib/form";
+
 
 const { Option } = Select;
 
@@ -43,7 +35,8 @@ const initFormItemMap = (list: { [field: string]: ICfg }) => {
         <label className={list[field].required ? "ant-form-item-required" : ""}>
           {list[field].text}
         </label>
-      )
+      ),
+      children:null
     };
   });
   return rst;
@@ -116,15 +109,27 @@ const ModalForm: React.FC<IModalForm> = ({
     disabled: boolean = false
   ) => {
     const Enum = getEnum(cfg, data) || [];
-    let mode: ModeOption = "default";
     if (cfg.multi) {
-      mode = "multiple";
+      return <Select
+        showSearch
+        optionFilterProp="children"
+        mode="multiple"
+        onChange={(val: any) => onSelectChange(field, val)}
+        getPopupContainer={node => node}
+        disabled={disabled}
+        value={data[field]}
+      >
+        {Object.keys(Enum).map(key => (
+          <Option key={key} value={Enum[key]}>
+            {Enum[key]}
+          </Option>
+        ))}
+      </Select>
     }
     return (
       <Select
         showSearch
         optionFilterProp="children"
-        mode={mode}
         onChange={(val: any) => onSelectChange(field, val)}
         getPopupContainer={node => node}
         disabled={disabled}
@@ -145,15 +150,29 @@ const ModalForm: React.FC<IModalForm> = ({
     disabled: boolean = false
   ) => {
     const Enum = getEnum(cfg, data) || {};
-    let mode: ModeOption = "default";
     if (cfg.multi) {
-      mode = "multiple";
+      return (
+        <Select
+          showSearch
+          optionFilterProp="children"
+          mode="multiple"
+          onChange={(val: any) => onSelectChange(field, val)}
+          getPopupContainer={node => node}
+          disabled={disabled}
+          value={data[field]}
+        >
+          {Object.keys(Enum).map(key => (
+            <Option key={key} value={key}>
+              {Enum[key]}
+            </Option>
+          ))}
+        </Select>
+      );
     }
     return (
       <Select
         showSearch
         optionFilterProp="children"
-        mode={mode}
         onChange={(val: any) => onSelectChange(field, val)}
         getPopupContainer={node => node}
         disabled={disabled}

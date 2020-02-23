@@ -16,11 +16,11 @@ interface ICell {
   required: boolean;
   editable: boolean;
   update?: (
-    row: number,
+    row: string,
     dataIndex: string | number,
     value?: string | number
   ) => void;
-  title: string | number;
+  title: string;
   type: string;
   render: (
     record: object,
@@ -29,7 +29,7 @@ interface ICell {
     value?: string | number,
   ) => JSX.Element;
   isOp: boolean;
-  [propName:string]:any;
+  [propName: string]: any;
 }
 
 const Cell: React.FC<ICell> = ({
@@ -44,16 +44,17 @@ const Cell: React.FC<ICell> = ({
   type,
   render,
   isOp = false,
+  children,
   ...restProps
 }) => {
   const [value, setValue] = React.useState(initValue);
   const [error, setError] = React.useState(false);
   const [editing, setEditing] = React.useState(false);
 
-  const [openShow,setOpenShow] = React.useState(true); //select open /close 状态
+  const [openShow, setOpenShow] = React.useState(true); //select open /close 状态
 
-  const [initOpenPickerStatus,setInitOpenPickerStatus] = React.useState(true);//picker 的初始open状态
-  const [openPicker,setOpenPicker] = React.useState(false);
+  const [initOpenPickerStatus, setInitOpenPickerStatus] = React.useState(true);//picker 的初始open状态
+  const [openPicker, setOpenPicker] = React.useState(false);
   const CellRef = useRef<HTMLTableDataCellElement>(null);
 
   const oldRef = useRef<string | number | undefined>();
@@ -65,7 +66,7 @@ const Cell: React.FC<ICell> = ({
   const oldInitValueRef = useRef<string | number | undefined>();
   useEffect(() => {
     oldInitValueRef.current = initValue;
-  },[initValue]);
+  }, [initValue]);
   const oldInitValue = oldInitValueRef.current; // 保存上次的initvalue值 用于判断是否需要setvalue
 
   const intputRef = useRef<any>(null);
@@ -100,11 +101,11 @@ const Cell: React.FC<ICell> = ({
     }
   }, [value]) // error check
 
-  useEffect(()=>{
-    if (oldInitValue !==initValue && value !== initValue) {
+  useEffect(() => {
+    if (oldInitValue !== initValue && value !== initValue) {
       setValue(initValue);
     }
-  },[value,initValue]) // initvalue发生变化 同时不等于value 则setvalue
+  }, [value, initValue]) // initvalue发生变化 同时不等于value 则setvalue
 
   useEffect(() => {
     if (editing) {
@@ -114,23 +115,23 @@ const Cell: React.FC<ICell> = ({
 
   useEffect(() => {
     const clickListen = (e: { target: any }) => {
-      if(editing){
-        if(type){
+      if (editing) {
+        if (type) {
           if (CellRef.current && CellRef.current !== e.target && !CellRef.current.contains(e.target)) {
-            if((type ==='date' ||type === 'time')){
-              if(!initOpenPickerStatus && !openPicker){
+            if ((type === 'date' || type === 'time')) {
+              if (!initOpenPickerStatus && !openPicker) {
                 setEditing(false);
                 if (update) update(rowIndex, dataIndex, value);
               }
-            }else if(type === 'intNumber' || type === 'number'){
+            } else if (type === 'intNumber' || type === 'number') {
               setEditing(false);
               if (update) update(rowIndex, dataIndex, value);
-            }else if(!openShow){
+            } else if (!openShow) {
               setEditing(false);
               if (update) update(rowIndex, dataIndex, value);
             }
           }
-        }else if(CellRef.current && CellRef.current !== e.target && !CellRef.current.contains(e.target)){
+        } else if (CellRef.current && CellRef.current !== e.target && !CellRef.current.contains(e.target)) {
           setEditing(false);
           if (update) update(rowIndex, dataIndex, value);
         }
@@ -142,21 +143,20 @@ const Cell: React.FC<ICell> = ({
     return () => {
       document.removeEventListener("click", clickListen, true);
     };
-  }, [openPicker,initOpenPickerStatus,openShow,editing,type,value,update]);
+  }, [openPicker, initOpenPickerStatus, openShow, editing, type, value, update]);
 
   const renderEditing = () => {
     if (type) {
       switch (type) {
         case 'date':
           return (
-              <DatePicker
-                open={initOpenPickerStatus}
-                format="YYYY-MM-DD"
-                onChange={(date: moment.Moment | null, v: string) => onChange(v)}
-                value={moment(value)}
-                ref={intputRef}
-                onOpenChange={(status:boolean)=>{setOpenPicker(status) ; setInitOpenPickerStatus(status)}}
-              />
+            <DatePicker
+              open={initOpenPickerStatus}
+              format="YYYY-MM-DD"
+              onChange={(date: moment.Moment | null, v: string) => onChange(v)}
+              ref={intputRef}
+              onOpenChange={(status: boolean) => { setOpenPicker(status); setInitOpenPickerStatus(status) }}
+            />
           )
         case 'time':
           return (
@@ -164,10 +164,10 @@ const Cell: React.FC<ICell> = ({
               open={initOpenPickerStatus}
               format="HH:mm:ss"
               placeholder="请选择时间"
-              onChange={(time: moment.Moment, v: string) => onChange(v)}
+              onChange={(time: moment.Moment|null, v: string) => onChange(v)}
               value={moment(value)}
               ref={intputRef}
-              onOpenChange={(status:boolean)=>{setOpenPicker(status) ; setInitOpenPickerStatus(status)}}
+              onOpenChange={(status: boolean) => { setOpenPicker(status); setInitOpenPickerStatus(status) }}
             />
           )
         case 'intNumber':
@@ -201,7 +201,7 @@ const Cell: React.FC<ICell> = ({
               optionFilterProp="children"
               showSearch
               onChange={(v: string | number) => onChange(v)}
-              onDropdownVisibleChange={(status:boolean) =>setOpenShow(status)}
+              onDropdownVisibleChange={(status: boolean) => setOpenShow(status)}
               ref={intputRef}
             >
               {Object.keys(Enum).map(key => (
@@ -226,25 +226,27 @@ const Cell: React.FC<ICell> = ({
     );
   }
   return (
-    <td className={styles.td} ref={CellRef}>
-      {
-        isOp && ( render ? render(record, dataIndex, type, value) : restProps.children)
-      }
-      {
-        !isOp && !editable && <div className={styles.noEditble}>
-          { render ?render(record, dataIndex, type, value): restProps.children}
-        </div>
-      }
-      {
-        editable && editing && <div className={styles.editing}>
-          {renderEditing()}
-        </div>
-      }
-      {
-        editable && !editing && <div className={styles.noEditing} onClick={toggleEdit}>
-          {render ? render(record, dataIndex, type, value) : restProps.children}
-        </div>
-      }
+    <td {...restProps} ref={CellRef}>
+      <div className={styles.td}>
+        {
+          isOp && (render ? render(record, dataIndex, type, value) : children)
+        }
+        {
+          !isOp && !editable && <div className={styles.noEditble}>
+            {render ? render(record, dataIndex, type, value) : children}
+          </div>
+        }
+        {
+          editable && editing && <div className={styles.editing}>
+            {renderEditing()}
+          </div>
+        }
+        {
+          editable && !editing && <div className={styles.noEditing} onClick={toggleEdit}>
+            {render ? render(record, dataIndex, type, value) : children}
+          </div>
+        }
+      </div>
       {error && <span className={styles.ErrorMsg}>{message}</span>}
     </td>
 

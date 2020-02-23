@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import { Form, DatePicker, TimePicker, Input, Col, Button } from 'antd';
+import '@ant-design/compatible/assets/index.css';
+import { DatePicker, TimePicker, Input, Col, Button,Form } from 'antd';
 import { FormItemProps } from 'antd/es/form';
 
 import styles from './index.less';
@@ -25,7 +26,8 @@ const initFormItemMap = (list: { [field: string]: ICfg }) => {
                 <label className={list[field].required ? "ant-form-item-required" : ""}>
                     {list[field].text}
                 </label>
-            )
+            ),
+            children:null
         };
     });
     return rst;
@@ -134,7 +136,7 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                     style={{ width: "100%" }}
                     format="YYYY-MM-DD"
                     value={ moment(data['end_date'], 'YYYY-MM-DD')}
-                    getCalendarContainer={(node)=>{return node as HTMLElement}}
+                    getPopupContainer={(node)=>{return node as HTMLElement}}
                     onChange={val => onChange('end_date', val,'YYYY-MM-DD')}
                 />
             </Form.Item>

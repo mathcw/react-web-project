@@ -11,7 +11,7 @@ export interface IActionPageProps extends ProLayoutProps {
     authority: string;
   };
   location: ProLayoutProps["location"] & {
-    state: {};
+    state: object;
   };
 }
 

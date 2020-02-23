@@ -1,5 +1,6 @@
 import React from 'react';
-import { Steps, Icon } from 'antd';
+import { LoadingOutlined, RollbackOutlined } from '@ant-design/icons';
+import { Steps } from 'antd';
 import { colDisplay } from '@/utils/utils';
 import { StepsProps } from 'antd/lib/steps';
 const { Step } = Steps;
@@ -54,20 +55,20 @@ function renderStep(step: IStep, key: number) {
             return <Step key={key} title={colDisplay(step.opinion, 'Opinion', step)} description={getDescription(step)} status='error' />
         }
         if (step.opinion === '3' || step.opinion === 3) {
-            return <Step key={key} title={colDisplay(step.opinion, 'Opinion', step)} description={getDescription(step)} icon={<Icon type="rollback" />} />
+            return <Step key={key} title={colDisplay(step.opinion, 'Opinion', step)} description={getDescription(step)} icon={<RollbackOutlined />} />;
         }
         if (step.opinion === '4' || step.opinion === 4) {
-            return <Step key={key} title={colDisplay(step.opinion, 'Opinion', step)} description={getDescription(step)} icon={<Icon type="rollback" />} />
+            return <Step key={key} title={colDisplay(step.opinion, 'Opinion', step)} description={getDescription(step)} icon={<RollbackOutlined />} />;
         }
     } else if (step.status === '2' || step.status === 2) {
-        return <Step key={key} title={step.title} description={step.description} icon={<Icon type="loading" />} />
+        return <Step key={key} title={step.title} description={step.description} icon={<LoadingOutlined />} />;
     }
     return null
 }
 
 interface IFlowStep extends StepsProps{
     data:IStep[]
-} 
+}
 
 const FlowSteps:React.FC<IFlowStep> = props =>{
     const {data,...rst} = props;

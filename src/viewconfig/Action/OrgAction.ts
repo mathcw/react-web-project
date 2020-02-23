@@ -87,7 +87,16 @@ const config: ActionConfigItem = {
   查看公告:{
     title: '查看公告',
     path:"/org/announce/see",
-    read:{url:"/org/Announce/read_edit",data:'id'},
+    read:{url:"/org/Announce/read_edit",data:{'id':'id'}},
+    btns:{
+        关闭: {text:'关闭' }
+    }
+  },
+
+  查看公告公告通知:{
+    title: '查看公告',
+    path:"/office/announcement/see",
+    read:{url:"/notice/Announcement/read_see",data:{'id':'id'}},
     btns:{
         关闭: {text:'关闭' }
     }

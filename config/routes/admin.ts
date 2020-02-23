@@ -5,7 +5,6 @@ const routes: Array<IRouteValue> = [
     routes: [
       {
         name: "办公中心",
-        icon: "sitemap",
         path: "/office",
         routes: [
           {
@@ -23,6 +22,13 @@ const routes: Array<IRouteValue> = [
             component: "./office/announcement/list"
           },
           {
+            path:"/office/announcement/see",
+            name:"查看公告",
+            viewConfig:"查看公告公告通知",
+            hideInMenu:true,
+            component:"./org/announce/see",
+          },
+          {
             path: "/office/msgflow/list",
             name: "审批任务",
             authority: "审批任务",
@@ -33,7 +39,6 @@ const routes: Array<IRouteValue> = [
       },
       {
         name: "行政管理",
-        icon: "sitemap",
         path: "/org",
         routes: [
           {
@@ -107,7 +112,6 @@ const routes: Array<IRouteValue> = [
           {
             path:"/org/announce/see",
             name:"查看公告",
-            authority:"查看公告",
             viewConfig:"查看公告",
             hideInMenu:true,
             component:"./org/announce/see",
@@ -140,7 +144,6 @@ const routes: Array<IRouteValue> = [
       },
       {
         name: "商家管理",
-        icon: "sitemap",
         path: "/supplierManagement",
         routes: [
           {
@@ -211,7 +214,6 @@ const routes: Array<IRouteValue> = [
       },
       {
         name: "产品管理",
-        icon: "sitemap",
         path: "/productManage",
         routes: [
           {
@@ -248,7 +250,6 @@ const routes: Array<IRouteValue> = [
       },
       {
         name: "业务配置",
-        icon: "sitemap",
         path: "/business",
         routes: [
           {
@@ -318,7 +319,6 @@ const routes: Array<IRouteValue> = [
       },
       {
         name: "系统设置",
-        icon: "sitemap",
         path: "/sys",
         routes: [
           {

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { Col, Icon, Input, InputNumber, Button } from 'antd';
+import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { Col, Input, InputNumber, Button } from 'antd';
 
 import styles from './morePrice.less';
 interface IProps {
@@ -211,12 +212,10 @@ class MorePrice extends React.Component<IProps, IState> {
                         <Col className={styles.modTitle}>
                             <Col className={styles.modTitleText}>其他价格</Col>
                             <Col className={styles.add} style={{ marginRight: '-70px' }}>
-                                <Icon
-                                    type="plus-circle"
+                                <PlusCircleOutlined
                                     className="pointer"
                                     style={{ color: '#1890FF' }}
-                                    onClick={() => this.add_other_price()}
-                                />
+                                    onClick={() => this.add_other_price()} />
                             </Col>
                         </Col>
                         <Col className={[styles.modContent, 'clear'].join(' ')}>
@@ -270,11 +269,7 @@ class MorePrice extends React.Component<IProps, IState> {
                                         </Col>
                                     </Col>
                                     {/* <Col className={styles.cell}> */}
-                                    <Icon
-                                        type="minus-circle"
-                                        className={styles.delete}
-                                        onClick={() => this.del_other_price(index)}
-                                    />
+                                    <MinusCircleOutlined className={styles.delete} onClick={() => this.del_other_price(index)} />
                                     {/* </Col> */}
                                 </Col>
                             );

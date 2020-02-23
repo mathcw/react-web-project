@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Col, Input, Button } from 'antd';
+import { Modal, Col, Input, Button, Row } from 'antd';
 
 import styles from './index.less';
 import { getEnum } from '@/utils/enum';
@@ -14,24 +14,26 @@ interface IModalProps {
 
 const renderFlow = (history: any[]) => {
     return (
-        <Col >
-            <Col className={styles.content}>
-                {history.map(item => (
-                    <Col xs={24} sm={24} md={24} lg={24} style={{ lineHeight: '36px' }}>
-                        <Col xs={12} sm={12} md={6} lg={6}>
-                            操作人:{getEnum({ type: 'Account' })[item.account_id]}
-                        </Col>
-                        <Col xs={12} sm={12} md={6} lg={6}>
-                            审批意见:{getEnum({ type: 'Opinion' })[item.opinion]}
-                        </Col>
-                        <Col xs={12} sm={12} md={6} lg={6}>
-                            时间:{item.create_at}
-                        </Col>
-                        <Col span={24}>备注:{item.comment}</Col>
+        <div className={styles.content}>
+            {history.map(item => (
+                <>
+                <Row style={{ lineHeight: '36px' }}>
+                    <Col xs={12} sm={12} md={8} lg={8}>
+                        操作人:{getEnum({ type: 'Account' })[item.account_id]}
                     </Col>
-                ))}
-            </Col>
-        </Col>
+                    <Col xs={12} sm={12} md={8} lg={8}>
+                        审批意见:{getEnum({ type: 'Opinion' })[item.opinion]}
+                    </Col>
+                    <Col xs={12} sm={12} md={8} lg={8}>
+                        时间:{item.create_at}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span={24}>备注:{item.comment}</Col>
+                </Row>
+                </>
+            ))}
+        </div>
     );
 };
 
@@ -70,21 +72,21 @@ export const ApproveModal: React.FC<IModalProps> = ({ history, passOk, passCance
     }
 
     return (<>
-        <Col span={24} className={styles.title}>审批记录:</Col>
-        <Col>{renderFlow(history)}</Col>
-        <Col span={24} className={styles.title}>本次备注信息:</Col>
-        <Col className={styles.content}>
+        <div className={styles.title}>审批记录:</div>
+        <>{renderFlow(history)}</>
+        <div className={styles.title}>本次备注信息:</div>
+        <div className={styles.content}>
             <Input.TextArea
                 value={comment}
                 placeholder="请输入审批备注"
                 autoSize={{ minRows: 4, maxRows: 8 }}
                 onChange={e => setComment(e.target.value)}
             />
-            <Col className={styles.footerBtn}>
+            <div className={styles.footerBtn}>
                 <Button className={styles.confirm} onClick={() => pass()}>通过</Button>
                 <Button className={styles.reject} onClick={() => reject()}>不通过</Button>
-            </Col>
-        </Col>
+            </div>
+        </div>
         <Modal
             title="审批通过"
             visible={passModal}

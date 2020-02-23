@@ -104,7 +104,9 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
         if (menuItemProps.isUrl || menuItemProps.children) {
           return defaultDom;
         }
-        return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+        if(menuItemProps.path)
+          return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+        return null
       }}
       breadcrumbRender={(routers = []) => [
         {

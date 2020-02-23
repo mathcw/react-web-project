@@ -1,6 +1,7 @@
 import React, { useState,useRef } from 'react';
 import GroupTour from './index';
-import { Tabs, Col, Input, InputNumber, Icon, Button, DatePicker, Select } from 'antd';
+import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { Tabs, Col, Input, InputNumber, Button, DatePicker, Select } from 'antd';
 
 import styles from './editModal.less';
 import moment from 'moment';
@@ -180,12 +181,10 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                                     <Col className={styles.modLabel}>直客价</Col>
                                 </Col>
                                 <Col span={1} className={styles.add}>
-                                    <Icon
-                                        type="plus-circle"
+                                    <PlusCircleOutlined
                                         className="pointer"
                                         style={{ color: '#1890FF' }}
-                                        onClick={() => addOtherPrice()}
-                                    />
+                                        onClick={() => addOtherPrice()} />
                                 </Col>
                             </Col>
                             {data['其它价格'].map((row: any, index: number) => {
@@ -208,12 +207,10 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                                                 </Col>
                                             </Col>
                                             <Col span={1} className={styles.minus}>
-                                                <Icon
-                                                    type="minus-circle"
+                                                <MinusCircleOutlined
                                                     className={styles.delete}
                                                     style={{ color: '#ff4d4f' }}
-                                                    onClick={row => delOtherPrice(index)}
-                                                />
+                                                    onClick={row => delOtherPrice(index)} />
                                             </Col>
                                         </Col>
                                     );
@@ -224,7 +221,7 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                     </Col>
                 </Col>
             </Col>
-        )
+        );
     }
 
     const seatTab = () => {
@@ -321,13 +318,13 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                                 <Col span={12} className={styles.cell}>
                                     <Col className={styles.modLabel}>出团日期</Col>
                                     <Col className={styles.modValue}>
-                                        <DatePicker value={moment(data.dep_date)} getCalendarContainer={(node) => ref.current as HTMLElement} onChange={(date, dateString) => inputChange(dateString, 'dep_date')} />
+                                        <DatePicker value={moment(data.dep_date)} getPopupContainer={(node) => ref.current as HTMLElement} onChange={(date, dateString) => inputChange(dateString, 'dep_date')} />
                                     </Col>
                                 </Col>
                                 <Col span={12} className={styles.cell}>
                                     <Col className={styles.modLabel}>回团日期</Col>
                                     <Col className={styles.modValue}>
-                                        <DatePicker value={moment(data.back_date)} getCalendarContainer={(node) => ref.current as HTMLElement} onChange={(date, dateString) => inputChange(dateString, 'back_date')} />
+                                        <DatePicker value={moment(data.back_date)} getPopupContainer={(node) => ref.current as HTMLElement} onChange={(date, dateString) => inputChange(dateString, 'back_date')} />
                                     </Col>
                                 </Col>
                             </Col>
@@ -373,7 +370,7 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                                             onChange={(val: any) => inputChange(val, 'state')}
                                         >
                                             {Object.keys(getEnum('GroupStateEdit')).map((key) =>
-                                                <Option key={key} >{getEnum('GroupStateEdit')[key]}</Option>
+                                                <Option key={key} value={key}>{getEnum('GroupStateEdit')[key]}</Option>
                                             )}
                                         </Select>
                                     </Col>

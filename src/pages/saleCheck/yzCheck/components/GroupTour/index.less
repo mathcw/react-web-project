@@ -1,308 +1,262 @@
 .OrderList {
-    margin-top: 10px;
-    &:hover {
-      box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
-        0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  margin: 12px 0;
+  background: #fff;
+  overflow: hidden;
+  &:hover {
+    box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+      0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  }
+  .focus {
+    box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+      0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .item {
+    position: relative;
+    padding: 10px;
+    border: 1px solid #edf1f5;
+    .active {
+      border-color: #377dea !important;
     }
-    .focus {
-      box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
-        0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+    .imgBox {
+      display: flex;
+      flex-direction: column;
+      .img {
+        width: 100%;
+        height: 85%;
+        border-radius: 4px 4px 0 0;
+      }
+      .imgText {
+        font-size: 11px;
+        width: 100%;
+        height: 15%;
+        line-height: 24px;
+        text-align: center;
+        border: 1px solid #d9d9d9;
+        border-radius: 0 0 4px 4px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
     }
-    .headerTags {
-      font-size: 12px;
-      font-weight: 400;
-      color: #b1bcd1;
-      margin-left: 40px;
-      display: inline-block;
-      .itemTag {
-        padding-bottom: 2px;
-        margin-right: 24px;
+    .content {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      padding-left: 20px;
+      .contentTop {
+        .name {
+          max-width: 500px;
+          font-size: 16px;
+          line-height: 24px;
+          margin-left: 10px;
+        }
+      }
+      .contentCenter {
+        display: flex;
+        font-size: 12px;
+        padding-top: 16px;
+        text-align: left;
+        line-height: 24px;
+        padding-right: 8px;
+        .cell {
+          display: flex;
+          overflow: hidden;
+        }
+        .lable {
+          color: #b1bcd1;
+          display: inline-block;
+        }
+        .text {
+          display: inline-block;
+          vertical-align: bottom;
+        }
+      }
+      .contentBottom {
+        text-align: center;
+        color: #ee921a;
+        font-size: 14px;
+        .open {
+          transform: rotate(-90deg);
+        }
+        .close {
+          transform: rotate(90deg);
+        }
+      }
+    }
+    .right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .rightlable {
+        font-size: 14px;
+        font-weight: 400;
+        color: rgba(72, 87, 113, 1);
+        line-height: 20px;
+      }
+      .rightstate {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+      }
+      .plan {
+        display: flex;
+        flex-direction: column;
+        margin-top: 4px;
         cursor: pointer;
-      }
-    }
-  
-    .item {
-      border-radius: 4px;
-      .active {
-        border-color: #377dea !important;
-      }
-      .list {
-        background: #fff;
-        border: 1px solid #edf1f5;
-        border-radius: 4px;
-        height: 160px;
-        padding: 16px;
-        .itemHeader {
-          font-size: 12px;
-          line-height: 40px;
-          padding: 0 24px 0 10px;
-          border-bottom: 1px solid #edf1f5;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          .hLeft {
-            font-weight: bold;
-          }
-          .hRight {
-            color: #b1bcd1;
-          }
+        .planimg {
+          width: 25px;
+          height: 25px;
         }
-  
-        .content {
+        .query {
           font-size: 12px;
-          .imgBox {
-            .imgWrapper {
-              width: 138px;
-              height: 102px;
-              position: relative;
-              .img {
-                width: 100%;
-                height: 100%;
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                border-radius: 4px 4px 0 0;
-              }
-              .imgText {
-                font-size: 11px;
-                width: 100%;
-                height: 24px;
-                line-height: 22px;
-                text-align: center;
-                color: rgba(72, 87, 113, 1);
-                border-radius: 0px 0px 4px 4px;
-                border: 1px solid rgba(239, 239, 244, 1);
-                border-radius: 0 0 4px 4px;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow: hidden;
-                position: absolute;
-                bottom: -23px;
-                left: 0;
-                right: 0;
-                z-index: 10;
-              }
-            }
-          }
-          .top {
-            margin-bottom: 8px;
-            display: flex;
-            .title {
-              font-size: 14px;
-              line-height: 20px;
-              margin-left: 10px;
-            }
-          }
-          .center {
-            line-height: 22px;
-            .row {
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              .key {
-                color: #b1bcd1;
-                margin-right: 4px;
-                display: inline-block;
-              }
-              .val {
-                width: 64px;
-                margin-right: 6px;
-                display: inline-block;
-              }
-            }
-          }
-          .bottom {
-            margin-top: 8px;
-            display: flex;
-            justify-content: center;
-            color: #ee921a;
-            font-size: 14px;
-            .open {
-              transform: rotate(-90deg);
-            }
-            .close {
-              transform: rotate(90deg);
-            }
-          }
-        }
-  
-        .rightcontent {
-          display: flex;
-          text-align: center;
-          flex-direction: column;
-          .lable1 {
-            font-size: 14px;
-            font-weight: 400;
-            color: rgba(72, 87, 113, 1);
-            line-height: 20px;
-          }
-          .text1 {
-            font-size: 14px;
-            font-weight: 400;
-            color: rgba(0, 163, 106, 1);
-            line-height: 20px;
-          }
-          .plan {
-            margin-top: 4px;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            .text2 {
-              width: 25px;
-              height: 25px;
-            }
-            .query {
-              font-size: 12px;
-              line-height: 25px;
-              color: #518fef;
-            }
-          }
+          line-height: 25px;
+          color: #518fef;
         }
       }
     }
   }
-  
-  .children {
-    background: rgba(242, 244, 248, 1);
-    border-radius: 4px;
-    .childrenMod {
-      margin-bottom: 10px;
-      padding: 0px 0px 4px 16px;
-      background: #fff;
-  
-      .ModTitle {
-        font-size: 15px;
-        line-height: 28px;
-        width: 80px;
-        border: 1px solid #b1bcd4;
-        border-radius: 19px;
-        padding: 0px 8px;
-        margin-top: 3px;
+}
+
+.children {
+  background: rgba(242, 244, 248, 1);
+  border-radius: 4px;
+  .childrenMod {
+    margin-bottom: 10px;
+    padding: 0px 0px 4px 16px;
+    background: #fff;
+
+    .ModTitle {
+      font-size: 15px;
+      line-height: 28px;
+      width: 80px;
+      border: 1px solid #b1bcd4;
+      border-radius: 19px;
+      padding: 0px 8px;
+      margin-top: 3px;
+    }
+    .ModContent {
+      font-size: 12px;
+      .details {
+        background: #fff;
+        margin: 5px 10px;
+        padding: 0 15px;
       }
-      .ModContent {
-        font-size: 12px;
-        .details {
-          background: #fff;
-          margin: 5px 10px;
-          padding: 0 15px;
+      .ModCell {
+        padding: 4px 0;
+        .button {
+          border: none;
+          color: #40a9ff;
+          outline: none;
+          cursor: pointer;
         }
-        .ModCell {
-          padding: 4px 0;
-          .button {
-            border: none;
-            color: #40a9ff;
-            outline: none;
-            cursor: pointer;
-          }
-          .detail {
-            outline: none;
-            border: none;
-            color: #40a9ff;
-            position: absolute;
-            left: 91%;
-            top: 0;
-            cursor: pointer;
-          }
-        }
-        .childrenother {
-          border: 1px solid #d9d9d9;
-          border-radius: 4px;
-          margin-top: 10px;
-          margin-right: 2%;
-          background: #fff;
-          margin-bottom: 5px;
-          .cTitle {
-            line-height: 44px;
-            font-weight: bold;
-            border-bottom: 1px dashed #d9d9d9;
-          }
-          .cCell {
-            line-height: 32px;
-            border-bottom: 1px dashed #d9d9d9;
-          }
-          .cCell:last-child {
-            border-bottom: none;
-          }
+        .detail {
+          outline: none;
+          border: none;
+          color: #40a9ff;
+          position: absolute;
+          left: 91%;
+          top: 0;
+          cursor: pointer;
         }
       }
-      .ModContentoth {
-        font-size: 12px;
+      .childrenother {
         border: 1px solid #d9d9d9;
         border-radius: 4px;
         margin-top: 10px;
         margin-right: 2%;
         background: #fff;
         margin-bottom: 5px;
-        padding: 3px 15px;
-        .ModCell {
-          padding: 4px 0;
-          line-height: 26px;
+        .cTitle {
+          line-height: 44px;
+          font-weight: bold;
           border-bottom: 1px dashed #d9d9d9;
         }
-        .ModCell:last-child {
+        .cCell {
+          line-height: 32px;
+          border-bottom: 1px dashed #d9d9d9;
+        }
+        .cCell:last-child {
           border-bottom: none;
         }
       }
     }
-    .childrenMod:last-child {
-      margin-bottom: 0px;
-    }
-  }
-  
-  .btns {
-    float: right;
-    position: absolute;
-    right: 7%;
-    top: 69%;
-    z-index: 99;
-    .button {
-      background: rgba(255, 255, 255, 1);
+    .ModContentoth {
+      font-size: 12px;
+      border: 1px solid #d9d9d9;
       border-radius: 4px;
-      border: 1px solid rgba(177, 188, 209, 1);
-      font-size: 12px;
-      font-weight: 400;
-      color: rgba(46, 58, 78, 1);
-      line-height: 17px;
-      height: 21px;
-      margin-right: 5px;
+      margin-top: 10px;
+      margin-right: 2%;
+      background: #fff;
+      margin-bottom: 5px;
+      padding: 3px 15px;
+      .ModCell {
+        padding: 4px 0;
+        line-height: 26px;
+        border-bottom: 1px dashed #d9d9d9;
+      }
+      .ModCell:last-child {
+        border-bottom: none;
+      }
     }
   }
-  
-  .tourist {
+  .childrenMod:last-child {
+    margin-bottom: 0px;
+  }
+}
+
+.btns {
+  float: right;
+  position: absolute;
+  right: 4%;
+  bottom: 10px;
+  z-index: 99;
+  .button {
+    background: rgba(255, 255, 255, 1);
+    border-radius: 4px;
+    border: 1px solid rgba(177, 188, 209, 1);
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(46, 58, 78, 1);
+    line-height: 17px;
+    height: 21px;
+    margin-right: 5px;
+  }
+}
+
+.tourist {
+  width: 450px;
+  .tableDiv {
     width: 450px;
-    .tableDiv {
-      width: 450px;
-      max-height: 200px;
-      overflow: auto;
-    }
-    .ListTitle {
-      text-align: left;
-      font-weight: 500;
-      font-size: 15px;
-      color: #2e3a4e;
-      padding-top: 5px;
-    }
-    .tableTitle {
-      text-align: center;
-      font-weight: 420;
-      font-size: 14px;
-      color: #2e3a4e;
-    }
-    .tableBody {
-      text-align: center;
-      font-size: 12px;
-    }
-  
-    .tableBorder {
-      line-height: 32px;
-      border-bottom: 1px dashed #d9d9d9;
-    }
-    .TableButtton {
-      float: right;
-      padding-top: 10px;
-    }
+    max-height: 200px;
+    overflow: auto;
   }
-  
+  .ListTitle {
+    text-align: left;
+    font-weight: 500;
+    font-size: 15px;
+    color: #2e3a4e;
+    padding-top: 5px;
+  }
+  .tableTitle {
+    text-align: center;
+    font-weight: 420;
+    font-size: 14px;
+    color: #2e3a4e;
+  }
+  .tableBody {
+    text-align: center;
+    font-size: 12px;
+  }
+
+  .tableBorder {
+    line-height: 32px;
+    border-bottom: 1px dashed #d9d9d9;
+  }
+  .TableButtton {
+    float: right;
+    padding-top: 10px;
+  }
+}

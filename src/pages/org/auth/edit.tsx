@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Collapse, Modal, Icon, Button, Checkbox, Col, Divider, Input } from 'antd';
+import { LockOutlined, RightOutlined, UserOutlined } from '@ant-design/icons';
+import { Collapse, Modal, Button, Checkbox, Col, Divider, Input } from 'antd';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper/actionPageHeader';
 import renderHeaderBtns from '@/components/PageHeaderWrapper/headerBtns';
@@ -134,24 +135,22 @@ const Page:React.FC<IActionPageProps> = ({route,location})=>{
         // eslint-disable-next-line max-len
         const filterType = { Company: 1, Department: 1, Employee: 1, Supplier: 1, SupplierDepartment: 1, SupplierSales: 1 };
         if (regular) {
-          return (
-            Object.keys(regular).map(field => (
-              filterType[regular[field].type] === 1 &&
-              <Button
-                key={`${mod}/${field}`}
-                onClick={() => editPemFilter({ mod, field, regular, type: regular[field].auth_type || regular[field].type })}
-                className={styles.filterItemButton}
-              >
-                {// eslint-disable-next-line eqeqeq
-                  filters[mod] && filters[mod][field] && filters[mod][field][0] != '-1' && <Icon type="lock" className={styles.filterIconLock} />
-                }
-                {// eslint-disable-next-line eqeqeq
-                  filters[mod] && filters[mod][field] && filters[mod][field][0] == '-1' && <Icon type="user" className={styles.filterIconselfLock} />
-                }
-                {regular[field].text}
-              </Button>
-            ))
-          )
+          return Object.keys(regular).map(field => (
+            filterType[regular[field].type] === 1 &&
+            <Button
+              key={`${mod}/${field}`}
+              onClick={() => editPemFilter({ mod, field, regular, type: regular[field].auth_type || regular[field].type })}
+              className={styles.filterItemButton}
+            >
+              {// eslint-disable-next-line eqeqeq
+                filters[mod] && filters[mod][field] && filters[mod][field][0] != '-1' && <LockOutlined className={styles.filterIconLock} />
+              }
+              {// eslint-disable-next-line eqeqeq
+                filters[mod] && filters[mod][field] && filters[mod][field][0] == '-1' && <UserOutlined className={styles.filterIconselfLock} />
+              }
+              {regular[field].text}
+            </Button>
+          ));
         }
         return null;
     }
@@ -162,7 +161,7 @@ const Page:React.FC<IActionPageProps> = ({route,location})=>{
           <Collapse
             bordered={false}
             defaultActiveKey={['1']}
-            expandIcon={({ isActive }) => <Icon type="right" rotate={isActive ? 90 : 0} />}
+            expandIcon={({ isActive }) => <RightOutlined rotate={isActive ? 90 : 0} />}
           >
             {Object.keys(menu).map(menuKey => (
               <Panel header={menuKey} key={menuKey}>
@@ -220,47 +219,47 @@ const Page:React.FC<IActionPageProps> = ({route,location})=>{
 
     const {btns} = useActionBtn(viewConfig,actionMap);
 
-    return <PageHeaderWrapper
-            title={cfg.title || ''}
-            extra={renderHeaderBtns(btns)}
-        >
-        <Collapse
-            bordered={false}
-            defaultActiveKey={['1']}
-            expandIcon={({ isActive }) => <Icon type="right" rotate={isActive ? 90 : 0} />}
-            >
-            <Panel header="描述信息" key="描述信息">
-                <div className={styles.info}>
-                <span className={styles.infoLable}>权限名称:</span>
-                <Input
-                    size="default"
-                    placeholder="权限名称"
-                    value={data.auth.name}
-                    onChange={e => onInfoChange(e.target.value, 'name')}
-                />
-                </div>
-                <div className={styles.info}>
-                <span className={styles.infoLable}>适用范围:</span>
-                <Input
-                    size="default"
-                    placeholder="适用范围"
-                    value={data.auth.scope}
-                    onChange={e => onInfoChange(e.target.value, 'scope')}
-                />
-                </div>
-            </Panel>
-        </Collapse>
-        {renderMenu()}
-        <Modal
-            title="可见数据"
-            visible={filterModalShow}
-            okButtonProps={{ className: 'hide' }}
-            cancelButtonProps={{ className: 'hide' }}
-            onCancel={modalCancel}
-            >
-            {filterModalShow && renderFilterModalContent()}
-        </Modal>
-    </PageHeaderWrapper>
+    return (
+      <PageHeaderWrapper
+              title={cfg.title || ''}
+              extra={renderHeaderBtns(btns)}
+          >
+          <Collapse
+              bordered={false}
+              defaultActiveKey={['1']}
+              expandIcon={({ isActive }) => <RightOutlined rotate={isActive ? 90 : 0} />}
+              >
+              <Panel header="描述信息" key="描述信息">
+                  <div className={styles.info}>
+                  <span className={styles.infoLable}>权限名称:</span>
+                  <Input
+                      placeholder="权限名称"
+                      value={data.auth.name}
+                      onChange={e => onInfoChange(e.target.value, 'name')}
+                  />
+                  </div>
+                  <div className={styles.info}>
+                  <span className={styles.infoLable}>适用范围:</span>
+                  <Input
+                      placeholder="适用范围"
+                      value={data.auth.scope}
+                      onChange={e => onInfoChange(e.target.value, 'scope')}
+                  />
+                  </div>
+              </Panel>
+          </Collapse>
+          {renderMenu()}
+          <Modal
+              title="可见数据"
+              visible={filterModalShow}
+              okButtonProps={{ className: 'hide' }}
+              cancelButtonProps={{ className: 'hide' }}
+              onCancel={modalCancel}
+              >
+              {filterModalShow && renderFilterModalContent()}
+          </Modal>
+      </PageHeaderWrapper>
+    );
 }
 
 export default Page;

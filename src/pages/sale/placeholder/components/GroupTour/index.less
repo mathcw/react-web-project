@@ -1,5 +1,8 @@
 .OrderList {
-  margin-top: 10px;
+  border-radius: 4px;
+  margin: 12px 0;
+  background: #fff;
+  overflow: hidden;
   &:hover {
     box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
       0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
@@ -8,159 +11,93 @@
     box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
       0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
   }
-  .headerTags {
-    font-size: 12px;
-    font-weight: 400;
-    color: #b1bcd1;
-    margin-left: 40px;
-    display: inline-block;
-    .itemTag {
-      padding-bottom: 2px;
-      margin-right: 24px;
-      cursor: pointer;
-    }
-  }
 
   .item {
-    border-radius: 4px;
+    position: relative;
+    padding: 10px;
+    border: 1px solid #edf1f5;
     .active {
       border-color: #377dea !important;
     }
-    .list {
-      background: #fff;
-      border: 1px solid #edf1f5;
-      border-radius: 4px;
-      height: 160px;
-      padding: 16px;
-      .itemHeader {
-        font-size: 12px;
-        line-height: 40px;
-        padding: 0 24px 0 10px;
-        border-bottom: 1px solid #edf1f5;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        .hLeft {
-          font-weight: bold;
+    .imgBox {
+      display: flex;
+      flex-direction: column;
+      .img {
+        width: 100%;
+        height: 85%;
+        border-radius: 4px 4px 0 0;
+      }
+      .imgText {
+        font-size: 11px;
+        width: 100%;
+        height: 15%;
+        line-height: 24px;
+        text-align: center;
+        border: 1px solid #d9d9d9;
+        border-radius: 0 0 4px 4px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      padding-left: 20px;
+      .contentTop {
+        .name {
+          max-width: 500px;
+          font-size: 16px;
+          line-height: 24px;
+          margin-left: 10px;
         }
-        .hRight {
+      }
+      .contentCenter {
+        display: flex;
+        font-size: 12px;
+        padding-top: 16px;
+        text-align: left;
+        line-height: 24px;
+        padding-right: 8px;
+        .cell {
+          display: flex;
+          overflow: hidden;
+        }
+        .lable {
           color: #b1bcd1;
+          display: inline-block;
+        }
+        .text {
+          display: inline-block;
+          vertical-align: bottom;
         }
       }
-
-      .content {
-        font-size: 12px;
-        .imgBox {
-          .imgWrapper {
-            width: 138px;
-            height: 102px;
-            position: relative;
-            .img {
-              width: 100%;
-              height: 100%;
-              position: absolute;
-              top: 0;
-              left: 0;
-              right: 0;
-              border-radius: 4px 4px 0 0;
-            }
-            .imgText {
-              font-size: 11px;
-              width: 100%;
-              height: 24px;
-              line-height: 22px;
-              text-align: center;
-              color: rgba(72, 87, 113, 1);
-              border-radius: 0px 0px 4px 4px;
-              border: 1px solid rgba(239, 239, 244, 1);
-              border-radius: 0 0 4px 4px;
-              white-space: nowrap;
-              text-overflow: ellipsis;
-              overflow: hidden;
-              position: absolute;
-              bottom: -23px;
-              left: 0;
-              right: 0;
-              z-index: 10;
-            }
-          }
+      .contentBottom {
+        text-align: center;
+        color: #ee921a;
+        font-size: 14px;
+        .open {
+          transform: rotate(-90deg);
         }
-        .top {
-          margin-bottom: 8px;
-          display: flex;
-          .title {
-            font-size: 14px;
-            line-height: 20px;
-            margin-left: 10px;
-          }
-        }
-        .center {
-          line-height: 22px;
-          .row {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            .key {
-              color: #b1bcd1;
-              margin-right: 4px;
-              display: inline-block;
-            }
-            .val {
-              width: 64px;
-              margin-right: 6px;
-              display: inline-block;
-            }
-          }
-        }
-        .bottom {
-          margin-top: 8px;
-          display: flex;
-          justify-content: center;
-          color: #ee921a;
-          font-size: 14px;
-          .open {
-            transform: rotate(-90deg);
-          }
-          .close {
-            transform: rotate(90deg);
-          }
+        .close {
+          transform: rotate(90deg);
         }
       }
-
-      .rightcontent {
-        display: flex;
-        .time {
-          width: 70%;
-          text-align: center;
-          .lable1 {
-            font-size: 14px;
-            font-weight: 400;
-            color: rgba(72, 87, 113, 1);
-            line-height: 20px;
-          }
-          .text1 {
-            font-size: 14px;
-            font-weight: 400;
-            color: rgba(72, 87, 113, 1);
-            line-height: 20px;
-          }
-        }
-        .state {
-          width: 30%;
-          text-align: center;
-          .lable1 {
-            font-size: 14px;
-            font-weight: 400;
-            color: rgba(72, 87, 113, 1);
-            line-height: 20px;
-          }
-          .text1 {
-            font-size: 14px;
-            font-weight: 400;
-            color: rgba(0, 163, 106, 1);
-            line-height: 20px;
-          }
-        }
+    }
+    .right {
+      display: flex;
+      flex-direction: column;
+      .rightlable {
+        font-size: 14px;
+        font-weight: 400;
+        color: rgba(72, 87, 113, 1);
+        line-height: 20px;
+      }
+      .righttext {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
       }
     }
   }
@@ -207,10 +144,10 @@
 }
 
 .btns {
-  float: right;
   position: absolute;
+  float: right;
   right: 6%;
-  top: 69%;
+  bottom: 10px;
   z-index: 99;
   .button {
     background: rgba(255, 255, 255, 1);

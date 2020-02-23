@@ -120,7 +120,7 @@ const config: ModConfigItem = {
       删除公告: { text: "删除",show:{flow:[0,1,3]}},
       提交公告: { text: "提交",show:{flow:[0,1,3]}},
 
-      查看公告: { text: "查看"},
+      // 查看公告: { text: "查看"},
       公告审批: { text: "审批",show:{flow:[2]} },
       撤回公告: { text: "撤回",show:{flow:[2]} },
       发布公告: { text: "发布",show:{flow:[4]},publish_state:[0] }

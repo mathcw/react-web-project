@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Col ,Button} from 'antd';
+import { Col ,Button, Row} from 'antd';
 import PageHeaderWrapper,{Extra} from '@/components/PageHeaderWrapper';
 import Timer from '@/components/Timer';
 import { IModPageProps } from '@/viewconfig/ModConfig';
@@ -55,7 +55,7 @@ const list:React.FC<IModPageProps> = ({ route }) => {
             >
             {
                 data.map(item=>
-                    <Col className={styles.container} key={item['id']}>
+                    <Row className={styles.container} key={item['id']}>
                       <Col span={3} className={styles.left}>
                         <img src={IconPng} alt="icon" className={styles.Icon} />
                       </Col>
@@ -77,7 +77,7 @@ const list:React.FC<IModPageProps> = ({ route }) => {
                         <Col className={styles.name}>操作</Col>
                         <Button className={styles.look} size="small" onClick={()=>{fastApprove(item)}}>审批</Button>
                       </Col>
-                </Col>)
+                </Row>)
             }
     </PageHeaderWrapper>
 }
