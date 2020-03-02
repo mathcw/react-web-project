@@ -11,12 +11,12 @@ const { Option } = Select;
 interface ICell {
   initValue?: string | number;
   record: object;
-  rowIndex: number;
+  rowIndex: string | number;
   dataIndex: string | number;
   required: boolean;
   editable: boolean;
   update?: (
-    row: string,
+    row: string|number,
     dataIndex: string | number,
     value?: string | number
   ) => void;
