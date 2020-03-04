@@ -60,7 +60,7 @@ const ResizeableTitle = (props: any) => {
 };
 
 interface IDataType{
-    uuid:string,
+    uuid?:string,
     [key:string]:any
 }
 
@@ -254,7 +254,7 @@ const Grid: IGird = function <T extends IDataType>(p: IGridProp<T> & TableProps<
     };
 
     const rowKey = (record: T, index?: number) => {
-        return record.uuid;
+        return   record.uuid?record.uuid:record.id;
     }
 
     config['rowKey'] = rowKey;
