@@ -253,39 +253,51 @@ const routes: Array<IRouteValue> = [
         path: "/business",
         routes: [
           {
-            path: "/business/packagetourNav/primaryNavList",
-            name: "一级导航",
-            authority: "跟团游导航",
-            viewConfig:"一级导航",
-            component: "./business/packagetourNav/primaryNavList"
+            path: "/business/packagetourNav",
+            name: "跟团游",
+            routes: [
+              {
+                path: "/business/packagetourNav/primaryNavList",
+                name: "一级导航",
+                authority: "跟团游导航",
+                viewConfig:"一级导航",
+                component: "./business/packagetourNav/primaryNavList"
+              },
+              {
+                path: "/business/packagetourNav/secondaryNavList",
+                name: "二级导航",
+                authority: "跟团游导航",
+                viewConfig:"二级导航",
+                component: "./business/packagetourNav/secondaryNavList"
+              }
+            ]
           },
           {
-            path: "/business/packagetourNav/secondaryNavList",
-            name: "二级导航",
-            authority: "跟团游导航",
-            viewConfig:"二级导航",
-            component: "./business/packagetourNav/secondaryNavList"
-          },
-          {
-            path: "/business/cruise/cruiseCompany",
-            name: "邮轮公司",
-            authority: "邮轮游导航",
-            viewConfig:"邮轮公司",
-            component: "./business/cruise/cruiseCompany"
-          },
-          {
-            path: "/business/cruise/cruiseShip",
-            name: "船舶名称",
-            authority: "邮轮游导航",
-            viewConfig:"船舶名称",
-            component: "./business/cruise/cruiseShip"
-          },
-          {
-            path: "/business/cruise/cruiseLine",
-            name: "邮轮航线",
-            authority: "邮轮游导航",
-            viewConfig:"邮轮航线",
-            component: "./business/cruise/cruiseLine"
+            path: "/business/cruise",
+            name: "邮轮游",
+            routes: [
+              {
+                path: "/business/cruise/cruiseCompany",
+                name: "邮轮公司",
+                authority: "邮轮游导航",
+                viewConfig:"邮轮公司",
+                component: "./business/cruise/cruiseCompany"
+              },
+              {
+                path: "/business/cruise/cruiseShip",
+                name: "船舶名称",
+                authority: "邮轮游导航",
+                viewConfig:"船舶名称",
+                component: "./business/cruise/cruiseShip"
+              },
+              {
+                path: "/business/cruise/cruiseLine",
+                name: "邮轮航线",
+                authority: "邮轮游导航",
+                viewConfig:"邮轮航线",
+                component: "./business/cruise/cruiseLine"
+              },
+            ]
           },
           {
             path: "/business/productTheme/list",

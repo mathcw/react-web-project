@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Modal, message } from "antd";
+import { v4 as uuid } from 'uuid';
 import PageHeaderWrapper, {
   Extra,
   Content
@@ -16,6 +18,68 @@ import ActionModal from "@/components/Table/ActionModal";
 import { ColumnProps } from "antd/es/table";
 
 import { getModConfig } from "@/utils/utils";
+import ModalForm from "@/components/ModalForm";
+import { submit } from "@/utils/req";
+
+// 新增跟团游一级导航
+const add = (reload: () => void) => () => {
+  const modalRef = Modal.info({});
+  const list = {
+    pd_direction: { text: "出游方向", required: true, type: "PdDirection" },
+    name: { text: "一级导航", required: true }
+  };
+  const onSubmit = (data: any) => {
+    submit("/business/PrimaryNav/submit", data).then(r => {
+      message.success(r.message);
+      modalRef.destroy();
+      reload();
+    });
+  };
+  const onCancel = () => {
+    modalRef.destroy();
+  };
+  modalRef.update({
+    title: "新增跟团游一级导航",
+    icon: null,
+    content: <ModalForm list={list} onSubmit={onSubmit} onCancel={onCancel} />,
+    okButtonProps: { className: "hide" },
+    cancelButtonProps: { className: "hide" }
+  });
+};
+
+// 修改跟团游一级导航
+const edit = (reload: () => void) => (ref: any) => {
+  const modalRef = Modal.info({});
+  const list = {
+    pd_direction: { text: "出游方向", required: true, type: "PdDirection" },
+    name: { text: "一级导航", required: true }
+  };
+  const onSubmit = (data: object | undefined) => {
+    submit("/business/PrimaryNav/submit", data).then(r => {
+      message.success(r.message);
+      modalRef.destroy();
+      reload();
+    });
+  };
+  const onCancel = () => {
+    modalRef.destroy();
+  };
+  modalRef.update({
+    title: "修改跟团游一级导航",
+    // eslint-disable-next-line max-len
+    icon: null,
+    content: (
+      <ModalForm
+        list={list}
+        onSubmit={onSubmit}
+        onCancel={onCancel}
+        data={{ ...ref }}
+      />
+    ),
+    okButtonProps: { className: "hide" },
+    cancelButtonProps: { className: "hide" }
+  });
+};
 
 const list: React.FC<IModPageProps> = ({ route }) => {
   const { viewConfig } = route;
@@ -33,6 +97,8 @@ const list: React.FC<IModPageProps> = ({ route }) => {
   } = useListPage(viewConfig);
 
   const actionMap = {
+    新增跟团游一级导航: add(load),
+    修改跟团游一级导航: edit(load)
   };
 
   const { headerBtns, rowBtns } = useListPageBtn(viewConfig, actionMap);
