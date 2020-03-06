@@ -241,9 +241,10 @@ const Grid: IGird = function <T extends IDataType>(p: IGridProp<T> & TableProps<
 
         setColumns(initCols);
     },[specCol,columns])
-
+    
     const config: TableProps<T> = {
         components: {
+            //@ts-ignore
             body: {
                 row: defaultRow,
                 cell: Cell
@@ -288,6 +289,7 @@ const Grid: IGird = function <T extends IDataType>(p: IGridProp<T> & TableProps<
                 cell: ResizeableTitle,
             },
         }
+        //@ts-ignore
         config['columns'] = ResizeableCols;
     }
 

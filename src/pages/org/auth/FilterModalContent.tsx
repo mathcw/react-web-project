@@ -24,15 +24,15 @@ function getIndex(regular:{[key:string]:object}, fd: string) {
     return rst;
 }
 
-export interface IFilteConfig{
+export interface IFilterConfig{
     mod:string,
     field:string,
-    regular:any,
+    auth_filter:any,
     type:string
 }
 
 interface IAppProps{
-    cfg:IFilteConfig,
+    cfg:IFilterConfig,
     auth:{
         filters:object
     },
@@ -47,7 +47,7 @@ interface IAppState{
     cfg:{
         mod:string,
         field:string,
-        regular:any,
+        auth_filter:any,
         type:string,
         cascade?:string,
         enumRow?:{}
@@ -69,8 +69,8 @@ const init = (props:IAppProps) => {
     }
 
     if (cfg.type !== 'Company') {
-        if (cfg.regular[cfg.field] && cfg.regular[cfg.field].cascade) {
-            const preField = cfg.regular[cfg.field].cascade;
+        if (cfg.auth_filter[cfg.field] && cfg.auth_filter[cfg.field].cascade) {
+            const preField = cfg.auth_filter[cfg.field].cascade;
             const preFilter = filters[cfg.mod] && filters[cfg.mod][preField];
             let prePem = ''
             if (!preFilter) {
@@ -113,7 +113,7 @@ class FilterModalContent extends Component<IAppProps,IAppState> {
         const { pem, specValue, cfg } = this.state;
         const { onSubmit, auth } = this.props;
         const filters = auth.filters ? auth.filters :{};
-        const { mod, field, type, regular } = cfg;
+        const { mod, field, type, auth_filter } = cfg;
         let filter = filters[mod];
         let i = -1;
         let fd = field;
@@ -127,14 +127,14 @@ class FilterModalContent extends Component<IAppProps,IAppState> {
                     switch (type) {
                         case 'Company':
                         case 'Supplier':
-                            i = getIndex(regular, field);
-                            delete filter[getField(regular, i + 1)];
-                            delete filter[getField(regular, i + 2)];
+                            i = getIndex(auth_filter, field);
+                            delete filter[getField(auth_filter, i + 1)];
+                            delete filter[getField(auth_filter, i + 2)];
                             break;
                         case 'Department':
                         case 'SupplierDepartment':
-                            i = getIndex(regular, field);
-                            delete filter[getField(regular, i + 1)];
+                            i = getIndex(auth_filter, field);
+                            delete filter[getField(auth_filter, i + 1)];
                             break;
                         case 'SupplierSales':
                         case 'Employee':
@@ -156,14 +156,14 @@ class FilterModalContent extends Component<IAppProps,IAppState> {
                     switch (type) {
                         case 'Company':
                         case 'Supplier':
-                            i = getIndex(regular, field);
-                            delete filter[getField(regular, i + 1)];
-                            delete filter[getField(regular, i + 2)];
+                            i = getIndex(auth_filter, field);
+                            delete filter[getField(auth_filter, i + 1)];
+                            delete filter[getField(auth_filter, i + 2)];
                             break;
                         case 'SupplierDepartment':
                         case 'Department':
-                            i = getIndex(regular, field);
-                            delete filter[getField(regular, i + 1)];
+                            i = getIndex(auth_filter, field);
+                            delete filter[getField(auth_filter, i + 1)];
                             break;
                         case 'SupplierSales':
                         case 'Employee':
@@ -178,21 +178,21 @@ class FilterModalContent extends Component<IAppProps,IAppState> {
                     switch (type) {
                         case 'Company':
                         case 'Supplier':
-                            i = getIndex(regular, field);
-                            delete filter[getField(regular, i + 1)];
-                            delete filter[getField(regular, i + 2)];
+                            i = getIndex(auth_filter, field);
+                            delete filter[getField(auth_filter, i + 1)];
+                            delete filter[getField(auth_filter, i + 2)];
                             break;
                         case 'Department':
                         case 'SupplierDepartment':
-                            i = getIndex(regular, field);
-                            filter[getField(regular, i - 1)] = [-1];
-                            delete filter[getField(regular, i + 1)];
+                            i = getIndex(auth_filter, field);
+                            filter[getField(auth_filter, i - 1)] = [-1];
+                            delete filter[getField(auth_filter, i + 1)];
                             break;
                         case 'Employee':
                         case 'SupplierSales':
-                            i = getIndex(regular, field);
-                            while (regular[fd].cascade) {
-                                fd = regular[fd].cascade;
+                            i = getIndex(auth_filter, field);
+                            while (auth_filter[fd].cascade) {
+                                fd = auth_filter[fd].cascade;
                                 filter[fd] = [-1];
                             }
                             break;

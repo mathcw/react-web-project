@@ -1,6 +1,6 @@
 import { BasicLayoutProps as ProLayoutProps } from "@ant-design/pro-layout";
 import { ButtonType, ButtonSize } from "antd/es/button";
-import { CompareFn } from 'antd/es/table';
+import { CompareFn } from 'antd/es/table/interface';
 import OfficeMod from "@/viewconfig/Mod/OfficeMod";
 import OrgMod from "@/viewconfig/Mod/OrgMod";
 import SupplierManagementMod from "@/viewconfig/Mod/SupplierManagementMod";
@@ -55,6 +55,10 @@ export interface ModConfigItem {
 }
 
 export let config: ModConfigItem = {};
+
+export function getAllCfg(){
+  return {...OfficeMod, ...OrgMod, ...SupplierManagementMod, ...ProductStoreMod,...SaleMod,...ProductManageMod,...BusinessMod,...SysMod,...CheckMod};
+}
 
 export function authMetaInit(authData: string[]) {
   // eslint-disable-next-line array-callback-return
