@@ -371,43 +371,49 @@ class MainContent extends React.Component<
         <Divider style={{ margin: 0 }} />
         <div className={styles.HeaderForm}>
           <Row>
-            <Col xs={24} sm={24} md={16} lg={16}>
+            <Col xs={24} sm={24} md={14} lg={14}>
               {this.renderMoreSerach()}
             </Col>
-            <Col xs={24} sm={24} md={8} lg={8}>
-              <div className={styles.rightSearch}>
-                {textSearch && (
-                  <Select
-                    defaultValue={textQueryType}
-                    size="small"
-                    onChange={this.textSearchTypeChange}
-                    style={{ width: "35%" }}
-                  >
-                    {Object.keys(textSearch).map((key: string | number) => (
-                      <SelectOption value={key} key={key}>
-                        {textSearch[key].text}
-                      </SelectOption>
-                    ))}
-                  </Select>
-                )}
-                <Input
-                  style={{ width: "50%", padding: 0 }}
-                  value={textQuery}
-                  onChange={this.textSearchChange}
-                  placeholder="请输入搜索条件"
-                  allowClear
-                />
-                <Button type="primary" size="small" onClick={this.refresh} className={styles.searchButton}>
-                  搜索
-                  </Button>
-                <div className={styles.Icon} style={{ color: "#3FB50B" }}>
-                  <Tooltip placement="top" title="刷新">
+            <Col xs={24} sm={24} md={10} lg={10}>
+              {textSearch && (
+                <Row className={styles.rightSearch}>
+                  <Col span={20}>
+                    <InputGroup size="small">
+                      <Row>
+                        <Col span={6}>
+                          <Select
+                            defaultValue={textQueryType}
+                            size="small"
+                            onChange={this.textSearchTypeChange}
+                            style={{ width: '100%' }}
+                          >
+                            {Object.keys(textSearch).map((key: string | number) => (
+                              <SelectOption value={key} key={key}>
+                                {textSearch[key].text}
+                              </SelectOption>
+                            ))}
+                          </Select>
+                        </Col>
+                        <Col span={15}>
+                          <Input
+                            value={textQuery}
+                            onChange={this.textSearchChange}
+                            placeholder="请输入搜索条件"
+                          />
+                        </Col>
+                        <Col span={3}>
+                          <Button type="primary" size="small" onClick={this.refresh} className={styles.searchButton}>
+                            搜索
+                          </Button>
+                        </Col>
+                      </Row>
+                    </InputGroup>
+                  </Col>
+                  <Col span={2} className={styles.Icon}>
                     <SyncOutlined onClick={this.refresh} />
-                  </Tooltip>
-                </div>
-              </div>
-
-
+                  </Col>
+                </Row>
+              )}
             </Col>
           </Row>
 
