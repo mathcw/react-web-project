@@ -1,5 +1,3 @@
-// 统一一下详情页的逻辑
-// 统一了一下列表页的逻辑
 import {useState} from 'react';
 import { message } from 'antd';
 import router from 'umi/router';
@@ -17,7 +15,7 @@ export function useActionPage<T extends object>(authority:string,initData:T,ref?
         try {
             const rst:T = await new Promise<T>((resolve, reject) => {
                 if(cfg.read){
-                    read(cfg.read.url,{},{...ref},cfg.read.data).then(r => {
+                    read(cfg.read.url,{action:authority},{...ref},cfg.read.data).then(r => {
                         resolve(r.data);
                     }),(e:any)=>{
                         reject(e);
