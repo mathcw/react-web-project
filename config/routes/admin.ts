@@ -259,14 +259,14 @@ const routes: Array<IRouteValue> = [
               {
                 path: "/business/packagetourNav/primaryNavList",
                 name: "一级导航",
-                authority: "跟团游导航",
+                authority: "一级导航",
                 viewConfig:"一级导航",
                 component: "./business/packagetourNav/primaryNavList"
               },
               {
                 path: "/business/packagetourNav/secondaryNavList",
                 name: "二级导航",
-                authority: "跟团游导航",
+                authority: "二级导航",
                 viewConfig:"二级导航",
                 component: "./business/packagetourNav/secondaryNavList"
               }
