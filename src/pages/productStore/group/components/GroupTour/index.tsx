@@ -65,11 +65,7 @@ const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [], orderbtns = [], 
         className={styles.top}
       >
         <Col className={styles.imgBox} xs={24} sm={24} md={3} lg={3}>
-          <img
-            src={data.list_pic || defaultPng}
-            className={styles.img}
-            alt="产品图片"
-          />
+          <img src={data.list_pic || defaultPng} className={styles.img} alt="产品图片"/>
           <span className={styles.imgText}>{`产品编号P0${data.pd_id}`}</span>
         </Col>
         <Col xs={24} sm={24} md={18} lg={18}>
@@ -160,9 +156,15 @@ const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [], orderbtns = [], 
         </Col>
         <Col xs={24} sm={24} md={3} lg={3}>
           <Row className={styles.left}>
-            <Col className={styles.lable} span={24}>团态 </Col>
-            <Col style={flowColor} className={[styles.text, 'text-overflow'].join(' ')}>
-              {colDisplay(data.state, 'GroupState', data)}
+            <Col span={12} className={styles.infoCell} style={{ textAlign: 'center' }}>
+                <span className={styles.lable}></span>
+                <div className={[styles.text, 'text-overflow'].join(' ')}></div>
+            </Col>
+            <Col span={12} className={styles.infoCell} style={{ textAlign: 'center' }}>
+                <span className={styles.lable}>团态</span>
+                <div style={flowColor} className={[styles.text, 'text-overflow'].join(' ')}>
+                  {colDisplay(data.state, 'GroupState', data)}
+                </div>
             </Col>
           </Row>
         </Col>

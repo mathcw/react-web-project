@@ -382,20 +382,19 @@ const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [], load }) => {
                         </Col>
                     </div>
                 </Col>
-                <Col xs={24} sm={24} md={3} lg={3}>
-                    <div className={styles.right}>
-                        <span className={styles.rightlable}>对账审批</span>
-                        <div style={colorfun({ flow: data.check_flow })} className={[styles.rightstate, 'text-overflow'].join(' ')}>
-                            {colDisplay(data.check_flow, 'Flow', data)}
-                        </div>
-                        <div className={styles.plan} onClick={() => showFlowInfo(data)}>
-                            <img
-                                src={IconPng}
-                                className={styles.planimg}
-                            />
-                            <div className={styles.query}>进度查询</div>
-                        </div>
-                    </div>
+                <Col xs={24} sm={24} md={3} lg={3} className={styles.Approval}>
+                    <Row>
+                        <Col span={24} className={styles.infoCell} style={{ textAlign: 'center' }}>
+                            <span className={styles.lable}>对账审批</span>
+                            <div style={colorfun({ flow: data.check_flow })} className={[styles.text, 'text-overflow'].join(' ')}>
+                                {colDisplay(data.check_flow, 'Flow', data)}
+                            </div>
+                            <div className={styles.plan} onClick={() => showFlowInfo(data)}>
+                                <img src={IconPng} className={styles.planimg}/>
+                                <div className={styles.query}>进度查询</div>
+                            </div>
+                        </Col>
+                    </Row>
                 </Col>
                 <Col className={btns ? styles.btns : 'hide'}>
                     {btns.map(btn => (
@@ -420,9 +419,3 @@ const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [], load }) => {
 }
 
 export default GroupTour;
-
-
-
-
-
-

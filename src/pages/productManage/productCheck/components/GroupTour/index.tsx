@@ -71,7 +71,7 @@ const GroupTour: React.FC<GroupTourProps> = ({ data,btns=[],load }) => {
                             </a>
                         </Col>
                         <Col span={18} className={styles.RCenter}>
-                            <Col span={6} className={styles.RCenterL}>
+                            <Col span={8} className={styles.RCenterL}>
                                 <div>
                                     <span className={styles.lable}>商家品牌：</span>{' '}
                                     <span className={[styles.text, 'text-overflow'].join(' ')}>{data.brand}</span>
@@ -85,7 +85,7 @@ const GroupTour: React.FC<GroupTourProps> = ({ data,btns=[],load }) => {
                                     <span className={[styles.text, 'text-overflow'].join(' ')}>{data.mobile}</span>
                                 </div>
                             </Col>
-                            <Col span={6} className={styles.RCenterL}>
+                            <Col span={8} className={styles.RCenterL}>
                                 <div>
                                     <span className={styles.lable}>出发城市： </span>{' '}
                                     <span className={[styles.text, 'text-overflow'].join(' ')}>
@@ -105,7 +105,7 @@ const GroupTour: React.FC<GroupTourProps> = ({ data,btns=[],load }) => {
                                     </span>
                                 </div>
                             </Col>
-                            <Col span={6} className={styles.RCenterL}>
+                            <Col span={8} className={styles.RCenterL}>
                                 <div>
                                     <span className={styles.lable}>在售团期： </span>{' '}
                                     <span className={[styles.text, 'text-overflow'].join(' ')}>{data.saleing_group_number}</span>

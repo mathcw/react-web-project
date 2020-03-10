@@ -157,7 +157,6 @@ const Detail: React.FC<GroupTourDetail> = ({ detail }) => {
                                 ))
                             }
                         </Col>
-
                     </Row>
                 </Col>
             </Row>
@@ -380,18 +379,17 @@ const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [], load }) => {
                         </Col>
                     </div>
                 </Col>
-                <Col xs={24} sm={24} md={3} lg={3}>
-                    <Row className={styles.right}>
-                        <Col className={styles.rightlable} span={24}>订单状态</Col>
-                        <Col className={styles.rightstate} span={24} style={orderStateFun(data)}>
-                            {colDisplay(data.state, 'OrderState', data)}
-                        </Col>
-                        <Col className={styles.plan} onClick={() => showFlowInfo(data)} span={24}>
-                            <img
-                                src={IconPng}
-                                className={styles.planimg}
-                            />
-                            <div className={styles.query}>进度查询</div>
+                <Col xs={24} sm={24} md={3} lg={3} className={styles.Approval}>
+                    <Row>
+                        <Col span={24} className={styles.infoCell} style={{ textAlign: 'center' }}>
+                            <span className={styles.lable}>订单状态</span>
+                            <div style={orderStateFun(data)} className={[styles.text, 'text-overflow'].join(' ')}>
+                                {colDisplay(data.state, 'OrderState', data)}
+                            </div>
+                            <div className={styles.plan} onClick={() => showFlowInfo(data)}>
+                                <img src={IconPng} className={styles.planimg}/>
+                                <div className={styles.query}>进度查询</div>
+                            </div>
                         </Col>
                     </Row>
                 </Col>

@@ -1,7 +1,7 @@
 import React, { useState,useRef } from 'react';
 import GroupTour from './index';
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
-import { Tabs, Col, Input, InputNumber, Button, DatePicker, Select } from 'antd';
+import { Tabs, Col, Input, InputNumber, Button, DatePicker, Select, Row } from 'antd';
 
 import styles from './editModal.less';
 import moment from 'moment';
@@ -72,7 +72,7 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
 
     const priceTab = () => {
         return (
-            <Col className='clear'>
+            <Row className='clear'>
                 <Col sm={12} md={12} lg={12} className={styles.Mod} style={{ paddingRight: '8px' }}>
                     <Col className={styles.ModTitle}>当前数据</Col>
                     <Col className={[styles.ModContent, 'clear'].join(' ')}>
@@ -80,7 +80,7 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                             <Col className={styles.modTitle}>
                                 <Col className={styles.modTitleText}>基准价格</Col>
                             </Col>
-                            <Col className={styles.modContent}>
+                            <Row className={styles.modContent}>
                                 <Col span={8} className={styles.cell}>
                                     <Col className={styles.modLabel}>价格名称</Col>
                                     <Col className={styles.modValue}>
@@ -99,7 +99,7 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                                         <Input value={groupInfo.retail_price} disabled />
                                     </Col>
                                 </Col>
-                            </Col>
+                            </Row>
                         </Col>
                         <Col className={[styles.mod, 'clear'].join(' ')}>
                             <Col className={styles.modTitle}>
@@ -108,7 +108,7 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                             {info['价格明细'].map((row: any, index: number) => {
                                 if (row.price_type == 2)
                                     return (
-                                        <Col className={styles.modContent}>
+                                        <Row className={styles.modContent}>
                                             <Col span={8} className={styles.cell}>
                                                 <Col className={styles.modLabel}>价格名称</Col>
                                                 <Col className={styles.modValue}>
@@ -127,7 +127,7 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                                                     <InputNumber value={row.retail_price} disabled />
                                                 </Col>
                                             </Col>
-                                        </Col>
+                                        </Row>
                                     );
                                 return null
                             })}
@@ -143,7 +143,7 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                             <Col className={styles.modTitle}>
                                 <Col className={styles.modTitleText}>基准价格</Col>
                             </Col>
-                            <Col className={styles.modContent}>
+                            <Row className={styles.modContent}>
                                 <Col span={8} className={styles.cell}>
                                     <Col className={styles.modLabel}>价格名称</Col>
                                     <Col className={styles.modValue}>
@@ -162,7 +162,7 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                                         <InputNumber value={data.retail_price} onChange={v => inputChange(v, 'retail_price')} />
                                     </Col>
                                 </Col>
-                            </Col>
+                            </Row>
                         </Col>
 
 
@@ -170,7 +170,7 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                             <Col className={styles.modTitle}>
                                 <Col className={styles.modTitleText}>其他价格</Col>
                             </Col>
-                            <Col className={[styles.modContent, 'clear'].join(' ')}>
+                            <Row className={[styles.modContent, 'clear'].join(' ')}>
                                 <Col span={8} className={styles.cell} style={{ marginBottom: 0 }}>
                                     <Col className={styles.modLabel}>价格名称</Col>
                                 </Col>
@@ -180,17 +180,17 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                                 <Col span={8} className={styles.cell} style={{ marginBottom: 0 }}>
                                     <Col className={styles.modLabel}>直客价</Col>
                                 </Col>
-                                <Col span={1} className={styles.add}>
+                                <Col span={1} className={styles.cell}>
                                     <PlusCircleOutlined
                                         className="pointer"
                                         style={{ color: '#1890FF' }}
                                         onClick={() => addOtherPrice()} />
                                 </Col>
-                            </Col>
+                            </Row>
                             {data['其它价格'].map((row: any, index: number) => {
                                 if (row.price_type == 2)
                                     return (
-                                        <Col className={[styles.modContent, 'clear'].join(' ')} key={index}>
+                                        <Row className={[styles.modContent, 'clear'].join(' ')} key={index}>
                                             <Col span={8} className={styles.cell}>
                                                 <Col className={styles.modValue}>
                                                     <Input value={row.price_comment} onChange={e => otherDetailChange(e.target.value, 'price_comment', index)} />
@@ -206,13 +206,13 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                                                     <InputNumber value={row.retail_price} onChange={value => otherDetailChange(value, 'retail_price', index)} />
                                                 </Col>
                                             </Col>
-                                            <Col span={1} className={styles.minus}>
+                                            <Col span={1} className={styles.cell}>
                                                 <MinusCircleOutlined
                                                     className={styles.delete}
                                                     style={{ color: '#ff4d4f' }}
                                                     onClick={row => delOtherPrice(index)} />
                                             </Col>
-                                        </Col>
+                                        </Row>
                                     );
                                 return null
                             })}
@@ -220,18 +220,18 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                         </Col>
                     </Col>
                 </Col>
-            </Col>
+            </Row>
         );
     }
 
     const seatTab = () => {
         return (
-            <Col>
+            <Row>
                 <Col sm={12} md={12} lg={12} className={styles.Mod} style={{ paddingRight: '8px' }}>
                     <Col className={styles.ModTitle}>当前数据</Col>
                     <Col className={[styles.ModContent, 'clear'].join(' ')}>
                         <Col className={[styles.mod, 'clear'].join(' ')}>
-                            <Col className={styles.modContent}>
+                            <Row className={styles.modContent}>
                                 <Col span={8} className={styles.cell}>
                                     <Col className={styles.modLabel}>计划总位</Col>
                                     <Col className={styles.modValue}>
@@ -250,7 +250,7 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                                         <InputNumber value={groupInfo.person_limit} disabled />
                                     </Col>
                                 </Col>
-                            </Col>
+                            </Row>
                         </Col>
                     </Col>
                 </Col>
@@ -258,7 +258,7 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                     <Col className={styles.ModTitle}>本次修改</Col>
                     <Col className={[styles.ModContent, 'clear'].join(' ')}>
                         <Col className={[styles.mod, 'clear'].join(' ')}>
-                            <Col className={styles.modContent}>
+                            <Row className={styles.modContent}>
                                 <Col span={8} className={styles.cell}>
                                     <Col className={styles.modLabel}>计划总位</Col>
                                     <Col className={styles.modValue}>
@@ -277,22 +277,22 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                                         <InputNumber value={data.person_limit} onChange={val => inputChange(val, 'person_limit')} />
                                     </Col>
                                 </Col>
-                            </Col>
+                            </Row>
                         </Col>
                     </Col>
                 </Col>
-            </Col>
+            </Row>
         )
     }
 
     const dateTab = () => {
         return (
-            <Col>
+            <Row>
                 <Col sm={12} md={12} lg={12} className={styles.Mod} style={{ paddingRight: '8px' }}>
                     <Col className={styles.ModTitle}>当前数据</Col>
                     <Col className={[styles.ModContent, 'clear'].join(' ')}>
                         <Col className={[styles.mod, 'clear'].join(' ')}>
-                            <Col className={styles.modContent}>
+                            <Row className={styles.modContent}>
                                 <Col span={12} className={styles.cell}>
                                     <Col className={styles.modLabel}>出团日期</Col>
                                     <Col className={styles.modValue}>
@@ -305,7 +305,7 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                                         <DatePicker value={moment(groupInfo.back_date)} disabled />
                                     </Col>
                                 </Col>
-                            </Col>
+                            </Row>
                         </Col>
                     </Col>
                 </Col>
@@ -314,7 +314,7 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                     <Col className={styles.ModTitle}>本次修改</Col>
                     <Col className={[styles.ModContent, 'clear'].join(' ')}>
                         <Col className={[styles.mod, 'clear'].join(' ')}>
-                            <Col className={styles.modContent}>
+                            <Row className={styles.modContent}>
                                 <Col span={12} className={styles.cell}>
                                     <Col className={styles.modLabel}>出团日期</Col>
                                     <Col className={styles.modValue}>
@@ -327,17 +327,17 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                                         <DatePicker value={moment(data.back_date)} getPopupContainer={(node) => ref.current as HTMLElement} onChange={(date, dateString) => inputChange(dateString, 'back_date')} />
                                     </Col>
                                 </Col>
-                            </Col>
+                            </Row>
                         </Col>
                     </Col>
                 </Col>
-            </Col>
+            </Row>
         )
     }
 
     const stateTab = () => {
         return (
-            <Col>
+            <Row>
                 <Col sm={12} md={12} lg={12} className={styles.Mod} style={{ paddingRight: '8px' }}>
                     <Col className={styles.ModTitle}>当前数据</Col>
                     <Col className={[styles.ModContent, 'clear'].join(' ')}>
@@ -379,7 +379,7 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                         </Col>
                     </Col>
                 </Col>
-            </Col>
+            </Row>
         )
     }
 

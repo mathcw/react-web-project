@@ -380,26 +380,22 @@ const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [], load }) => {
                         </Col>
                     </div>
                 </Col>
-                <Col xs={24} sm={24} md={6} lg={6}>
-                    <Row className={styles.right}>
-                        <Col span={12}>
-                            <span className={styles.rightlable}>订单状态</span>
-                            <br />
-                            <div style={orderStateFun(data)} className={[styles.rightstate, 'text-overflow'].join(' ')}>
+                
+                <Col xs={24} sm={24} md={6} lg={6} className={styles.Approval}>
+                    <Row>
+                        <Col span={12} className={styles.infoCell} style={{ textAlign: 'center' }}>
+                            <span className={styles.lable}>订单状态</span>
+                            <div style={orderStateFun(data)} className={[styles.text, 'text-overflow'].join(' ')}>
                                 {colDisplay(data.state, 'OrderState', data)}
                             </div>
                         </Col>
-                        <Col span={12}>
-                            <span className={styles.rightlable}>变更状态</span>
-                            <br />
-                            <div style={colorfun({ flow: data.order_change_flow })} className={[styles.rightstate, 'text-overflow'].join(' ')}>
+                        <Col span={12} className={styles.infoCell} style={{ textAlign: 'center' }}>
+                            <span className={styles.lable}>变更状态</span>
+                            <div style={colorfun({ flow: data.order_change_flow })} className={[styles.text, 'text-overflow'].join(' ')}>
                                 {colDisplay(data.order_change_flow, 'Flow', data)}
                             </div>
                             <div className={styles.plan} onClick={() => showFlowInfo(data)}>
-                                <img
-                                    src={IconPng}
-                                    className={styles.planimg}
-                                />
+                                <img src={IconPng} className={styles.planimg}/>
                                 <div className={styles.query}>进度查询</div>
                             </div>
                         </Col>

@@ -26,7 +26,7 @@ const config: ActionConfigItem = {
     directlySubmit: true,
     submit: {
       url: "/org/Company/toggle/state",
-      data: { id: "id", state: {state:"state"} }
+      data: { id: "id", state:"state"}
     }
   },
   // 员工
@@ -41,7 +41,7 @@ const config: ActionConfigItem = {
     directlySubmit: true,
     submit: {
       url: "/org/Employee/toggle/state",
-      data: { id: "id", state: {state:"state"} }
+      data: { id: "id", state:"state"}
     }
   },
 
@@ -106,7 +106,7 @@ const config: ActionConfigItem = {
       title:'公告审批',
       path:"/org/announce/approve",
       read:{url:"/org/Announce/read_approve",data:'id'},
-      submit:{url:"/comm/Flow/approve_by_post/公告审批",data:{flow_id:'flow_id',opinion:'opinion','comment':'comment'}},
+      submit:{url:"/comm/Flow/approve_by_post/公告审批",data:{flow_id:'flow_id',opinion:'opinion',comment:'comment'}},
       btns:{
           关闭: {text:'关闭' }
       }
