@@ -11,7 +11,7 @@ export async function req(url:string, data?:object) {
         reqUrl = sys.HOST+reqUrl;
     }
 
-    const body = { ...data, enum_ver: dict.enum_ver, sid: sys.sid };
+    const body = { ...data, sid: sys.sid };
 
     const headers = {
         'Content-Type': 'application/json',
