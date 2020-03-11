@@ -1,8 +1,7 @@
-@import '~antd/es/style/themes/default.less';
+@import "~antd/es/style/themes/default.less";
 
 html,
-body
-#root {
+body #root {
   height: 100%;
 }
 
@@ -31,16 +30,16 @@ body {
   .ant-layout-header {
     background: #1755c0;
   }
-  .ant-menu-dark{
+  .ant-menu-dark {
     background: #1755c0;
   }
 }
 
-.ant-menu-dark{
-  .ant-menu-sub{
+.ant-menu-dark {
+  .ant-menu-sub {
     background: #1755c0 !important;
   }
-  .ant-menu-item-selected{
+  .ant-menu-item-selected {
     background: #1755c0 !important;
   }
 }
@@ -56,6 +55,11 @@ ol {
 
 .hide {
   display: none !important;
+}
+
+.container {
+  height: 100vh;
+  overflow: auto;
 }
 
 @media (max-width: @screen-xs) {
@@ -120,12 +124,8 @@ ol {
       overflow: visible;
     }
     // 带sort的 表头 居中
-    .ant-table-thead
-      > tr
-      > th
-      .ant-table-header-column
-      .ant-table-column-sorters {
-      display: inline-block;
+    .ant-table-column-has-sorters{
+      text-align: center;
     }
     // 下拉条设置
     .ant-table-body::-webkit-scrollbar {
@@ -181,12 +181,8 @@ ol {
     .ant-table-tbody > tr > td {
       overflow: visible;
     }
-    .ant-table-thead
-      > tr
-      > th
-      .ant-table-header-column
-      .ant-table-column-sorters {
-      display: inline-block;
+    .ant-table-column-has-sorters{
+      text-align: center;
     }
     .ant-table-body::-webkit-scrollbar {
       width: 6px;
@@ -304,7 +300,7 @@ ol {
 }
 
 .Spin-box {
-  background: rgba(0,0,0,.1);
+  background: rgba(0, 0, 0, 0.1);
   position: fixed;
   top: 0;
   right: 0;
@@ -318,7 +314,7 @@ ol {
 
 // 清除浮动
 .clear:after {
-  content: '.';
+  content: ".";
   display: block;
   height: 0;
   visibility: hidden;
@@ -511,4 +507,3 @@ ol {
     width: 100%;
   }
 }
-
