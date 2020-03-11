@@ -243,8 +243,8 @@ const Grid: IGird = function <T extends IDataType>(p: IGridProp<T> & TableProps<
     },[specCol,columns])
     
     const config: TableProps<T> = {
+        //@ts-ignore
         components: {
-            //@ts-ignore
             body: {
                 row: defaultRow,
                 cell: Cell
@@ -255,7 +255,7 @@ const Grid: IGird = function <T extends IDataType>(p: IGridProp<T> & TableProps<
     };
 
     const rowKey = (record: T, index?: number) => {
-        return   record.uuid?record.uuid:record.id;
+        return  record.uuid?record.uuid:record.id;
     }
 
     config['rowKey'] = rowKey;
