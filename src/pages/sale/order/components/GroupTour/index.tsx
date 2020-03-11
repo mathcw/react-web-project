@@ -271,7 +271,7 @@ const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [], load }) => {
     }, [detail])
 
     const showFlowInfo = (data: GroupTourProps['data']) => {
-        get('/comm/Flow/seeDetail', { flow_id: data.confirm_flow_id }).then((r) => {
+        get('/comm/FlowList/seeDetail', { flow_id: data.confirm_flow_id }).then((r) => {
             if (r.data) {
                 Modal.info({
                     title: '审批记录',
