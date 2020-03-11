@@ -10,11 +10,11 @@ import PageHeaderWrapper, {
     Extra,
     Content
 } from "@/components/PageHeaderWrapper";
-import { getRowBtnArray, colDisplay } from '@/utils/utils';
+import { getRowBtnArray } from '@/utils/utils';
 import { getEnum } from '@/utils/enum';
 
 import styles from './list.less';
-import { Col, Button } from 'antd';
+import { Col, Button, Row } from 'antd';
 
 const defaultPng = require('@/assets/role.png');
 
@@ -38,53 +38,71 @@ interface IAuthProps {
 
 const Auth: React.FC<IAuthProps> = ({ data, btns, load }) => {
     return (
-        <Col className={styles.container}>
-            <Col span={4} className={styles.left}>
-                <img src={defaultPng} className={styles.img} alt="图标" />
-            </Col>
-            <Col span={12} className={styles.middle}>
-                <Col span={24} className={styles.top}>
-                    <span className={styles.lable}>{data.name}</span>
+        <React.Fragment>
+            <Col className={styles.Supplier}>
+                <Col className={styles.top}>
+                    <Col span={2} className={styles.imgBox} xs={3} sm={3} md={3} lg={3}>
+                        <img src={defaultPng} className={styles.img} alt="图标" />
+                    </Col>
+                    <Col style={{ paddingLeft: '20px', flex: '1' }} xs={21} sm={21} md={21} lg={21}>
+                        <Col span={20} className={styles.RTop}>
+                            <span className={[styles.name, 'text-overflow'].join(' ')}>{data.name}</span>
+                        </Col>
+                        <Col span={17} className={styles.RCenter}>
+                            <Col span={10} className={styles.RCenterL}>
+                                <div>
+                                    <span className={styles.lable}>适用公司：</span>{' '}
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>
+                                        {data.branch_company_name}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span className={styles.lable}>启停状态：</span>{' '}
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>
+                                        {getEnum('State')[data.state]}
+                                    </span>
+                                </div>
+                            </Col>
+                            <Col span={10} className={styles.RCenterL}>
+                                <div className={styles.address}>
+                                    <span className={styles.lable}>审批步骤：</span>{' '}
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>{data.flow_step}</span>
+                                </div>
+                            </Col>
+                        </Col>
+                        <Col span={7} className={styles.Approval}>
+                            <Row>
+                                <Col span={12} className={styles.infoCell} style={{ textAlign: 'center' }}>
+                                    <span className={styles.lable}></span>
+                                    <div className={[styles.text, 'text-overflow'].join(' ')}></div>
+                                </Col>
+                                <Col span={12} className={styles.infoCell} style={{ textAlign: 'center' }}>
+                                    <span className={styles.lable}></span>
+                                    <div  className={[styles.text, 'text-overflow'].join(' ')}>
+                                    </div>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Col>
+                    
+                    <Col className={btns ? styles.btns : 'hide'}>
+                        {btns.map(btn => (
+                            <Button
+                                className={styles.button}
+                                type="primary"
+                                size="small"
+                                key={btn.text}
+                                onClick={() => {
+                                    if (btn.onClick) btn.onClick(data, load);
+                                }}
+                            >
+                                {btn.text || ""}
+                            </Button>
+                        ))}
+                    </Col>
                 </Col>
-                <Col span={8} className={styles.centerL}>
-                    <div>
-                        <span className={styles.lable}>适用公司：</span>{' '}
-                        <span className={[styles.text, 'text-overflow'].join(' ')}>
-                            {data.branch_company_name}
-                        </span>
-                    </div>
-                    <div>
-                        <span className={styles.lable}>启停状态：</span>{' '}
-                        <span className={[styles.text, 'text-overflow'].join(' ')}>
-                            {getEnum('State')[data.state]}
-                        </span>
-                    </div>
-                </Col>
-                <Col span={12} className={styles.centerR}>
-                    <div className={styles.address}>
-                        <span className={styles.lable}>审批步骤：</span>{' '}
-                        <span className={[styles.text, 'text-overflow'].join(' ')}>{data.flow_step}</span>
-                    </div>
-                </Col>
             </Col>
-            <Col className={styles.btn}>
-                <div className={styles.button}>
-                    {btns.map(btn => (
-                        <Button
-                            className={styles.approval}
-                            type="primary"
-                            size="small"
-                            key={btn.text}
-                            onClick={() => {
-                                if (btn.onClick) btn.onClick(data, load);
-                            }}
-                        >
-                            {btn.text || ""}
-                        </Button>
-                    ))}
-                </div>
-            </Col>
-        </Col>
+        </React.Fragment>
     )
 }
 
