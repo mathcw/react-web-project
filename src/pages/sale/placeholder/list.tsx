@@ -35,16 +35,15 @@ const sx = (reload:()=>void) =>(ref:any)=>{
           modalRef.destroy();
         };
         modalRef.update({
-          title: "时限",
-          icon: null,
-          width:520,
-          className: 'modal-confirm-body',
-          content: <Zw info={r.data} onOk={onOk} onCancel={onCancel}/>,
-          okButtonProps: { className: "hide" },
-          cancelButtonProps: { className: "hide" }
+            title: "时限",
+            icon: null,
+            width:520,
+            className: 'modal-confirm-body',
+            content: <Zw info={r.data} onOk={onOk} onCancel={onCancel}/>,
+            okButtonProps: { className: "hide" },
+            cancelButtonProps: { className: "hide" }
         });
     })
-
 }
 
 const lw = (reload:()=>void)=>(ref:any)=>{
@@ -59,16 +58,16 @@ const lw = (reload:()=>void)=>(ref:any)=>{
         )
     };
     const onCancel = () => {
-      modalRef.destroy();
+        modalRef.destroy();
     };
     modalRef.update({
-      title: "留位",
-      icon: null,
-      width:520,
-      className: 'modal-confirm-body',
-      content: <Zw info={ref} onOk={onOk} onCancel={onCancel}/>,
-      okButtonProps: { className: "hide" },
-      cancelButtonProps: { className: "hide" }
+        title: "留位",
+        icon: null,
+        width:520,
+        className: 'modal-confirm-body',
+        content: <Zw info={ref} onOk={onOk} onCancel={onCancel}/>,
+        okButtonProps: { className: "hide" },
+        cancelButtonProps: { className: "hide" }
     });
 }
 

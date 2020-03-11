@@ -311,7 +311,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                         <Col span={6}>应转金额： {detail.settle_amount}</Col>
                         <Col span={6}>已转金额： {detail.settled_amount}</Col>
                         <Col span={6}>未转金额： {detail.settle_amount - detail.settled_amount}</Col>
-                        <span className={styles.detail} onClick={() => setOpen(!open)}> {open ? '收起' : '详情'}</span>
+                        <span className={styles.detail} onClick={() => setOpen(!open)}> {open ? '收起1' : '详情1'}</span>
                     </Row>
                     <div className={styles.childrenother} style={open ? { display: 'block' } : { display: 'none' }}>
                         <Row className={[styles.cTitle, 'clear'].join(' ')}>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import '@ant-design/compatible/assets/index.css';
-import { DatePicker, TimePicker, Input, Col, Button,Form } from 'antd';
+import { DatePicker, TimePicker, Input, Col, Button,Form,Row } from 'antd';
 import { FormItemProps } from 'antd/es/form';
 
 import styles from './index.less';
@@ -78,15 +78,15 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
     const log = () => {
         if (data['占位时限日志'] && data['占位时限日志'].length > 0) {
             return (
-                <Col style={{ margin: '12px 0 24px 0' }} >
+                <Row style={{ margin: '12px 0 24px 0' }} >
                     <Col span={24} className={styles.title}>时限日志:</Col>
                     <Col>
                         <Col span={10}>
                             提交时间
-                    </Col>
+                        </Col>
                         <Col span={12}>
                             到期时间
-                    </Col>
+                        </Col>
                     </Col>
                     {
                         data['占位时限日志'].map((item, index) => (
@@ -102,12 +102,12 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                     }
 
                     <Col span={24} className={styles.change} >变更时限:</Col>
-                </Col>
+                </Row>
             );
         }
         return (
-            <Col style={{ margin: '0' }} >
-            </Col>
+            <Row style={{ margin: '0' }} >
+            </Row>
         );
     }
 
@@ -127,7 +127,7 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
         <>
             {log()}
             <Form.Item
-                style={{ margin: "5px 0" }}
+                style={{ margin: "10px 0" }}
                 label='时限日期'
                 key='end_date'
                 {...formItemMap['end_date']}
@@ -141,7 +141,7 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                 />
             </Form.Item>
             <Form.Item
-                style={{ margin: "5px 0" }}
+                style={{ margin: "10px 0" }}
                 label='时限时间'
                 key='hour'
                 {...formItemMap['end_date']}
@@ -155,11 +155,11 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
                 />
             </Form.Item>
             <Form.Item
-                style={{ margin: "5px 0" }}
+                style={{ margin: "10px 0" }}
                 label='到期时间'
                 key='timer_end_date'
             >
-                <Input value={data.timer_end_date} readOnly />
+                <Input style={{ width: "100%" }} value={data.timer_end_date} readOnly />
             </Form.Item>
 
             <Col className={styles.footerBtns}>

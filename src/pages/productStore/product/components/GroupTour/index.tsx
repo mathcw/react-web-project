@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Modal, Tag, Button } from 'antd';
+import { Col, Modal, Tag, Button, Row } from 'antd';
 
 import styles from './index.less';
 import { colDisplay, colorfun } from '@/utils/utils';
@@ -117,28 +117,26 @@ const GroupTour: React.FC<GroupTourProps> = ({ data,btns=[],load }) => {
                             </Col>
                         </Col>
                         <Col span={6} className={styles.Approval}>
-                            <Col span={24} className={styles.infoCell} style={{ textAlign: 'center' }}>
-                                <span className={styles.lable}>审核状态</span>
-                                <div
-                                    className={[styles.text, 'text-overflow'].join(' ')}
-                                    style={colorfun(data)}
-                                >
-                                    {colDisplay(data.flow, 'Flow', data)}
-                                </div>
-                                <Col
-                                    className={styles.plan}
-                                    onClick={() => showFlowInfo(data)}
-                                >
-                                    {
-                                        data.flow_id && data.flow_id != 0 &&
-                                        <img
-                                            src={IconPng}
-                                            className={[styles.text1].join(' ')}
-                                        />
-                                    }
-                                    <div className={styles.query}>进度查询</div>
+                            <Row>
+                                <Col span={12} className={styles.infoCell} style={{ textAlign: 'center' }}>
+                                    <span className={styles.lable}></span>
+                                    <div className={[styles.text, 'text-overflow'].join(' ')} style={colorfun(data)}>
+                                    </div>
                                 </Col>
-                            </Col>
+                                <Col span={12} className={styles.infoCell} style={{ textAlign: 'center' }}>
+                                    <span className={styles.lable}>审核状态</span>
+                                    <div className={[styles.text, 'text-overflow'].join(' ')} style={colorfun(data)}>
+                                        {colDisplay(data.flow, 'Flow', data)}
+                                    </div>
+                                    <Col className={styles.plan} onClick={() => showFlowInfo(data)}>
+                                        {
+                                            data.flow_id && data.flow_id != 0 &&
+                                            <img src={IconPng} className={[styles.text1].join(' ')}/>
+                                        }
+                                        <div className={styles.query}>进度查询</div>
+                                    </Col>
+                                </Col>
+                            </Row>
                         </Col>
                         <Col className={styles.btns}>
                             <Col

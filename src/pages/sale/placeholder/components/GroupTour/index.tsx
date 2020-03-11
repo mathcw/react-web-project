@@ -115,9 +115,7 @@ const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [], load }) => {
     return <div className={styles.OrderList}>
         <Row className={styles.item}>
             <Col className={styles.imgBox} xs={24} sm={24} md={3} lg={3}>
-                {
-                    renderImg(data.list_pic, data.id)
-                }
+                {renderImg(data.list_pic, data.id)}
             </Col>
             <Col xs={24} sm={24} md={15} lg={15}>
                 <div className={styles.content}>
@@ -177,22 +175,18 @@ const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [], load }) => {
                     </Col>
                 </div>
             </Col>
-            <Col xs={24} sm={24} md={6} lg={6}>
+            <Col xs={24} sm={24} md={6} lg={6} className={styles.Approval}>
                 <Row>
-                    <Col span={16}>
-                        <div className={styles.right}>
-                            <span className={styles.rightlable}>留位时限</span>
-                            <div className={[styles.righttext, 'text-overflow'].join(' ')}>
-                                {data.timer_end_date}
-                            </div>
+                    <Col span={14} className={styles.infoCell} style={{ textAlign: 'center' }}>
+                        <span className={styles.lable}>留位时限</span>
+                        <div className={[styles.text, 'text-overflow'].join(' ')}>
+                            {data.timer_end_date}
                         </div>
                     </Col>
-                    <Col span={8}>
-                        <div className={styles.right}>
-                            <span className={styles.rightlable}>订单状态</span>
-                            <div style={orderStateFun(data)} className={[styles.righttext, 'text-overflow'].join(' ')}>
-                                {colDisplay(data.state, 'OrderState', data)}
-                            </div>
+                    <Col span={10} className={styles.infoCell} style={{ textAlign: 'center' }}>
+                        <span className={styles.lable}>订单状态</span>
+                        <div style={orderStateFun(data)} className={[styles.text, 'text-overflow'].join(' ')}>
+                            {colDisplay(data.state, 'OrderState', data)}
                         </div>
                     </Col>
                 </Row>

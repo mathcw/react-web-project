@@ -24,14 +24,14 @@
       flex-direction: column;
       .img {
         width: 100%;
-        height: 85%;
+        height: 110px;
         border-radius: 4px 4px 0 0;
       }
       .imgText {
         font-size: 11px;
         width: 100%;
-        height: 15%;
-        line-height: 24px;
+        height: 24px;
+        line-height: 22px;
         text-align: center;
         border: 1px solid #d9d9d9;
         border-radius: 0 0 4px 4px;
@@ -85,39 +85,74 @@
         }
       }
     }
-    .right {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      .rightlable {
-        font-size: 14px;
-        font-weight: 400;
-        color: rgba(72, 87, 113, 1);
-        line-height: 20px;
-      }
-      .rightstate {
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 20px;
-      }
-      .plan{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-top: 4px;
-        cursor: pointer;
-        .planimg{
-          width: 25px;
-          height: 25px;
+    // .right {
+    //   display: flex;
+    //   flex-direction: column;
+    //   justify-content: center;
+    //   align-items: center;
+    //   .rightlable {
+    //     font-size: 14px;
+    //     font-weight: 400;
+    //     color: rgba(72, 87, 113, 1);
+    //     line-height: 20px;
+    //   }
+    //   .rightstate {
+    //     font-size: 14px;
+    //     font-weight: 400;
+    //     line-height: 20px;
+    //   }
+    //   .plan{
+    //     display: flex;
+    //     flex-direction: column;
+    //     justify-content: center;
+    //     align-items: center;
+    //     margin-top: 4px;
+    //     cursor: pointer;
+    //     .planimg{
+    //       width: 25px;
+    //       height: 25px;
+    //     }
+    //     .query{
+    //       font-size: 12px;
+    //       line-height: 25px;
+    //       color: #518FEF;
+    //     }
+    //   }
+    // }
+    .Approval{
+        width: 200px;
+        position: absolute;
+        right: 1%;
+        .lable{ 
+            font-size:14px;
+            font-weight:400;
+            color:rgba(72,87,113,1);
+            line-height:20px;
         }
-        .query{
-          font-size: 12px;
-          line-height: 25px;
-          color: #518FEF;
+        .text{
+            font-size:14px;
+            font-weight:400;
+            line-height:20px;
+            margin-top: 3px;
+            text-align: center;
         }
-      }
+        .plan{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 4px;
+            cursor: pointer;
+            .planimg{
+                width: 25px;
+                height: 25px;
+            }
+            .query{
+                font-size: 12px;
+                line-height: 25px;
+                color: #518FEF;
+            }
+        }           
     }
   }
 }
@@ -141,6 +176,7 @@
     }
     .ModContent {
       font-size: 12px;
+      padding-left: 5px;
       .details {
         background: #fff;
         margin: 5px 10px;
@@ -210,22 +246,22 @@
 }
 
 .btns {
-  float: right;
-  position: absolute;
-  right: 5%;
-  bottom: 10px;
-  z-index: 99;
-  .button {
-    background: rgba(255, 255, 255, 1);
-    border-radius: 4px;
-    border: 1px solid rgba(177, 188, 209, 1);
-    font-size: 12px;
-    font-weight: 400;
-    color: rgba(46, 58, 78, 1);
-    line-height: 17px;
-    height: 21px;
-    margin-right: 5px;
-  }
+    float: right;
+    position: absolute;
+    right: 4%;
+    bottom: 10px;
+    z-index: 99;
+    .button {
+      background: rgba(255, 255, 255, 1);
+      border-radius: 4px;
+      border: 1px solid rgba(177, 188, 209, 1);
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(46, 58, 78, 1);
+      line-height: 17px;
+      height: 21px;
+      margin-right: 5px;
+    }
 }
 
 .tourist {

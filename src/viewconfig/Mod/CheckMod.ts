@@ -38,7 +38,7 @@ const config: ModConfigItem = {
         headerButtons: {
         },
         rowButtons: {
-            订单对账: { text: '对账', show: { flow: [0, 1, 3], check_flow: [0, 1, 3, 4] } },
+            订单应转对账: { text: '对账', show: { flow: [0, 1, 3], check_flow: [0, 1, 3, 4] } },
             提交对账: { text: '提交', show: { flow: [0, 1, 3], check_flow: [1, 3] } },
             撤回对账: { text: '撤回', show: { flow: [0, 1, 3], check_flow: [2] } }
         },
