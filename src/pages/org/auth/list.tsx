@@ -127,7 +127,7 @@ const list:React.FC<IModPageProps> = ({ route }) => {
                                 size="small"
                                 key={btn.text}
                                 onClick={() => {
-                                    if (btn.onClick) btn.onClick(data, load);
+                                    if (btn.onClick) btn.onClick(item, load);
                                 }}
                             >
                                 {btn.text || ""}
