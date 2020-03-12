@@ -13,8 +13,8 @@ interface IModal {
 const init = (info: any) => {
     const data = {
         占位时限日志: info['占位时限日志'] ? [...info['占位时限日志']] : [],
-        end_date: !!info.end_date ? moment(info.end_date) : moment(new Date()),
-        hour: !!info.hour ? moment(info.hour) : moment(new Date()),
+        end_date: !!info.end_date ? moment(info.end_date, 'YYYY-MM-DD') : moment(new Date(),'YYYY-MM-DD'),
+        hour: !!info.hour&&info.hour!=='0' ? moment(info.hour, 'HH:mm') : moment(new Date(), 'HH:mm'),
         timer_end_date: !! info.timer_end_date ? moment(info.timer_end_date).format('YYYY-MM-DD HH:mm') : moment(new Date()).format('YYYY-MM-DD HH:mm'),
     };
     data.timer_end_date = moment(data.end_date).format('YYYY-MM-DD ') + ' ' + moment(data.hour).format('HH:mm');
@@ -22,7 +22,6 @@ const init = (info: any) => {
 }
 
 const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
-
     const data = init(info);
     const formData = {
         end_date:data['end_date'],
@@ -42,11 +41,11 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
         if (onOk) {
             form.validateFields().then(
                 (formValues:any)=>{
-                onOk({
-                    end_date: formValues['end_date'].format('YYYY-MM-DD'),
-                    hour:formValues['hour'].format('HH:mm'),
-                    timer_end_date:formValues['timer_end_date']
-                })
+                    onOk({
+                        end_date: formValues['end_date'].format('YYYY-MM-DD'),
+                        hour:formValues['hour'].format('HH:mm'),
+                        timer_end_date:formValues['timer_end_date']
+                    })
                 },()=>{
 
                 }
@@ -58,7 +57,7 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
         if (data['占位时限日志'] && data['占位时限日志'].length > 0) {
             return (
                 <>
-                <Row style={{ margin: '12px 0 24px 0' }} >
+                <Row style={{ margin: '12px 0 5px 0' }} >
                     <Col span={24} className={styles.title}>时限日志:</Col>
                 </Row>
                 <Row>
@@ -94,7 +93,6 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
     }
 
     const onChange = (field: string, val: moment.Moment | null, format: string) => {
-
         const formValues = form.getFieldsValue();
         if(val){
             formValues[field] = val;
