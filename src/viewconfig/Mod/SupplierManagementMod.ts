@@ -6,7 +6,7 @@ const config: ModConfigItem = {
         title: "提报处理",
         textSearch: {
             full_name: { text: '公司全称' }
-        },
+        }, 
         dropDownSearch: {
             city_id: { text: '所在城市', type: 'City' }
         },
