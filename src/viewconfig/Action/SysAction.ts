@@ -4,7 +4,7 @@ const config: ActionConfigItem = {
     修改流程: {
         title: "修改流程",
         path:"/sys/flow/edit",
-        read: { url: "/comm/Flow/read_step", data: { schema_name: 'schema_name' } },
+        read: { url: "/comm/FlowList/read_step", data: { schema_name: 'schema_name' } },
         submit: { url: "/comm/Flow/submit",data:{"流程编辑":"流程编辑","流程":"流程"} },
         btns: {
           关闭: { text: "关闭" },
