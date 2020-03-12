@@ -172,6 +172,23 @@ const routes: Array<IRouteValue> = [
           },
           // 供应商公司管理相关 action to do
           {
+            path: "/supplierManagement/company/add",
+            name: "新增供应商",
+            authority: "新增供应商公司",
+            viewConfig:"新增供应商公司",
+            hideInMenu: true,
+            component: "./supplierManagement/company/edit"
+          },
+          {
+            path: "/supplierManagement/company/modify",
+            name: "修改供应商",
+            authority: "修改供应商公司",
+            viewConfig:"修改供应商公司",
+            hideInMenu: true,
+            component: "./supplierManagement/company/edit"
+          },
+          //
+          {
             path: "/supplierManagement/department/list",
             name: "部门管理",
             authority: "供应商部门管理",
