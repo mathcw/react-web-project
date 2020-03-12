@@ -133,7 +133,9 @@ const list: React.FC<IModPageProps> = ({ route }) => {
         setPageSize(size);
     };
 
-    const actionMap = {};
+    const actionMap = {
+
+    };
 
     const { headerBtns, rowBtns } = useListPageBtn(viewConfig, actionMap);
     const { dropDownSearch, textSearch } = useListPageSearch(viewConfig);

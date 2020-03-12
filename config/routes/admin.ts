@@ -358,6 +358,13 @@ const routes: Array<IRouteValue> = [
             component: "./sys/flow/list"
           },
           {
+            path:"/sys/flow/edit",
+            name:"修改流程",
+            viewConfig:"修改流程",
+            hideInMenu:true,
+            component:"./sys/flow/edit",
+          },
+          {
             path: "/sys/api/list",
             name: "api管理",
             authority: "api管理",
