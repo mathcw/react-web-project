@@ -6,7 +6,7 @@ const routes:Array<IRouteValue> = [
         {
           parent: '/',
           routes: [
-            {path: '/home/admin', component: './Welcome'},
+            {path: '/home/admin', component: './home/Admin'},
             {path: '/home/supplier', component: './Welcome'},  
           ],
         }
