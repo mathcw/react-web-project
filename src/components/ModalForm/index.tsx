@@ -6,25 +6,24 @@ import { getEnum } from "@/utils/enum";
 
 import styles from "./index.less";
 
-
 const { Option } = Select;
 
 interface ICfg {
-  text: string; //label 名
-  editable?: boolean; // 可否编辑
-  required?: boolean; // 是否必填
-  type?: string; // 类型
-  width?: number; // 宽度
+    text: string; //label 名
+    editable?: boolean; // 可否编辑
+    required?: boolean; // 是否必填
+    type?: string; // 类型
+    width?: number; // 宽度
 }
 
 interface IModalForm {
-  list: {
-    [field: string]: ICfg;
-  };
-  data?: object;
-  onSubmit?: (p: any) => void;
-  onCancel?: () => void;
-  change?: (field: string, val: any, rst: any) => object;
+    list: {
+        [field: string]: ICfg;
+    };
+    data?: object;
+    onSubmit?: (p: any) => void;
+    onCancel?: () => void;
+    change?: (field: string, val: any, rst: any) => object;
 }
 
 const initFormItemMap = (list: { [field: string]: ICfg }) => {
@@ -43,11 +42,11 @@ const initFormItemMap = (list: { [field: string]: ICfg }) => {
 };
 
 const ModalForm: React.FC<IModalForm> = ({
-  list,
-  data: ref,
-  onSubmit,
-  onCancel,
-  change
+    list,
+    data: ref,
+    onSubmit,
+    onCancel,
+    change
 }) => {
   const [data, setData] = useState(ref || {});
   const [formItemMap, setFormItemMap] = useState(initFormItemMap(list));
@@ -169,6 +168,66 @@ const ModalForm: React.FC<IModalForm> = ({
         </Select>
       );
     }
+    if (cfg.edit_path) {
+        <Select
+          showSearch
+          optionFilterProp="children"
+          onChange={(val: any) => onSelectChange(field, val)}
+          getPopupContainer={node => node}
+          disabled={disabled}
+          value={data[field]}
+        >
+          {Object.keys(Enum).map(key => (
+              <Option key={key} value={key}>
+                  {Enum[key]}
+              </Option>
+          ))}
+        </Select>
+    }
+    return (
+      <Select
+        showSearch
+        optionFilterProp="children"
+        onChange={(val: any) => onSelectChange(field, val)}
+        getPopupContainer={node => node}
+        disabled={disabled}
+        value={data[field]}
+      >
+        {Object.keys(Enum).map(key => (
+          <Option key={key} value={key}>
+            {Enum[key]}
+          </Option>
+        ))}
+      </Select>
+    );
+  };
+
+  const renderPairEditSelect = (
+    cfg: any,
+    field: string,
+    disabled: boolean = false
+  ) => {
+    let selectArrName = cfg.edit_path;
+    const Enum = data[selectArrName] || {};
+    if (cfg.multi) {
+      return (
+        <Select
+          showSearch
+          optionFilterProp="children"
+          mode="multiple"
+          onChange={(val: any) => onSelectChange(field, val)}
+          getPopupContainer={node => node}
+          disabled={disabled}
+          value={data[field]}
+        >
+          {Object.keys(Enum).map(key => (
+            <Option key={key} value={key}>
+              {Enum[key]}
+            </Option>
+          ))}
+        </Select>
+      );
+    }
     return (
       <Select
         showSearch
@@ -243,10 +302,23 @@ const ModalForm: React.FC<IModalForm> = ({
                 )}
               {list[field].editable === false &&
                 list[field].type &&
+                list[field].type == "PairEdit" && (
+                  <Form.Item
+                    style={{ margin: "12px 0" }}
+                    label={list[field].text}
+                    key={field}
+                    {...formItemMap[field]}
+                  >
+                    {renderPairEditSelect(list[field], field)}
+                  </Form.Item>
+              )}
+              {list[field].editable === false &&
+                list[field].type &&
                 list[field].type !== "number" &&
                 list[field].type !== "date" &&
                 list[field].type !== "time" &&
-                list[field].type !== "ArrayEdit" && (
+                list[field].type !== "ArrayEdit" &&
+                list[field].type !== "PairEdit" && (
                   <Form.Item
                     style={{ margin: "12px 0" }}
                     label={list[field].text}
@@ -322,7 +394,20 @@ const ModalForm: React.FC<IModalForm> = ({
                   >
                     {renderArraySelect(list[field], field)}
                   </Form.Item>
-                )}
+              )}
+              {list[field].editable !== false &&
+                list[field].type &&
+                list[field].type == "PairEdit" && (
+                  <Form.Item
+                    style={{ margin: "12px 0" }}
+                    label={list[field].text}
+                    key={field}
+                    {...formItemMap[field]}
+                  >
+                    {renderPairEditSelect(list[field], field)}
+                  </Form.Item>
+              )}
+
               {list[field].editable !== false &&
                 list[field].type &&
                 list[field].type !== "text" &&

@@ -154,7 +154,15 @@ const routes: Array<IRouteValue> = [
 
             component: "./supplierManagement/tbCompany/list"
           },
-          // 提报相关action to do
+          {
+            path: "/supplierManagement/company/perfect",
+            name: "完善供应商",
+            authority: "完善吸纳供应商",
+            viewConfig:"完善吸纳供应商",
+            hideInMenu: true,
+            component: "./supplierManagement/company/edit"
+          },
+
           {
             path: "/supplierManagement/xnCompany/list",
             name: "吸纳审核",
@@ -162,7 +170,16 @@ const routes: Array<IRouteValue> = [
             viewConfig: "吸纳供应商管理",
             component: "./supplierManagement/xnCompany/list"
           },
-          // 吸纳相关action to do
+          {
+            path: "/supplierManagement/xnCompany/approve",
+            name: "吸纳供应商审批",
+            authority: "审批吸纳供应商",
+            viewConfig:"审批吸纳供应商",
+            hideInMenu:true,
+            component: "./supplierManagement/xnCompany/approve"
+          },
+          
+
           {
             path: "/supplierManagement/company/list",
             name: "公司管理",
@@ -187,7 +204,23 @@ const routes: Array<IRouteValue> = [
             hideInMenu: true,
             component: "./supplierManagement/company/edit"
           },
-          //
+          {
+            path: "/supplierManagement/company/maintenance",
+            name: "维护供应商",
+            authority: "维护供应商公司",
+            viewConfig:"维护供应商公司",
+            hideInMenu: true,
+            component: "./supplierManagement/company/edit"
+          },
+          {
+            path: "/supplierManagement/Company/approve",
+            name: "供应商审批",
+            authority: "审批供应商公司",
+            viewConfig:"审批供应商公司",
+            hideInMenu:true,
+            component: "./supplierManagement/xnCompany/approve"
+          },
+          
           {
             path: "/supplierManagement/department/list",
             name: "部门管理",

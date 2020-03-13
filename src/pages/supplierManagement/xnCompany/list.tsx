@@ -97,7 +97,7 @@ const Company: React.FC<ICompanyProps> = ({ data, btns, load }) => {
                                     </span>
                                 </div>
                             </Col>
-                            <Col span={10} className={styles.RCenterL}>
+                            <Col span={13} className={styles.RCenterL}>
                                 <div>
                                     <span className={styles.lable}>提报用户：  </span>{' '}
                                     <span className={[styles.text, 'text-overflow'].join(' ')}>
