@@ -13,7 +13,9 @@ import PageHeaderWrapper, {
 import { getRowBtnArray, colDisplay } from '@/utils/utils';
 
 import styles from './list.less';
-import { Col, Button, Row } from 'antd';
+import { get,submit } from "@/utils/req";
+import { Col, Button,message, Row, Modal } from 'antd';
+import ModalForm from "@/components/ModalForm";
 
 const defaultPng = require('@/assets/login-bg.png');
 
@@ -153,6 +155,109 @@ const Saler: React.FC<ISalerProps> = ({ data, btns, load }) => {
 }
 
 
+const add = (reload: () => void) => () => {
+    const modalRef = Modal.info({});
+    const list = {
+        supplier_id:{text:'所属商家',required: true,type:'FullSupplier'},
+        department_id:{text:'所属部门',required: true,type:'SupplierDepartment',cascade:'supplier_id'},
+        name:{text:'姓名',required: true},
+        gender:{text:"性别",required:true,type:"Gender"},
+        mobile:{text:'电话',required:true},
+        account:{text:'账号',required:true},
+        password:{text:'密码',required:true}
+    };
+    const onSubmit = (data: any) => {
+      submit("/SupplierManagement/Sales/submit", data).then(r => {
+            message.success(r.message);
+            modalRef.destroy();
+            reload();
+      });
+    };
+    const onCancel = () => {
+        modalRef.destroy();
+    };
+    modalRef.update({
+        title: "新增员工",
+        icon: null,
+        content: <ModalForm list={list} onSubmit={onSubmit} onCancel={onCancel} />,
+        okButtonProps: { className: "hide" },
+        cancelButtonProps: { className: "hide" }
+    });
+};
+  
+const edit = (reload: () => void) => (ref: any) => {
+    const modalRef = Modal.info({});
+    const list = {
+        supplier_id:{text:'所属商家',required: true,type:'FullSupplier'},
+        department_id:{text:'所属部门',required: true,type:'SupplierDepartment',cascade:'supplier_id'},
+        name:{text:'姓名',required: true},
+        gender:{text:"性别",required:true,type:"Gender"},
+        mobile:{text:'电话',required:true},
+        account:{text:'账号',required:true}
+    };
+    const onSubmit = (data: object | undefined) => {
+        submit("/SupplierManagement/Sales/edit", data).then(r => {
+            message.success(r.message);
+            modalRef.destroy();
+            reload();
+        });
+    };
+    const onCancel = () => {
+        modalRef.destroy();
+    };
+    modalRef.update({
+        title: "修改员工",
+        // eslint-disable-next-line max-len
+        icon: null,
+        content: (
+            <ModalForm
+            list={list}
+            onSubmit={onSubmit}
+            onCancel={onCancel}
+            data={{ ...ref }}
+            />
+        ),
+        okButtonProps: { className: "hide" },
+        cancelButtonProps: { className: "hide" }
+    });
+};
+
+// 设置权限
+const setAuth = (reload: () => void) => (ref: any) => {
+    const modalRef = Modal.info({});
+    const list = {
+        auth_id: {text:"权限", required: true, type:"PairEdit", edit_path:'可选权限'},
+        online: { text:'是否开启线上接单',required: true, type:'OpenOrClose'}
+    };
+    const onSubmit = (data: object | undefined) => {
+        submit("/SupplierManagement/Sales/set_auth", data).then(r => {
+            message.success(r.message);
+            modalRef.destroy();
+            reload();
+        });
+    };
+    const onCancel = () => {
+        modalRef.destroy();
+    };
+
+    get("/SupplierManagement/Sales/read_auth", { id: ref.id }).then(res => {
+        modalRef.update({
+            title: "设置权限",
+            icon: null,
+            content: (
+                <ModalForm
+                    list={list}
+                    onSubmit={onSubmit}
+                    onCancel={onCancel}
+                    data={{ ...res.data }}
+                />
+            ),
+            okButtonProps: { className: "hide" },
+            cancelButtonProps: { className: "hide" }
+        });
+    });
+};
+
 const list: React.FC<IModPageProps> = ({ route }) => {
     const { viewConfig } = route;
     const {
@@ -180,7 +285,11 @@ const list: React.FC<IModPageProps> = ({ route }) => {
         setPageSize(size);
     };
 
-    const actionMap = {};
+    const actionMap = {
+        新增供应商账号:add(load),
+        修改供应商账号:edit(load),
+        设置供应商权限:setAuth(load)
+    };
 
     const { headerBtns, rowBtns } = useListPageBtn(viewConfig, actionMap);
     const { dropDownSearch, textSearch } = useListPageSearch(viewConfig);

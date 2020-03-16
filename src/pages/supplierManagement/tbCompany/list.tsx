@@ -13,7 +13,9 @@ import PageHeaderWrapper, {
 import { getRowBtnArray, colDisplay, colorfun } from '@/utils/utils';
 
 import styles from './list.less';
-import { Col, Button, Row } from 'antd';
+import { Col, Button, message, Modal, Row } from 'antd';
+import { submit } from "@/utils/req";
+import ModalForm from "@/components/ModalForm";
 
 const defaultPng = require('@/assets/login-bg.png');
 
@@ -97,7 +99,7 @@ const Company: React.FC<ICompanyProps> = ({ data, btns, load }) => {
                                     </span>
                                 </div>
                             </Col>
-                            <Col span={10} className={styles.RCenterL}>
+                            <Col span={13} className={styles.RCenterL}>
                                 <div>
                                     <span className={styles.lable}>提报用户：  </span>{' '}
                                     <span className={[styles.text, 'text-overflow'].join(' ')}>
@@ -152,6 +154,36 @@ const Company: React.FC<ICompanyProps> = ({ data, btns, load }) => {
     )
 }
 
+const setXnSupp = (reload: () => void) => (ref: any) => {
+    const modalRef = Modal.info({});
+    const list = {
+        ruku_state: {text: "处理方式", required: true, type: "RkState"}
+    };
+    const onSubmit = (data: object | undefined) => {
+        submit("/SupplierManagement/ErpCompany/chuli", data).then(r => {
+            message.success(r.message);
+            modalRef.destroy();
+            reload();
+        });
+    };
+    const onCancel = () => {
+        modalRef.destroy();
+    };
+    modalRef.update({
+        title: "处理供应商",
+        icon: null,
+        content: (
+            <ModalForm
+                list={list}
+                onSubmit={onSubmit}
+                onCancel={onCancel}
+                data={{ ...ref }}
+            />
+        ),
+        okButtonProps: { className: "hide" },
+        cancelButtonProps: { className: "hide" }
+    });
+};
 
 const list: React.FC<IModPageProps> = ({ route }) => {
     const { viewConfig } = route;
@@ -180,7 +212,9 @@ const list: React.FC<IModPageProps> = ({ route }) => {
         setPageSize(size);
     };
 
-    const actionMap = {};
+    const actionMap = {
+        处理吸纳供应商:setXnSupp(load)
+    };
 
     const { headerBtns, rowBtns } = useListPageBtn(viewConfig, actionMap);
     const { dropDownSearch, textSearch } = useListPageSearch(viewConfig);

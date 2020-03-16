@@ -34,7 +34,7 @@ const config: ModConfigItem = {
 
         },
         rowButtons: {
-            审批吸纳供应商: { text: '通过', show: { flow: [2] } },
+            审批吸纳供应商: { text: '审批', show: { flow: [2] } },
         }
     },
 

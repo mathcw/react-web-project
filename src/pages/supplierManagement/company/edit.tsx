@@ -165,17 +165,14 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
     }
 
     return (
-        <PageHeaderWrapper
-            title={cfg.title || ''}
-            extra={renderHeaderBtns(btns)}
-        >
+        <PageHeaderWrapper title={cfg.title || ''} extra={renderHeaderBtns(btns)} >
             <Row className={styles.Mod}>
                 <Col span={24} className={styles.title}>
                     <div className={styles.text}>基础信息</div>
                 </Col>
-                <Col xs={24} sm={24} md={5} lg={5} className={styles.content}>
-                    <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <div style={{ lineHeight: '24px', paddingLeft: '20px' }}>
+                <Col xs={24} sm={24} md={6} lg={6} className={styles.content}>
+                    <div style={{ display: 'flex', flexDirection: 'column' , paddingTop:'5px' }}>
+                        <div style={{ lineHeight: '24px', paddingLeft: '0px' ,marginTop: '-6px'}}>
                             商家商标
                         </div>
                         <Dragger
@@ -191,9 +188,9 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                         </Dragger>
                     </div>
                 </Col>
-                <Col xs={24} sm={24} md={19} lg={19} className={styles.content}>
+                <Col xs={24} sm={24} md={18} lg={18} className={styles.content}>
                     <Row>
-                        <Col span={8}>
+                        <Col span={12}>
                             <div className={styles.cell}>
                                 <div className={styles.cellLabel}>
                                     商家类型
@@ -214,7 +211,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                                 </Select>
                             </div>
                         </Col>
-                        <Col span={8}>
+                        <Col span={12}>
                             <div className={styles.cell}>
                                 <div className={styles.cellLabel}>
                                     所在城市
@@ -235,19 +232,17 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                                 </Select>
                             </div>
                         </Col>
-                        <Col span={8}>
+                        <Col span={12}>
                             <div className={styles.cell}>
                                 <div className={styles.cellLabel}>
                                     商家编号
                                 </div>
                                 <div style={{ padding: '0 11px', lineHeight: '32px', height: '32px', border: '1px solid #d9d9d9', borderRadius: '4px' }}>
-                                    {data['供应商信息']['id'] || ''}
+                                    {data['供应商信息']['id'] ? 'S0'+data['供应商信息']['id'] : ''}
                                 </div>
                             </div>
                         </Col>
-                    </Row>
-                    <Row>
-                        <Col span={8}>
+                        <Col span={12}>
                             <div className={styles.cell}>
                                 <div className={styles.cellLabel}>
                                     公司全称
@@ -260,7 +255,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                                 />
                             </div>
                         </Col>
-                        <Col span={8}>
+                        <Col span={12}>
                             <div className={styles.cell}>
                                 <div className={styles.cellLabel}>
                                     品牌名称
@@ -273,7 +268,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                                 />
                             </div>
                         </Col>
-                        <Col span={8}>
+                        <Col span={12}>
                             <div className={styles.cell}>
                                 <div className={styles.cellLabel}>
                                     办公地址
@@ -295,7 +290,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                 </Col>
                 <Col xs={24} sm={24} md={7} lg={7} className={styles.content}>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <div style={{ lineHeight: '24px', paddingLeft: '20px' }}>
+                        <div style={{ lineHeight: '24px', paddingLeft: '0px' }}>
                             营业执照
                         </div>
                         <Dragger
@@ -313,7 +308,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                 </Col>
                 <Col xs={24} sm={24} md={7} lg={7} className={styles.content}>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <div style={{ lineHeight: '24px', paddingLeft: '20px' }}>
+                        <div style={{ lineHeight: '24px', paddingLeft: '0px' }}>
                             经营许可证
                         </div>
                         <Dragger
@@ -331,7 +326,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                 </Col>
                 <Col xs={24} sm={24} md={7} lg={7} className={styles.content}>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <div style={{ lineHeight: '24px', paddingLeft: '20px' }}>
+                        <div style={{ lineHeight: '24px', paddingLeft: '0px' }}>
                             旅行社责任险
                         </div>
                         <Dragger
@@ -348,12 +343,14 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                     </div>
                 </Col>
             </Row>
+            
             {/* ===== 业务联系人 ===== */}
             <Row className={styles.Mod} style={{ marginTop: '20px' }}>
                 <Col span={24} className={styles.title}>
                     <div className={styles.text}>业务联系人</div>
                     <Button
                         type="primary"
+                        size="small"
                         className={styles.btns}
                         onClick={() => {
                             addYWCon()
@@ -367,22 +364,22 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                         <Col span={6} className={styles.cell}>
                             <div className={styles.cellLabel}>
                                 姓名
-                    </div>
+                            </div>
                         </Col>
                         <Col span={6} className={styles.cell}>
                             <div className={styles.cellLabel}>
                                 性别
-                    </div>
+                            </div>
                         </Col>
                         <Col span={6} className={styles.cell}>
                             <div className={styles.cellLabel}>
                                 座机
-                    </div>
+                            </div>
                         </Col>
                         <Col span={6} className={styles.cell}>
                             <div className={styles.cellLabel}>
                                 手机
-                    </div>
+                            </div>
                         </Col>
                     </Row>
                 </Col>
@@ -443,14 +440,15 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                         ))
                     }
                 </Col>
-
             </Row>
+
             {/* ===== 银行账号编辑 ===== */}
             <Row className={styles.Mod} style={{ marginTop: '20px' }}>
                 <Col span={24} className={styles.title}>
                     <div className={styles.text}>结算账号</div>
                     <Button
                         type="primary"
+                        size="small"
                         className={styles.btns}
                         onClick={()=>{
                             addYHCon();

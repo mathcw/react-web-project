@@ -307,6 +307,7 @@ const setAuth = (reload: () => void) => (ref: any) => {
     const onCancel = () => {
         modalRef.destroy();
     };
+    
     modalRef.update({
         title: "设置权限",
         // eslint-disable-next-line max-len
@@ -323,7 +324,7 @@ const setAuth = (reload: () => void) => (ref: any) => {
         cancelButtonProps: { className: "hide" }
     });
 };
-;
+
 
 const list: React.FC<IModPageProps> = ({ route }) => {
     const { viewConfig } = route;

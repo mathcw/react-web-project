@@ -106,7 +106,7 @@ const Company: React.FC<ICompanyProps> = ({ data, btns, load }) => {
                                     </span>
                                 </div>
                             </Col>
-                            <Col span={10} className={styles.RCenterL}>
+                            <Col span={13} className={styles.RCenterL}>
                                 <div className={styles.address}>
                                     <span className={styles.lable}>办公地址： </span>{' '}
                                     <span className={[styles.text, 'text-overflow'].join(' ')}>{data.addr || ''}</span>
