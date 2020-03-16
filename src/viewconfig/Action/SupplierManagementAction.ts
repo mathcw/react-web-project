@@ -119,6 +119,65 @@ const config: ActionConfigItem = {
           url: "/SupplierOrg/Sales/toggle/state",
           data: { id: "id", state:"state"}
         } 
+    },
+
+    新增供应商权限: {
+        title: "新增供应商权限",
+        path: "/SupplierManagement/auth/add",
+        read: { url: "/org/Auth/read_new_supplier_auth" ,data:{id:"id"}},
+        submit: { url: "/org/Auth/submit", data: "auth" },
+        btns: {
+            关闭: { text: "关闭" },
+            提交: { text: "提交" }
+        }
+    },
+
+    编辑供应商权限: {
+        title: "新增供应商权限",
+        path: "/SupplierManagement/auth/edit",
+        read: { url: "/org/Auth/read_modify_supplier_auth" ,data:{id:"id"}},
+        submit: { url: "/org/Auth/submit", data: "auth" },
+        btns: {
+            关闭: { text: "关闭" },
+            提交: { text: "提交" }
+        }
+    },
+
+    复制供应商权限: {
+        title: "复制供应商权限",
+        path: "/SupplierManagement/auth/copy",
+        read: { url: "/org/Auth/read_modify_supplier_auth" ,data:{id:"id"}},
+        submit: { url: "/org/Auth/copy_submit", data: "auth" },
+        btns: {
+            关闭: { text: "关闭" },
+            提交: { text: "提交" }
+        }
+    },
+    启停供应商权限: { 
+        directlySubmit: true,
+        submit: {
+          url: "/org/Auth/toggle/state",
+          data: { id: "id", state:"state"}
+        } 
+    },
+    删除供应商权限:{
+        directlySubmit:true,
+        confirm:'确认删除吗？',
+        submit:{
+            url:"/org/Auth/destroy",
+            data:{id:"id"}
+        }
+    },
+
+    审批供应商头像:{
+        title:"审批供应商头像",
+        path:'/SupplierManagement/profilePhoto/approve',
+        read: {url:'/SupplierManagement/Sales/read_approve',data:{id:'id'}},
+        submit: {url:'/comm/Flow/approve_by_post/供应商头像审批',data:{flow_id:'flow_id',opinion:'opinion',comment:'comment'}},
+        btns:{
+            关闭:{'text':"关闭"},
+            提交:{'text':"保存"},
+        }
     }
 };
 

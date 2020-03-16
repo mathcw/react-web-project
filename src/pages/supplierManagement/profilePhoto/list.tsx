@@ -51,7 +51,7 @@ const Photo: React.FC<IPhotoProps> = ({ data, btns, load }) => {
                 </Col>
                 <Col style={{ paddingLeft: '20px', flex: '1' }} xs={21} sm={21} md={21} lg={21}>
                     <Col span={20} className={styles.RTop}>
-                        <span className={[styles.name, 'text-overflow'].join(' ')}>{data.company_name}-{data.department_name}</span>
+                        <span className={[styles.name, 'text-overflow'].join(' ')}>{data.supplier_full_name}-{data.supplier_department_name}</span>
                     </Col>
                     <Col span={17} className={styles.RCenter}>
                         <Col span={10} className={styles.RCenterL}>
@@ -71,7 +71,7 @@ const Photo: React.FC<IPhotoProps> = ({ data, btns, load }) => {
                         <Col span={10} className={styles.RCenterL}>
                             <div>
                                 <span className={styles.lable}>所属部门：  </span>{' '}
-                                <span className={[styles.text, 'text-overflow'].join(' ')}>{data.department_name}</span>
+                                <span className={[styles.text, 'text-overflow'].join(' ')}>{data.supplier_department_name}</span>
                             </div>
                         </Col>
                     </Col>

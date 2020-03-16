@@ -244,7 +244,31 @@ const routes: Array<IRouteValue> = [
             viewConfig: "供应商权限管理",
             component: "./supplierManagement/auth/list"
           },
-          // 供应商权限相关 action to do
+          {
+            path: "/supplierManagement/auth/add",
+            name: "新增供应商权限",
+            authority: "新增供应商权限",
+            viewConfig:"新增供应商权限",
+            hideInMenu: true,
+            component: "./supplierManagement/auth/edit"
+          },
+          {
+            path: "/supplierManagement/auth/edit",
+            name: "编辑供应商权限",
+            authority: "编辑供应商权限",
+            viewConfig:"编辑供应商权限",
+            hideInMenu: true,
+            component: "./supplierManagement/auth/edit"
+          },
+          {
+            path: "/supplierManagement/auth/copy",
+            name: "复制供应商权限",
+            authority: "复制供应商权限",
+            viewConfig:"复制供应商权限",
+            hideInMenu: true,
+            component: "./supplierManagement/auth/edit"
+          },
+
           {
             path: "/supplierManagement/bindCompany/list",
             name: "绑定管理",
@@ -259,7 +283,15 @@ const routes: Array<IRouteValue> = [
             authority:"供应商头像审批",
             viewConfig:"供应商头像审批",
             component:"./supplierManagement/profilePhoto/list"
-          }
+          },
+          {
+            path: "/SupplierManagement/profilePhoto/approve",
+            name: "供应商头像",
+            authority: "审批供应商头像",
+            viewConfig:"审批供应商头像",
+            hideInMenu: true,
+            component: "./SupplierManagement/profilePhoto/approve"
+          },
         ]
       },
       {
