@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { IModPageProps } from '@/viewconfig/ModConfig';
 
-import { Row, Col, Avatar, Button, Divider, Modal, Input, Upload, message } from 'antd';
+import { Row, Col, Avatar, Button, Divider, Spin, Modal, Input, Upload, message } from 'antd';
 import Link from 'umi/link';
-import { rootAction } from '@/rootState';
+import { rootAction, useRootState } from '@/rootState';
 import { ActionType } from '@/rootState/rootAction';
 
 import styles from './Admin.less';
 import { read, upload, submit } from '@/utils/req';
-import { LoadingOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 const {Password} = Input;
 const {Dragger} = Upload;
 const defaultProfile = require('@/assets/profile.png');
 
-function beforeUpload(file) {
+function beforeUpload(file:any) {
   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
   if (!isJpgOrPng) {
     message.error('请上传 JPG/PNG 图片!');
@@ -88,6 +88,8 @@ const page:React.FC<IModPageProps> = ({ route }) => {
           setData({ ...res.data });
       })
   }, []);
+
+  const { loading } = useRootState();
 
   const handleChange = (info:any) => {
     if (info.file.status === 'uploading') {
@@ -181,10 +183,10 @@ const page:React.FC<IModPageProps> = ({ route }) => {
   }
 
   return <React.Fragment>
+        <div className={[loading ? '' : 'hide', 'Spin-box'].join(' ')}>
+          <Spin tip="Loading..." />
+        </div>
         <Row className={styles.TopContent}> 
-          {/* <div className={[loading ? '' : 'hide', 'Spin-box'].join(' ')}>
-            <Spin tip="Loading..." />
-          </div> */}
           {/* 个人信息 */}
             <Col xl={10} lg={10} md={24} sm={24} xs={24}  className={styles.infos}>
               <Row className={styles.block}>
