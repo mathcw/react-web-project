@@ -130,7 +130,8 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
       menuDataRender={menuDataRender}
       formatMessage={formatMessage}
       rightContentRender={rightProps => <RightContent {...rightProps} />}
-      contentStyle={{ padding: "0px 175px" }}
+      // contentStyle={{ padding: "0px 175px"}}
+      contentStyle={{ margin:'0'}}
       {...props}
       {...settings}
     >

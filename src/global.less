@@ -507,3 +507,34 @@ ol {
     width: 100%;
   }
 }
+
+main{padding: 24px 175px}
+@media screen and (max-width: @screen-xl) {
+  main {
+    padding: 24px 50px;
+    position: relative;
+    .contentBgc {
+      // background: #fff;
+    }
+  }
+}
+
+@media screen and (max-width: @screen-sm) {
+  main {
+    padding: 12px;
+    position: relative;
+    .contentBgc {
+      // background: #fff;
+    }
+  }
+}
+
+@media screen and (max-width: @screen-xs) {
+  main {
+    padding: 0;
+    position: relative;
+    .contentBgc {
+      background: #fff;
+    }
+  }
+}
