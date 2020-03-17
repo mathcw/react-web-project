@@ -197,7 +197,9 @@ const page:React.FC<IModPageProps> = ({ route }) => {
                 <Row className={styles.content}>
                   <Col span={8} style={{ textAlign: 'center' }}>
                     <Col> 
-                      <Avatar src='' size={64}/>
+                      <Avatar 
+                      src={data.account.photo || 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'} 
+                      size={64}/>
                     </Col>
                 <Col className={styles['left-text']}>{data.account.name}</Col>
                   </Col>
@@ -217,8 +219,8 @@ const page:React.FC<IModPageProps> = ({ route }) => {
             <Col xl={14} lg={14} md={24} sm={24} xs={24}  className={styles.infos}>
               <Row className={styles.block}>
                   <Col className={styles['mod-title']}>
-                    <Col className="mod-text">任务审批</Col>
-                    <Col className="mod-more">
+                    <Col span={22} className="mod-text">任务审批</Col>
+                    <Col span={2} className="mod-more">
                       <Link to="/office/msgflow/list" className={styles['text-right']}>
                         更多>
                       </Link>
@@ -246,8 +248,8 @@ const page:React.FC<IModPageProps> = ({ route }) => {
           <Col xl={14} lg={14} md={24} sm={24} xs={24}  className={styles.infos}>
               <Row className={styles.block}>
                   <Col className={styles['mod-title']}>
-                    <Col className="mod-text">平台公告</Col>
-                    <Col className="mod-more">
+                    <Col span={22} className="mod-text">平台公告</Col>
+                    <Col span={2} className="mod-more">
                       <Link to="/office/announcement/list" className={styles['text-right']}>
                         更多>
                       </Link>
@@ -321,8 +323,8 @@ const page:React.FC<IModPageProps> = ({ route }) => {
           <Col xl={14} lg={14} md={24} sm={24} xs={24}  className={styles.infos}>
               <Row className={styles.block}>
                   <Col className={styles['mod-title']}>
-                    <Col className="mod-text">平台公告</Col>
-                    <Col className="mod-more">
+                    <Col span={22} className="mod-text">平台公告</Col>
+                    <Col span={2} className="mod-more">
                       <Link to="/office/msg/list" className={styles['text-right']}>
                         更多>
                         {/* <Icon type="right" /> */}
