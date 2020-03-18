@@ -207,14 +207,14 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
   const tableBtns: IModBtn[] = [
     {
       text: '批量新增',
-      viewConfig: '批量新增团期',
+      authority: '批量新增团期',
       onClick: () => {
         setCalendarModal(true);
       }
     },
     {
       text: '批量填充',
-      viewConfig: '批量填充团期',
+      authority: '批量填充团期',
       onClick: () => {
         if (selectedRowKeys.length === 0) {
           Modal.error({
@@ -259,7 +259,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
     },
     {
       text: '批量删除',
-      viewConfig: '批量删除团期',
+      authority: '批量删除团期',
       onClick: () => {
         if (selectedRowKeys.length === 0) {
           Modal.error({
@@ -401,7 +401,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
         <Col className={styles.text}>团期价格</Col>
         <Col className={styles.btns}>
           {tableBtns.map(btn => (
-            <div key={btn.viewConfig} className="dib" style={{ marginLeft: 8 }}>
+            <div key={btn.authority} className="dib" style={{ marginLeft: 8 }}>
               <Button
                 icon={<LegacyIcon type={btn.icon} />}
                 type='primary'
