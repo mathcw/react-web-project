@@ -68,17 +68,18 @@ const list:React.FC<IModPageProps> = ({ route }) => {
         >
         {data.map((item) => (
             <React.Fragment>
-            <Col className={styles.Org}>
-                <Col className={styles.top}>
-                    <Col span={2} className={styles.imgBox} xs={3} sm={3} md={3} lg={3}>
-                        <img src={IconPng} alt="icon" className={styles.img} />
+                <Row className={styles.container}>
+                    <Col span={3} className={styles.left}>
+                        <div className={styles.headerIcon}>
+                            <img src={IconPng} alt="icon" className={styles.img} />
+                        </div>
                     </Col>
-                    <Col style={{ paddingLeft: '20px', flex: '1' }} xs={21} sm={21} md={21} lg={21}>
-                        <Col span={20} className={styles.RTop}>
-                            <span className={[styles.name, 'text-overflow'].join(' ')}>{item['name']}</span>
+                    <Col span={17} className={styles.middle}>
+                        <Col span={24} className={styles.top}>
+                            <span className={[styles.text, 'text-overflow'].join(' ')}>{item['name']}</span>
                         </Col>
-                        <Col span={17} className={styles.RCenter}>
-                            <Col span={10} className={styles.RCenterL}>
+                        <Row>
+                            <Col xl={8} lg={8} md={24} sm={24} xs={24} className={styles.centerL}>
                                 <div>
                                     <span className={styles.lable}>创建人员:  </span>{' '}&nbsp;&nbsp;&nbsp;
                                     <span className={[styles.text, 'text-overflow'].join(' ')}>{item['creator_id']}</span>
@@ -92,7 +93,7 @@ const list:React.FC<IModPageProps> = ({ route }) => {
                                     <span className={[styles.text, 'text-overflow'].join(' ')}>{item['last_update']}</span>
                                 </div>
                             </Col>
-                            <Col span={10} className={styles.RCenterL}>
+                            <Col xl={9} lg={9} md={24} sm={24} xs={24} className={styles.centerL}>
                                 <div>
                                     <span className={styles.lable}>权限备注:  </span>{' '}&nbsp;&nbsp;&nbsp;
                                     <span className={[styles.text, 'text-overflow'].join(' ')}>{item['scope']}</span>
@@ -102,43 +103,37 @@ const list:React.FC<IModPageProps> = ({ route }) => {
                                     <span className={[styles.text, 'text-overflow'].join(' ')}>{item['employee_num']}人</span>
                                 </div>
                             </Col>
-                        </Col>
-                        <Col span={7} className={styles.Approval}>
-                            <Row>
-                                <Col span={12} className={styles.infoCell} style={{ textAlign: 'center' }}>
-                                    <span className={styles.lable}></span>
-                                    <div className={[styles.text, 'text-overflow'].join(' ')}></div>
-                                </Col>
-                                <Col span={12} className={styles.infoCell} style={{ textAlign: 'center' }}>
-                                    <span className={styles.lable}>账号状态</span>
-                                    <div style={colorfun(item)} className={[styles.text, 'text-overflow'].join(' ')}>
-                                        {getEnum('State')[item['state']]}
-                                    </div>
-                                </Col>
-                            </Row>
+                        </Row>
+                    </Col>
+                    <Col span={4} className={styles.Approval}>
+                        <div className={styles.head}>
+                            <span className={styles.lable}>账号状态</span>
+                        </div>
+                        <div className={styles.state}>
+                            <span style={colorfun(item)} className={[styles.text, 'text-overflow'].join(' ')}>
+                            {getEnum('State')[item['state']]}
+                            </span>
+                        </div>
+                        <Col className={rowBtns ? styles.btns : 'hide'}>
+                            {rowBtns.map(btn => (
+                                <Button
+                                    className={styles.button}
+                                    type="primary"
+                                    size="small"
+                                    key={btn.text}
+                                    onClick={() => {
+                                        if (btn.onClick) btn.onClick(item, load);
+                                    }}
+                                >
+                                    {btn.text || ""}
+                                </Button>
+                            ))}
                         </Col>
                     </Col>
-                    
-                    <Col className={rowBtns ? styles.btns : 'hide'}>
-                        {rowBtns.map(btn => (
-                            <Button
-                                className={styles.button}
-                                type="primary"
-                                size="small"
-                                key={btn.text}
-                                onClick={() => {
-                                    if (btn.onClick) btn.onClick(item, load);
-                                }}
-                            >
-                                {btn.text || ""}
-                            </Button>
-                        ))}
-                    </Col>
-                </Col>
-            </Col>
+                </Row>
             </React.Fragment>
         ))}
     </PageHeaderWrapper>
 }
 
-export default list
+export default list;

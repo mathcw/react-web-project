@@ -39,69 +39,53 @@ interface IAuthProps {
 const Auth: React.FC<IAuthProps> = ({ data, btns, load }) => {
     return (
         <React.Fragment>
-            <Col className={styles.Supplier}>
-                <Col className={styles.top}>
-                    <Col span={2} className={styles.imgBox} xs={3} sm={3} md={3} lg={3}>
-                        <img src={defaultPng} className={styles.img} alt="图标" />
+                <Row className={styles.container}>
+                    <Col span={3} className={styles.left}>
+                        <div className={styles.headerIcon}>
+                            <img src={defaultPng} alt="icon" className={styles.img} />
+                        </div>
                     </Col>
-                    <Col style={{ paddingLeft: '20px', flex: '1' }} xs={21} sm={21} md={21} lg={21}>
-                        <Col span={20} className={styles.RTop}>
-                            <span className={[styles.name, 'text-overflow'].join(' ')}>{data.name}</span>
+                    <Col span={17} className={styles.middle}>
+                        <Col span={24} className={styles.top}>
+                            <span className={[styles.text, 'text-overflow'].join(' ')}>{data['name']}</span>
                         </Col>
-                        <Col span={17} className={styles.RCenter}>
-                            <Col span={10} className={styles.RCenterL}>
+                        <Row>
+                            <Col xl={8} lg={8} md={24} sm={24} xs={24} className={styles.centerL}>
                                 <div>
-                                    <span className={styles.lable}>适用公司：</span>{' '}
-                                    <span className={[styles.text, 'text-overflow'].join(' ')}>
-                                        {data.branch_company_name}
-                                    </span>
+                                    <span className={styles.lable}>适用公司：</span>{' '}&nbsp;&nbsp;&nbsp;
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>{data.branch_company_name}</span>
                                 </div>
                                 <div>
-                                    <span className={styles.lable}>启停状态：</span>{' '}
-                                    <span className={[styles.text, 'text-overflow'].join(' ')}>
-                                        {getEnum('State')[data.state]}
-                                    </span>
+                                    <span className={styles.lable}>启停状态：</span>{' '}&nbsp;&nbsp;&nbsp;
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>{getEnum('State')[data.state]}</span>
                                 </div>
                             </Col>
-                            <Col span={10} className={styles.RCenterL}>
-                                <div className={styles.address}>
+                            <Col xl={12} lg={12} md={24} sm={24} xs={24} className={styles.centerL}>
+                                <div>
                                     <span className={styles.lable}>审批步骤：</span>{' '}
                                     <span className={[styles.text, 'text-overflow'].join(' ')}>{data.flow_step}</span>
                                 </div>
                             </Col>
-                        </Col>
-                        <Col span={7} className={styles.Approval}>
-                            <Row>
-                                <Col span={12} className={styles.infoCell} style={{ textAlign: 'center' }}>
-                                    <span className={styles.lable}></span>
-                                    <div className={[styles.text, 'text-overflow'].join(' ')}></div>
-                                </Col>
-                                <Col span={12} className={styles.infoCell} style={{ textAlign: 'center' }}>
-                                    <span className={styles.lable}></span>
-                                    <div  className={[styles.text, 'text-overflow'].join(' ')}>
-                                    </div>
-                                </Col>
-                            </Row>
+                        </Row>
+                    </Col>
+                    <Col span={4} className={styles.Approval}>
+                        <Col className={btns ? styles.btns : 'hide'}>
+                            {btns.map(btn => (
+                                <Button
+                                    className={styles.button}
+                                    type="primary"
+                                    size="small"
+                                    key={btn.text}
+                                    onClick={() => {
+                                        if (btn.onClick) btn.onClick(data, load);
+                                    }}
+                                >
+                                    {btn.text || ""}
+                                </Button>
+                            ))}
                         </Col>
                     </Col>
-                    
-                    <Col className={btns ? styles.btns : 'hide'}>
-                        {btns.map(btn => (
-                            <Button
-                                className={styles.button}
-                                type="primary"
-                                size="small"
-                                key={btn.text}
-                                onClick={() => {
-                                    if (btn.onClick) btn.onClick(data, load);
-                                }}
-                            >
-                                {btn.text || ""}
-                            </Button>
-                        ))}
-                    </Col>
-                </Col>
-            </Col>
+                </Row>
         </React.Fragment>
     )
 }
