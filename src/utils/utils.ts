@@ -81,26 +81,6 @@ export function getActionButton(key: string) {
   return {};
 }
 
-export function searchChange(cfg: any, field: any, data: any) {
-  const result = {...data};
-  const clearCascade = (checkField:string) =>{
-    let nField = null;
-    Object.keys(cfg).forEach((key)=>{
-      if( cfg[key].cascade && (cfg[key].cascade === checkField 
-        || cfg[key].cascade2 === checkField || cfg[key].cascade3 === checkField)){
-        nField = key;
-        result[key] = '';
-      }
-    })
-    return nField;
-  }
-  let cField = clearCascade(field);
-  while(cField){
-    cField = clearCascade(cField);
-  }
-  return result;
-}
-
 export function getBtnClickEvent(
   key: string
 ): (ref?: object, rs?: (arg0: any) => void, rj?: (arg0: any) => void) => void {

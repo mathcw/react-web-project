@@ -10,6 +10,7 @@ import ProductManageMod from "@/viewconfig/Mod/ProductManageMod";
 import CheckMod from "@/viewconfig/Mod/CheckMod";
 import BusinessMod from "@/viewconfig/Mod/BusinessMod";
 import SysMod from "@/viewconfig/Mod/SysMod";
+import { IEnumCfg } from "@/utils/enum";
 
 export interface IModBtn<T = any> {
   authority: string;
@@ -45,7 +46,7 @@ export interface ModConfigItem {
     };
     title?: string;
     textSearch?: object;
-    dropDownSearch?: object;
+    dropDownSearch?: {[key:string]:IEnumCfg};
     headerButtons?: object;
     rowButtons?: object;
     pageSizeOptions?: Array<string>;

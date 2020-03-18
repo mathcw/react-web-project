@@ -3,7 +3,7 @@ import { CloseOutlined, DownOutlined, SearchOutlined, SyncOutlined, UpOutlined }
 import { Button, Input, Select, Divider, Col, Row, Tooltip, Modal, DatePicker } from "antd";
 import * as PropTypes from "prop-types";
 
-import { getEnum, IEnumCfg } from "@/utils/enum";
+import { getEnum, IEnumCfg, searchChange } from "@/utils/enum";
 import { IModBtn } from "@/viewconfig/ModConfig";
 import styles from "./index.less";
 import moment from "moment";
@@ -56,7 +56,7 @@ class MainContent extends React.Component<
   > {
   static propTypes: {
     headerButton: PropTypes.Requireable<IModBtn[]>;
-    dropDownSearch: PropTypes.Requireable<object>;
+    dropDownSearch: PropTypes.Requireable<{[key:string]:IEnumCfg}>;
     textSearch: PropTypes.Requireable<object>;
     reload: PropTypes.Requireable<() => void>;
     query: PropTypes.Requireable<object>;
@@ -171,12 +171,14 @@ class MainContent extends React.Component<
   };
 
   onDropDownChange = (field: React.ReactText, value: any) => {
-    const { setQuery } = this.props;
+    const { setQuery,dropDownSearch } = this.props;
     if (setQuery) {
       setQuery((preQuery: any) => {
         const newQuery = { ...preQuery };
         newQuery[field] = value;
-        return newQuery;
+        // @ts-ignore
+        const rst = searchChange(dropDownSearch,field,newQuery);
+        return rst;
       });
     }
   };

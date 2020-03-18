@@ -219,12 +219,11 @@ const ModalForm: React.FC<IModalForm> = ({
         <Form labelCol={{ span: 7 }} wrapperCol={{ span: 16 }} form={form}
           onFinish={submit} initialValues={formData}>
           {Object.keys(list).map(field => (
-            <>
+            <React.Fragment key={field}>
               {list[field].editable === false && !list[field].type && (
                 <Form.Item
                   style={{ margin: "12px 0" }}
                   label={list[field].text}
-                  key={field}
                   name={field}
                 >
                   <Input readOnly />
@@ -238,7 +237,6 @@ const ModalForm: React.FC<IModalForm> = ({
                   <Form.Item
                     style={{ margin: "12px 0" }}
                     label={list[field].text}
-                    key={field}
                     name={field}
                   >
                     <Input readOnly />
@@ -250,7 +248,6 @@ const ModalForm: React.FC<IModalForm> = ({
                   <Form.Item
                     style={{ margin: "12px 0" }}
                     label={list[field].text}
-                    key={field}
                     name={field}
                   >
                     {renderArraySelect(list[field], field, true)}
@@ -262,7 +259,6 @@ const ModalForm: React.FC<IModalForm> = ({
                   <Form.Item
                     style={{ margin: "12px 0" }}
                     label={list[field].text}
-                    key={field}
                     name={field}
                   >
                     {renderPairEditSelect(list[field], field)}
@@ -278,7 +274,6 @@ const ModalForm: React.FC<IModalForm> = ({
                   <Form.Item
                     style={{ margin: "12px 0" }}
                     label={list[field].text}
-                    key={field}
                     name={field}
                   >
                     {renderEnumSelect(list[field], field, true)}
@@ -288,7 +283,6 @@ const ModalForm: React.FC<IModalForm> = ({
                 <Form.Item
                   style={{ margin: "12px 0" }}
                   label={list[field].text}
-                  key={field}
                   name={field}
                   rules={[{ required: true, message: `请输入${list[field].text}` }]}
                 >
@@ -300,7 +294,6 @@ const ModalForm: React.FC<IModalForm> = ({
                 <Form.Item
                   style={{ margin: "12px 0" }}
                   label={list[field].text}
-                  key={field}
                   name={field}
                   rules={[{ required: list[field].required, message: `请输入${list[field].text}` }]}
                 >
@@ -311,7 +304,6 @@ const ModalForm: React.FC<IModalForm> = ({
                 <Form.Item
                   style={{ margin: "12px 0" }}
                   label={list[field].text}
-                  key={field}
                   name={field}
                   rules={[{ required: list[field].required, message: `请输入${list[field].text}` }]}
                 >
@@ -325,7 +317,6 @@ const ModalForm: React.FC<IModalForm> = ({
                 <Form.Item
                   style={{ margin: "12px 0" }}
                   label={list[field].text}
-                  key={field}
                   name={field}
                   rules={[{ required: list[field].required, message: `请输入${list[field].text}` }]}
                 >
@@ -340,7 +331,6 @@ const ModalForm: React.FC<IModalForm> = ({
                   <Form.Item
                     style={{ margin: "12px 0" }}
                     label={list[field].text}
-                    key={field}
                     name={field}
                     rules={[{ required: list[field].required, message: `请输入${list[field].text}` }]}
                   >
@@ -353,7 +343,6 @@ const ModalForm: React.FC<IModalForm> = ({
                   <Form.Item
                     style={{ margin: "12px 0" }}
                     label={list[field].text}
-                    key={field}
                     name={field}
                     rules={[{ required: list[field].required, message: `请输入${list[field].text}` }]}
                   >
@@ -383,7 +372,6 @@ const ModalForm: React.FC<IModalForm> = ({
                           <Form.Item
                             style={{ margin: "12px 0" }}
                             label={list[field].text}
-                            key={field}
                             name={field}
                             rules={[{ required: list[field].required, message: `请输入${list[field].text}` }]}>
                             {renderEnumSelect(list[field], field)}
@@ -396,7 +384,6 @@ const ModalForm: React.FC<IModalForm> = ({
                         <Form.Item
                           style={{ margin: "12px 0" }}
                           label={list[field].text}
-                          key={field}
                           name={field}
                           rules={[{ required: list[field].required, message: `请输入${list[field].text}` }]}>
                           {renderEnumSelect(list[field], field)}
@@ -404,7 +391,6 @@ const ModalForm: React.FC<IModalForm> = ({
                       ) : <Form.Item
                         style={{ margin: "12px 0" }}
                         label={list[field].text}
-                        key={field}
                         name={field}
                         rules={[{ required: list[field].required, message: `请输入${list[field].text}` }]}>
                           {renderEnumSelect(list[field], field)}
@@ -412,7 +398,7 @@ const ModalForm: React.FC<IModalForm> = ({
                     }}
                   </Form.Item>
                 )}
-            </>
+            </React.Fragment>
           ))}
           <Form.Item className={styles.footerBtnBox}>
             <Button
