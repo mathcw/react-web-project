@@ -28,7 +28,7 @@
     "lint:prettier": "check-prettier lint",
     "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
     "prettier": "prettier -c --write \"**/*\"",
-    "start": "umi dev --port=8013",
+    "start": "umi dev --port=8014",
     "start:no-mock": "cross-env MOCK=none umi dev",
     "start:no-ui": "cross-env UMI_UI=none umi dev",
     "ui": "umi ui"
@@ -59,7 +59,7 @@
     "@ant-design/pro-table": "^2.0.0",
     "@antv/data-set": "^0.10.2",
     "animate.css": "^3.7.2",
-    "antd": "^4.0.0",
+    "antd": "^4.0.3",
     "bizcharts": "^3.5.8",
     "braft-editor": "^2.3.8",
     "braft-utils": "^3.0.12",

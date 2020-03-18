@@ -57,12 +57,12 @@ export interface ModConfigItem {
 export let config: ModConfigItem = {};
 
 export function getAllCfg(){
-  return {...OfficeMod, ...OrgMod, ...SupplierManagementMod, ...ProductStoreMod,...SaleMod,...ProductManageMod,...BusinessMod,...SysMod,...CheckMod};
+  return JSON.parse(JSON.stringify({...OfficeMod, ...OrgMod, ...SupplierManagementMod, ...ProductStoreMod,...SaleMod,...ProductManageMod,...BusinessMod,...SysMod,...CheckMod}));
 }
 
 export function authMetaInit(authData: string[]) {
   // eslint-disable-next-line array-callback-return
-  config = {...OfficeMod, ...OrgMod, ...SupplierManagementMod, ...ProductStoreMod,...SaleMod,...ProductManageMod,...BusinessMod,...SysMod,...CheckMod};
+  config = JSON.parse(JSON.stringify({...OfficeMod, ...OrgMod, ...SupplierManagementMod, ...ProductStoreMod,...SaleMod,...ProductManageMod,...BusinessMod,...SysMod,...CheckMod}));
 
   Object.keys(config).map(mod => {
     if (authData.indexOf(mod) === -1) {

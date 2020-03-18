@@ -38,5 +38,5 @@ export interface ActionConfigItem {
   };
 }
 
-export const config: ActionConfigItem = { ...OrgAction, ...ProductStoreAction,...ProductManageAction,...SysAction
-  ,...SaleAction,...CheckAction,...SupplierManagementAction };
+export const config: ActionConfigItem = JSON.parse(JSON.stringify({ ...OrgAction, ...ProductStoreAction,...ProductManageAction,...SysAction
+  ,...SaleAction,...CheckAction,...SupplierManagementAction }));
