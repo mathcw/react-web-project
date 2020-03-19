@@ -163,7 +163,6 @@ const Cell: React.FC<ICell> = ({
             <TimePicker
               open={initOpenPickerStatus}
               format="HH:mm:ss"
-              placeholder="请选择时间"
               onChange={(time: moment.Moment|null, v: string) => onChange(v)}
               value={moment(value)}
               ref={intputRef}
