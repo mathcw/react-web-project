@@ -719,12 +719,12 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
           {/* 自建标签 */}
           <Col className={styles.addMod}>
             <Col className={styles.title}>
-              <Col className={styles.titleL}>
-                <Col className={styles.text} style={{ margin: '2px' }}>自建标签</Col>
-                <Col className={styles.btns}>
+              <Col className={styles.zjtitleL}>
+                <Col className={styles.zjtext} style={{ margin: '2px' }}>自建标签</Col>
+                <Col className={styles.zjbackgroundtext}>(如果上述热卖标签没有适用您产品的,可在这里自建标签)</Col>
+                <Col className={styles.zjbtns}>
                   <Button onClick={addTheme} style={{ padding: '0px 5px', height: '27px', fontSize: '12px' }}>自建标签</Button>
                 </Col>
-                <Col className={styles.backgroundtext}>(如果上述热卖标签没有适用您产品的,可在这里自建标签)</Col>
               </Col>
             </Col>
             <Col className={styles.content1}>

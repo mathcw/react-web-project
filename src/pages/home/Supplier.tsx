@@ -5,16 +5,7 @@ import { Row, Col, Avatar, Button, Divider, Spin, Modal, Input, Upload, message 
 import Link from 'umi/link';
 import { rootAction, useRootState } from '@/rootState';
 import { ActionType } from '@/rootState/rootAction';
-import {
-  Chart,
-  Geom,
-  Axis,
-  Tooltip,
-  Coord,
-  Label,
-  Legend,
-  Guide
-} from 'bizcharts';
+import {Chart,Geom,Axis,Tooltip,Coord,Label,Legend,Guide} from 'bizcharts';
 // @ts-ignore
 import DataSet from '@antv/data-set';
 
@@ -288,7 +279,6 @@ const page: React.FC<IModPageProps> = ({ route }) => {
     const cols = {
       percent: {
         formatter: val => {
-          // eslint-disable-next-line no-param-reassign
           val = `${(val * 100).toFixed()}%`;
           return val;
         },
@@ -304,7 +294,6 @@ const page: React.FC<IModPageProps> = ({ route }) => {
     const cols1 = {
       percent: {
         formatter: val => {
-          // eslint-disable-next-line no-param-reassign
           val = `${(val * 100).toFixed()}%`;
           return val;
         },
@@ -313,7 +302,6 @@ const page: React.FC<IModPageProps> = ({ route }) => {
     return (
       <Col>
         {[1].map((item, index) => (
-          // eslint-disable-next-line react/no-array-index-key
           <Col span={12} key={`hartsRender${index}`}>
             <Chart className={styles.chart} height={140} data={dv} scale={cols} padding={[0, 80, 0, 0]} forceFit>
               <Coord type="theta" radius={0.9} />
@@ -329,9 +317,7 @@ const page: React.FC<IModPageProps> = ({ route }) => {
                 color="item"
                 tooltip={[
                   'item*percent',
-                  // eslint-disable-next-line no-shadow
                   (item, percent) => {
-                    // eslint-disable-next-line no-param-reassign
                     percent = `${(percent * 100).toFixed()}%`;
                     return {
                       name: item,
@@ -347,7 +333,6 @@ const page: React.FC<IModPageProps> = ({ route }) => {
                 <Label
                   content="percent"
                   offset={-10}
-                  // eslint-disable-next-line no-shadow
                   formatter={(val, item) => {
                     if (item.point.item === '无对账') {
                       return 0;
@@ -372,9 +357,7 @@ const page: React.FC<IModPageProps> = ({ route }) => {
                 color="item"
                 tooltip={[
                   'item*percent',
-                  // eslint-disable-next-line no-shadow
                   (item, percent) => {
-                    // eslint-disable-next-line no-param-reassign
                     percent = `${(percent * 100).toFixed()}%`;
                     return {
                       name: item,
@@ -390,7 +373,6 @@ const page: React.FC<IModPageProps> = ({ route }) => {
                 <Label
                   content="percent"
                   offset={-10}
-                  // eslint-disable-next-line no-shadow
                   formatter={(val, item) => {
                     if (item.point.item === '无结账') {
                       return 0;
@@ -399,9 +381,6 @@ const page: React.FC<IModPageProps> = ({ route }) => {
 
                   }}
                 />
-                {/* formatter={(val, item) => {
-                  return item.point.item + ": " + val;
-                }} */}
               </Geom>
             </Chart>
           </Col>

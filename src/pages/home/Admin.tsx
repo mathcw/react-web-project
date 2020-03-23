@@ -327,7 +327,6 @@ const page:React.FC<IModPageProps> = ({ route }) => {
                     <Col span={2} className="mod-more">
                       <Link to="/office/msg/list" className={styles['text-right']}>
                         更多>
-                        {/* <Icon type="right" /> */}
                       </Link>
                     </Col>
                   </Col>

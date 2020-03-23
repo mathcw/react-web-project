@@ -315,7 +315,6 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
             <Row className={styles.title}>
               <Col className={styles.titleL} xs={24} sm={24} md={10} lg={10}>
                 <Col className={styles.text}>产品图片</Col>
-                {/* <Col className={styles.backgroundtext}>(上传一张即可,1M以内,尺寸建议比例16:9)</Col> */}
               </Col>
               <Col className={styles.titleR}>
                 <Col className={styles.text}>产品信息</Col>
@@ -516,7 +515,6 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
             <Col className={styles.title}>
               <Col className={styles.titleL}>
                 <Col className={styles.text}>产品特色</Col>
-                {/* <Col className={styles.backgroundtext}>(请注意文字排版的整齐美观)</Col> */}
               </Col>
             </Col>
             <Col className={styles.content2}>
@@ -535,7 +533,6 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
             <Col className={styles.title}>
               <Col className={styles.titleL}>
                 <Col className={styles.text}>产品行程</Col>
-                {/* <Col className={styles.backgroundtext}>(直接将您的行程文件上传,文件要小于8M,请注意去掉您自己公司的LOGO,以便门市下载后转发给客户)</Col> */}
               </Col>
             </Col>
             <Col className={styles.content}>

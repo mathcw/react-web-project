@@ -210,7 +210,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
     >
       <Col className={styles.title}>
         <Col className={styles.text}>审批步骤</Col>
-        <Col className={styles.btns}>
+        <Col className={`${styles.btns} ${styles.textbtns}`}>
           <div className="dib" style={{ marginLeft: 8 }}>
             <Button
               type='primary'
