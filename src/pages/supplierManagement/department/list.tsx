@@ -18,6 +18,7 @@ import { getModConfig } from "@/utils/utils";
 import { submit } from "@/utils/req";
 import {  message, Modal } from "antd";
 import ModalForm from "@/components/ModalForm";
+import styles from './list.less';
 
 const add = (reload: () => void) => () => {
     const modalRef = Modal.info({});
@@ -51,7 +52,7 @@ const edit = (reload: () => void) => (ref: any) => {
         name:{text:'部门名称',required: true}
     };
     const onSubmit = (data: object | undefined) => {
-        submit("/SupplierManagement/Department/submit", data).then(r => {
+        submit("/SupplierManagement/Department/submit", {id:ref.id,...data}).then(r => {
             message.success(r.message);
             modalRef.destroy();
             reload();
@@ -186,14 +187,16 @@ const list: React.FC<IModPageProps> = ({ route }) => {
                 textSearch
             )}
         >
-          <Grid
-              columns={getCols(cfg.list||{})}
-              dataSource={data}
-              rowKey="id"
-              pagination={false}
-              className={'ListTableStyle'}
-              specCol={opCol}
-          />
+            <div className={styles.ScrollHight}>
+                <Grid
+                    columns={getCols(cfg.list||{})}
+                    dataSource={data}
+                    rowKey="id"
+                    pagination={false}
+                    className={'ListTableStyle'}
+                    specCol={opCol}
+                />
+            </div>
         </PageHeaderWrapper>
     );
 };

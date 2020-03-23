@@ -18,6 +18,7 @@ import { message, Modal } from "antd";
 import { submit } from "@/utils/req";
 import { getModConfig } from "@/utils/utils";
 import ModalForm from "@/components/ModalForm";
+import styles from './list.less';
 
 const bindDepart = (reload: () => void) => (ref:any) => {
     const modalRef = Modal.info({});
@@ -27,7 +28,7 @@ const bindDepart = (reload: () => void) => (ref:any) => {
         bind_opinion:{text:'绑定意见',type:'BindOpinion',required:true}
     };
     const onSubmit = (data: any) => {
-        submit("/SupplierManagement/Company/bind", data).then(r => {
+        submit("/SupplierManagement/Company/bind", {id:ref.id,...data}).then(r => {
             message.success(r.message);
             modalRef.destroy();
             reload();
@@ -128,14 +129,16 @@ const list: React.FC<IModPageProps> = ({ route }) => {
         textSearch
       )}
     >
-      <Grid
-        columns={getCols(cfg.list||{})}
-        dataSource={data}
-        rowKey="id"
-        pagination={false}
-        className={'ListTableStyle'}
-        specCol={opCol}
-      />
+      <div className={styles.ScrollHight}>
+        <Grid
+          columns={getCols(cfg.list||{})}
+          dataSource={data}
+          rowKey="id"
+          pagination={false}
+          className={'ListTableStyle'}
+          specCol={opCol}
+        />
+      </div>
     </PageHeaderWrapper>
   );
 };

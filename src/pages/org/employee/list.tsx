@@ -265,7 +265,7 @@ const edit = (reload: () => void) => (ref: any) => {
         account:{text:'账号',required:true}
     };
     const onSubmit = (data: object | undefined) => {
-        submit("/org/Employee/submit", data).then(r => {
+        submit("/org/Employee/submit", {id:ref.id,...data}).then(r => {
             message.success(r.message);
             modalRef.destroy();
             reload();
@@ -381,14 +381,16 @@ const list: React.FC<IModPageProps> = ({ route }) => {
                 textSearch
             )}
             >
-            {data.map((item: any) => (
-                <Employee
-                data={item}
-                btns={getRowBtnArray(item, rowBtns)}
-                load={load}
-                key={item["id"]}
-                />
-            ))}
+            <div className={styles.ScrollHight}>
+                {data.map((item: any) => (
+                    <Employee
+                    data={item}
+                    btns={getRowBtnArray(item, rowBtns)}
+                    load={load}
+                    key={item["id"]}
+                    />
+                ))}
+            </div>
         </PageHeaderWrapper>
     );
 };

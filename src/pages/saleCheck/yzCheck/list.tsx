@@ -18,7 +18,7 @@ import { submit, get } from '@/utils/req';
 import GroupTour from './components/GroupTour';
 import NzCheckModal from './components/CheckModal/nz';
 import { Modal } from 'antd';
-
+import styles from './list.less';
 
 const nzCheck = (reload:()=>void) =>(ref:any)=>{
     get('/Sale/Order/read_for_dz', { id: ref.id }).then((r) => {
@@ -130,14 +130,16 @@ const list: React.FC<IModPageProps> = ({ route }) => {
                 textSearch
             )}
         >
-            {data.map((item: any) => (
-                <OrderItem
-                    data={item}
-                    btns={getRowBtnArray(item, rowBtns)}
-                    load={load}
-                    key={item["id"]}
-                />
-            ))}
+            <div className={styles.ScrollHight}>
+                {data.map((item: any) => (
+                    <OrderItem
+                        data={item}
+                        btns={getRowBtnArray(item, rowBtns)}
+                        load={load}
+                        key={item["id"]}
+                    />
+                ))}
+            </div>
         </PageHeaderWrapper>
     )
 };

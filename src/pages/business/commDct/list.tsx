@@ -19,6 +19,7 @@ import { ColumnProps } from "antd/es/table";
 
 import { getModConfig } from "@/utils/utils";
 import { submit } from "@/utils/req";
+import styles from './list.less';
 
 // 新增数据字典
 const add = (reload: () => void) => () => {
@@ -54,7 +55,7 @@ const edit = (reload: () => void) => (ref: any) => {
     name: { text: "名称", required: true }
   };
   const onSubmit = (data: object | undefined) => {
-    submit("/business/CommDct/submit", data).then(r => {
+    submit("/business/CommDct/submit", {id:ref.id,...data}).then(r => {
       message.success(r.message);
       modalRef.destroy();
       reload();
@@ -174,14 +175,16 @@ const list: React.FC<IModPageProps> = ({ route }) => {
         textSearch
       )}
     >
-      <Grid
-        columns={getCols(cfg.list||{})}
-        dataSource={data}
-        rowKey="id"
-        pagination={false}
-        className={'ListTableStyle'}
-        specCol={opCol}
-      />
+      <div className={styles.ScrollHight}>
+        <Grid
+          columns={getCols(cfg.list||{})}
+          dataSource={data}
+          rowKey="id"
+          pagination={false}
+          className={'ListTableStyle'}
+          specCol={opCol}
+        />
+      </div>
     </PageHeaderWrapper>
   );
 };

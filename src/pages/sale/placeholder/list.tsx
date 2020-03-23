@@ -18,6 +18,7 @@ import GroupTour from './components/GroupTour';
 import Zw from './components/Zw';
 import { Modal } from 'antd';
 import { submit, get } from '@/utils/req';
+import styles from './list.less';
 
 const sx = (reload:()=>void) =>(ref:any)=>{
     get('/Sale/Order/read_set_sx', { id: ref.id }).then((r:any)=>{
@@ -144,14 +145,16 @@ const list: React.FC<IModPageProps> = ({ route }) => {
                 textSearch
             )}
         >
-            {data.map((item: any) => (
-                <OrderItem
-                    data={item}
-                    btns={getRowBtnArray(item, rowBtns)}
-                    load={load}
-                    key={item["id"]}
-                />
-            ))}
+            <div className={styles.ScrollHight}>
+                {data.map((item: any) => (
+                    <OrderItem
+                        data={item}
+                        btns={getRowBtnArray(item, rowBtns)}
+                        load={load}
+                        key={item["id"]}
+                    />
+                ))}
+            </div>
         </PageHeaderWrapper>
     )
 };

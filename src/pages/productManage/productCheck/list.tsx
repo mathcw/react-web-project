@@ -14,6 +14,7 @@ import { getRowBtnArray, getBtnClickEvent } from '@/utils/utils';
 
 import AppConst from '@/utils/AppConst';
 import GroupTour from './components/GroupTour';
+import styles from './list.less';
 
 interface ProductItemProps {
     data: {
@@ -96,14 +97,16 @@ const list: React.FC<IModPageProps> = ({ route }) => {
                 textSearch
             )}
         >
-            {data.map((item: any) => (
-                <ProductItem
-                    data={item}
-                    btns={getRowBtnArray(item, rowBtns)}
-                    load={load}
-                    key={item["id"]}
-                />
-            ))}
+            <div className={styles.ScrollHight}>
+                {data.map((item: any) => (
+                    <ProductItem
+                        data={item}
+                        btns={getRowBtnArray(item, rowBtns)}
+                        load={load}
+                        key={item["id"]}
+                    />
+                ))}
+            </div>
         </PageHeaderWrapper>
     )
 };

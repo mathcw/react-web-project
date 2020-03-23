@@ -44,24 +44,26 @@ const list: React.FC<IModPageProps> = ({ route }) => {
                 pageSizeChange)
         }
     >
-        {
-            data.map(item =>
-                <Row className={styles.container} key={item['id']}>
-                    <Col span={3} className={styles.left}>
-                        <img src={IconPng} alt="icon" className={styles.Icon} />
-                    </Col>
-                    <Col span={17} className={styles.middle}>
-                        <div className={styles.state}>{item['title']}</div>
-                        <div className={styles.datetime}>推送时间：{item['create_at']}</div>
-                    </Col>
-                    <Col span={4} className={styles.right1}>
-                        <div className={styles.name}>推送人</div>
-                        {item['source'] === '1' && <div className={styles.name1}>{item['publisher_info']['retailer_name']}-{item['publisher_info']['employee_name']}</div>}
-                        {item['source'] === '2' && <div className={styles.name1}>{getEnum('Account')[item['publisher']]}</div>}
-                    </Col>
-                </Row>
-            )
-        }
+        <div className={styles.ScrollHight}>
+            {
+                data.map(item =>
+                    <Row className={styles.container} key={item['id']}>
+                        <Col span={3} className={styles.left}>
+                            <img src={IconPng} alt="icon" className={styles.Icon} />
+                        </Col>
+                        <Col span={17} className={styles.middle}>
+                            <div className={styles.state}>{item['title']}</div>
+                            <div className={styles.datetime}>推送时间：{item['create_at']}</div>
+                        </Col>
+                        <Col span={4} className={styles.right1}>
+                            <div className={styles.name}>推送人</div>
+                            {item['source'] === '1' && <div className={styles.name1}>{item['publisher_info']['retailer_name']}-{item['publisher_info']['employee_name']}</div>}
+                            {item['source'] === '2' && <div className={styles.name1}>{getEnum('Account')[item['publisher']]}</div>}
+                        </Col>
+                    </Row>
+                )
+            }
+        </div>
     </PageHeaderWrapper>
 }
 

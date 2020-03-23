@@ -160,7 +160,7 @@ const setXnSupp = (reload: () => void) => (ref: any) => {
         ruku_state: {text: "处理方式", required: true, type: "RkState"}
     };
     const onSubmit = (data: object | undefined) => {
-        submit("/SupplierManagement/ErpCompany/chuli", data).then(r => {
+        submit("/SupplierManagement/ErpCompany/chuli", {id:ref.id,...data}).then(r => {
             message.success(r.message);
             modalRef.destroy();
             reload();
@@ -238,14 +238,16 @@ const list: React.FC<IModPageProps> = ({ route }) => {
                 textSearch
             )}
         >
-            {data.map((item: any) => (
-                <Company
-                    data={item}
-                    btns={getRowBtnArray(item, rowBtns)}
-                    load={load}
-                    key={item["id"]}
-                />
-            ))}
+            <div className={styles.ScrollHight}>
+                {data.map((item: any) => (
+                    <Company
+                        data={item}
+                        btns={getRowBtnArray(item, rowBtns)}
+                        load={load}
+                        key={item["id"]}
+                    />
+                ))}
+            </div>
         </PageHeaderWrapper>
     )
 };

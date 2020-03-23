@@ -52,7 +52,8 @@ const list:React.FC<IModPageProps> = ({ route }) => {
                     pageSizeChange)
             }
             >
-            {
+              <div className={styles.ScrollHight}>
+              {
                 data.map((item, index) => (
                     <Row className={styles.container} key={item['id']}>
                       <Col span={3} className={styles.left}>
@@ -70,7 +71,8 @@ const list:React.FC<IModPageProps> = ({ route }) => {
                         </Row>
                       </Col>
                     </Row>))
-            }
+                }
+            </div>
     </PageHeaderWrapper>
 }
 

@@ -19,6 +19,7 @@ import { ColumnProps } from "antd/es/table";
 
 import { getModConfig } from "@/utils/utils";
 import { submit } from "@/utils/req";
+import styles from './list.less';
 
 // 新增协议
 const add = (reload: () => void) => () => {
@@ -138,14 +139,16 @@ const list: React.FC<IModPageProps> = ({ route }) => {
         textSearch
       )}
     >
-      <Grid
-        columns={getCols(cfg.list||{})}
-        dataSource={data}
-        rowKey="id"
-        pagination={false}
-        className={'ListTableStyle'}
-        specCol={opCol}
-      />
+      <div className={styles.ScrollHight}>
+        <Grid
+          columns={getCols(cfg.list||{})}
+          dataSource={data}
+          rowKey="id"
+          pagination={false}
+          className={'ListTableStyle'}
+          specCol={opCol}
+        />
+      </div>
     </PageHeaderWrapper>
   );
 };
