@@ -227,7 +227,7 @@ const page:React.FC<IModPageProps> = ({ route }) => {
                     </Col>
                   </Col>
                   <Divider style={{ margin: 0 }} />
-                  <Col className={styles.content}>
+                  <Col className={`${styles.content} ${styles.contentc}`}>
                     {data.msg_flow.map((item, index) => (
                       <Row>
                         <Col span={8} className={styles['times']}>
@@ -331,7 +331,7 @@ const page:React.FC<IModPageProps> = ({ route }) => {
                     </Col>
                   </Col>
                   <Divider style={{ margin: 0 }} />
-                  <Col className={styles.content}>
+                  <Col className={`${styles.content} ${styles.contentc}`}>
                     {data.msg.map((item, index) => (
                       <Row>
                         <Col span={8} className={styles['times']}>

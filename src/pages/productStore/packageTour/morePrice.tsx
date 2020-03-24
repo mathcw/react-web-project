@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
-import { Col, Input, InputNumber, Button } from 'antd';
+import { Col, Input, InputNumber, Button, Divider } from 'antd';
 
 import styles from './morePrice.less';
 interface IProps {
@@ -161,6 +161,7 @@ class MorePrice extends React.Component<IProps, IState> {
         const { data, showWarning } = this.state;
         return (
             <Col sm={24} md={24} lg={24}>
+                <Divider style={{ margin: 0 }} />
                 <Col className={[styles.morePrice, 'clear'].join(' ')}>
                     {data['团期基准价格'] && <Col className={[styles.mod, 'clear'].join(' ')}>
                         <Col className={styles.modTitle}>

@@ -1,11 +1,13 @@
 import React, { useState,useRef } from 'react';
 import GroupTour from './index';
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
-import { Tabs, Col, Input, InputNumber, Button, DatePicker, Select, Row } from 'antd';
+import { Tabs, Col, Input, InputNumber, Button, DatePicker, Select, Row, Divider, Tag } from 'antd';
+import { colDisplay } from '@/utils/utils';
 
 import styles from './editModal.less';
 import moment from 'moment';
 import { getEnum } from '@/utils/enum';
+const defaultPng = require('@/assets/login-bg.png');
 
 const { TabPane } = Tabs;
 const { Option } = Select;
@@ -68,6 +70,125 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
         if(onOk){
             onOk(data)
         }
+    }
+
+    const EditGroupTour = (groupInfo:any) => {
+        const detail = groupInfo.data;
+        let flowColor = {}
+        switch (detail.state) {
+            case '1':
+            flowColor = { color: 'green' }
+            break;
+            case '2':
+            flowColor = { color: 'red' }
+            break;
+            case '3':
+            flowColor = { color: '#333' }
+            break;
+            case '4':
+            flowColor = { color: 'yellow' }
+            break;
+            default:
+            flowColor = { color: '#333' }
+        }
+        return (
+            <div className={styles.Schedule}>
+            <Row
+              className={styles.top}
+            >
+              <Col className={styles.imgBox} xs={24} sm={24} md={3} lg={3}>
+                <img src={detail.list_pic || defaultPng} className={styles.img} alt="产品图片"/>
+                <span className={styles.imgText}>{`产品编号P0${detail.pd_id}`}</span>
+              </Col>
+              <Col xs={24} sm={24} md={18} lg={18}>
+                <div className={styles.content}>
+                  <Col span={24} className={styles.contentTop}>
+                    <Tag color="blue">团队游</Tag>
+                    <span className={[styles.name, 'text-overflow'].join(' ')}>
+                      {detail.pd_name}
+                    </span>
+                  </Col>
+                  <Col span={24} className={styles.contentCenter}>
+                    <Col span={6}>
+                      <div className={styles.cell}>
+                        <span className={styles.lable}>出团日期：</span>{' '}
+                        <span className={[styles.text, 'text-overflow'].join(' ')}>{detail.dep_date}</span>
+                      </div>
+                      <div className={styles.cell}>
+                        <span className={styles.lable}>回团日期：</span>{' '}
+                        <span className={[styles.text, 'text-overflow'].join(' ')}>{detail.back_date}</span>{' '}
+                      </div>
+                      <div className={styles.cell}>
+                        <span className={styles.lable}>出发城市：</span>{' '}
+                        <span className={[styles.text, 'text-overflow'].join(' ')}>{colDisplay(detail.dep_city_id, 'City', detail)}</span>{' '}
+                      </div>
+                    </Col>
+                    <Col span={6}>
+                      <div className={styles.cell}>
+                        <span className={styles.lable} style={{ display: 'inline-block', minWidth: '48px' }}>供应商：</span>{' '}
+                        <span className={[styles.text, 'text-overflow'].join(' ')}>{detail.brand}</span>{' '}
+                      </div>
+                      <div className={styles.cell}>
+                        <span className={styles.lable}>团&nbsp;&nbsp;&nbsp;号：</span>{' '}
+                        <span className={[styles.text, 'text-overflow'].join(' ')}>{detail.gp_num}</span>
+                      </div>
+                      <div className={styles.infoCell} style={{ margin: 0 }}>
+                        <span className={styles.lable}>控团人： </span>
+                        <span className={[styles.text, 'text-overflow'].join(' ')}>
+                          {colDisplay(detail.saler_id, 'SupplierSales', detail)}
+                        </span>
+                      </div>
+                    </Col>
+                    <Col span={6}>
+                      <div className={styles.cell}>
+                        <span className={styles.lable}>同行价：</span>{' '}
+                        <span className={[styles.text, 'text-overflow'].join(' ')}>{detail.peer_price}</span>
+                      </div>
+                      <div className={styles.cell}>
+                        <span className={styles.lable}>计划位：</span>{' '}
+                        <span className={[styles.text, 'text-overflow'].join(' ')}>{detail.gp_total}</span>{' '}
+                      </div>
+                      <div className={styles.cell}>
+                        <span className={styles.lable}>库&nbsp;&nbsp;&nbsp;存：</span>{' '}
+                        <span className={[styles.text, 'text-overflow'].join(' ')}>{detail.stock}</span>{' '}
+                      </div>
+      
+      
+                    </Col>
+                    <Col span={6}>
+                      <div className={styles.cell}>
+                        <span className={styles.lable}>实报：</span>{' '}
+                        <span className={[styles.text, 'text-overflow'].join(' ')}>{detail.confirmation_num}</span>
+                      </div>
+                      <div className={styles.cell}>
+                        <span className={styles.lable}>占位：</span>{' '}
+                        <span className={[styles.text, 'text-overflow'].join(' ')}>{detail.reservation_num}</span>{' '}
+                      </div>
+                      <div className={styles.cell}>
+                        <span className={styles.lable}>剩余：</span>{' '}
+                        <span className={[styles.text, 'text-overflow'].join(' ')}>{detail.remain}</span>{' '}
+                      </div>
+                    </Col>
+                  </Col>
+                </div>
+              </Col>
+              <Col xs={24} sm={24} md={3} lg={3}>
+                <Row className={styles.left}>
+                  <Col span={12} className={styles.infoCell} style={{ textAlign: 'center' }}>
+                      <span className={styles.lable}></span>
+                      <div className={[styles.text, 'text-overflow'].join(' ')}></div>
+                  </Col>
+                  <Col span={12} className={styles.infoCell} style={{ textAlign: 'center' }}>
+                      <span className={styles.lable}>团态</span>
+                      <div style={flowColor} className={[styles.text, 'text-overflow'].join(' ')}>
+                        {colDisplay(detail.state, 'GroupState', detail)}
+                      </div>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </div>
+        )
     }
 
     const priceTab = () => {
@@ -385,7 +506,8 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
 
     return (
         <>
-            <GroupTour data={groupInfo} />
+            <Divider style={{ margin: 0 }} />
+            <EditGroupTour data={groupInfo} />
             <div ref={ref}>
             <Tabs defaultActiveKey="price">
                 <TabPane tab="修改价格" key="price">

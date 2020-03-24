@@ -249,7 +249,8 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
           modalRef.destroy();
         };
         modalRef.update({
-          title: "填写团期数据",
+          title: "批量填充",
+          width:520,
           icon: null,
           content: <BatchModal OnOk={onSubmit} OnCancel={onCancel} />,
           okButtonProps: { className: "hide" },
@@ -326,7 +327,8 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
       modalRef.destroy();
     };
     modalRef.update({
-      title: "填写团期数据",
+      title: "更多价格",
+      width:520,
       icon: null,
       content: <MorePrice data={record} OnOk={onSubmit} OnCancel={onCancel} />,
       okButtonProps: { className: "hide" },

@@ -479,13 +479,11 @@ const page: React.FC<IModPageProps> = ({ route }) => {
           <Col className={styles['mod-title']}>
             <Col span={22} className="mod-text">消息通知</Col>
             <Col span={2} className="mod-more">
-              <Link to="/office/announcement/list" className={styles['text-right']}>
-                更多>
-                      </Link>
+              <Link to="/office/msg/list" className={styles['text-right']}>更多></Link>
             </Col>
           </Col>
           <Divider style={{ margin: 0 }} />
-          <Col className={styles.content} style={{ height: 'auto' }}>
+          <Col className={`${styles.content} ${styles.contentc}`} style={{ height: 'auto' }}>
             {data.msg.map((item, index) => (
               <Row key={index}>
                 <Col span={8} className={styles['times']}>
@@ -506,19 +504,17 @@ const page: React.FC<IModPageProps> = ({ route }) => {
           <Col className={styles['mod-title']}>
             <Col span={22} className="mod-text">平台公告</Col>
             <Col span={2} className="mod-more">
-              <Link to="/office/announcement/list" className={styles['text-right']}>
-                更多>
-                  </Link>
+              <Link to="/office/announcement/list" className={styles['text-right']}>更多></Link>
             </Col>
           </Col>
           <Divider style={{ margin: 0 }} />
-          <Col className={styles.content} style={{ height: 'auto' }}>
+          <Col className={`${styles.content} ${styles.contentc}`} style={{ height: 'auto' }}>
             {data.announce.map((item, index) => (
               <Row key={index}>
-                <Col span={6} className={styles['item-left']}>
+                <Col span={8} className={styles['item-left']}>
                   {item.create_at.split(' ')[0]}
                 </Col>
-                <Col span={18} className={[styles.itemcentertwo, 'text-overflow', styles.itemfocus].join(' ')} onClick={e => handleClick(item)}>
+                <Col span={16} className={[styles.itemcentertwo, 'text-overflow', styles.itemfocus].join(' ')} onClick={e => handleClick(item)}>
                   {item.title}
                 </Col>
               </Row>

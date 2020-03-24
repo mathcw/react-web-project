@@ -38,6 +38,19 @@ interface GroupTourProps {
 const GroupTour: React.FC<GroupTourProps> = ({ data,btns=[],load }) => {
 
     const showFlowInfo = (data: GroupTourProps['data']) => {
+        if(data.flow_id==='0'){
+            Modal.info({
+                title: '审批记录',
+                content: (
+                  <div>
+                    <p>暂无审批记录</p>
+                  </div>
+                ),
+                onOk() {},
+                okText: '关闭',
+            });
+            return;
+        }
         get('/comm/FlowList/seeDetail', { flow_id: data.flow_id }).then((r) => {
             if(r.data){
                 Modal.info({
@@ -66,7 +79,7 @@ const GroupTour: React.FC<GroupTourProps> = ({ data,btns=[],load }) => {
                     <Col style={{ paddingLeft: '20px', flex: '1' }} xs={21} sm={21} md={21} lg={21}>
                         <Col span={20} className={styles.RTop}>
                             <Tag color="blue">团队游</Tag>
-                            <a className={[styles.name, 'text-overflow'].join(' ')} onClick={() => {}} >
+                            <a className={[styles.name, 'text-overflow'].join(' ')} onClick={() =>{}} >
                                 {data.pd_name}
                             </a>
                         </Col>

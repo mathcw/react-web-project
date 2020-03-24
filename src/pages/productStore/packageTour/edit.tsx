@@ -292,7 +292,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
       {
         !pdfUploading && <PlusOutlined/>
       }
-      <div className="ant-upload-text">Upload</div>
+      <div className="ant-upload-text">选择上传</div>
     </div>
   );
 
