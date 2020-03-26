@@ -88,7 +88,7 @@ const Detail: React.FC<GroupTourDetail> = ({ detail }) => {
         <div className={styles.children}>
             <div className={[styles.childrenMod, 'clear'].join(' ')}>
                 <div className={styles.ModTitle}>基础信息</div>
-                <div className={styles.ModContent}>
+                <div className={styles.ModContentoth}>
                     <Row className={[styles.ModCell, 'clear'].join(' ')}>
                         <Col span={6}>客户简称： {detail.retailer_name}</Col>
                         <Col span={7}>订单编号： D0{detail.retailer_order_id}</Col>
@@ -260,6 +260,19 @@ const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [], load }) => {
     }, [detail])
 
     const showFlowInfo = (data: GroupTourProps['data']) => {
+        if(data.check_flow_id==='0'){
+            Modal.info({
+                title: '审批记录',
+                content: (
+                  <div>
+                    <p>暂无审批记录</p>
+                  </div>
+                ),
+                onOk() {},
+                okText: '关闭',
+            });
+            return;
+        }
         get('/comm/FlowList/seeDetail', { flow_id: data.check_flow_id }).then((r) => {
             if (r.data) {
                 Modal.info({

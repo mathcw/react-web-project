@@ -86,12 +86,8 @@ const Detail: React.FC<GroupTourDetail> = ({ detail }) => {
     return (
         <div className={styles.children}>
             <Row className={[styles.childrenMod, 'clear'].join(' ')}>
-                <Col span={24}>
-                    <div className={styles.ModTitle}>
-                        基础信息
-                </div>
-                </Col>
-                <Col className={styles.ModContent} span={24}>
+                <Col span={24}><div className={styles.ModTitle}>基础信息</div></Col>
+                <Col className={styles.ModContentoth} span={24}>
                     <Row className={[styles.ModCell, 'clear'].join(' ')}>
                         <Col span={6}>客户简称： {detail.retailer_name}</Col>
                         <Col span={7}>订单编号： D0{detail.retailer_order_id}</Col>
@@ -271,6 +267,19 @@ const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [], load }) => {
     }, [detail])
 
     const showFlowInfo = (data: GroupTourProps['data']) => {
+        if(data.confirm_flow_id==='0'){
+            Modal.info({
+                title: '审批记录',
+                content: (
+                  <div>
+                    <p>暂无审批记录</p>
+                  </div>
+                ),
+                onOk() {},
+                okText: '关闭',
+            });
+            return;
+        }
         get('/comm/FlowList/seeDetail', { flow_id: data.confirm_flow_id }).then((r) => {
             if (r.data) {
                 Modal.info({
