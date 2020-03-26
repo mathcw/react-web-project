@@ -86,7 +86,7 @@ const setLoader = (reload: () => void) => (ref: any) => {
     leader_ids: { text: "领导", multi: true, type: "EmpAccount" }
   };
   const onSubmit = (data: object | undefined) => {
-    submit("/org/Department/set_leader", data).then(r => {
+    submit("/org/Department/set_leader", {id:ref.id,...data}).then(r => {
       message.success(r.message);
       modalRef.destroy();
       reload();

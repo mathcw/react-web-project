@@ -81,15 +81,6 @@ const edit = (reload: () => void) => (ref: any) => {
   });
 };
 
-// 启停数据字典
-const toggle = (reload: () => void) => (ref: any) => {
-  submit("/business/CommDct/toggle/state", { id:ref.id,state:ref.state }).then(r => {
-    message.success(r.message);
-    reload();
-  });
-};
-
-
 const list: React.FC<IModPageProps> = ({ route }) => {
   const { viewConfig } = route;
   const {
@@ -108,7 +99,6 @@ const list: React.FC<IModPageProps> = ({ route }) => {
   const actionMap = {
     新增数据字典: add(load),
     修改数据字典: edit(load),
-    启停数据字典: toggle(load),
   };
 
   const { headerBtns, rowBtns } = useListPageBtn(viewConfig, actionMap);

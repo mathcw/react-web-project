@@ -89,7 +89,7 @@ const setLoader = (reload: () => void) => (ref: any) => {
     leader_ids: { text: "领导", multi: true, type: "EmpAccount" }
   };
   const onSubmit = (data: object | undefined) => {
-    submit("/org/Company/set_leader", data).then(r => {
+    submit("/org/Company/set_leader", {id:ref.id,...data}).then(r => {
       message.success(r.message);
       modalRef.destroy();
       reload();
@@ -98,6 +98,11 @@ const setLoader = (reload: () => void) => (ref: any) => {
   const onCancel = () => {
     modalRef.destroy();
   };
+  let formData = { ...ref };
+  if (ref.leader_ids) {
+    const leaders = JSON.parse(ref.leader_ids);
+    formData = { ...formData, leader_ids: leaders };
+  }
   modalRef.update({
     title: "设置公司领导",
     // eslint-disable-next-line max-len
@@ -107,7 +112,7 @@ const setLoader = (reload: () => void) => (ref: any) => {
         list={list}
         onSubmit={onSubmit}
         onCancel={onCancel}
-        data={{ ...ref }}
+        data={{ ...formData }}
       />
     ),
     okButtonProps: { className: "hide" },

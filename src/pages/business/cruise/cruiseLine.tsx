@@ -79,14 +79,6 @@ const edit = (reload: () => void) => (ref: any) => {
   });
 };
 
-// 启停邮轮航线
-const toggle = (reload: () => void) => (ref: any) => {
-  submit("/business/CruiseLine/toggle/state", { id:ref.id,state:ref.state }).then(r => {
-    message.success(r.message);
-    reload();
-  });
-};
-
 // 邮轮航线日志
 const cruiselog = (reload: () => void) => (ref: any) => {
   read("/business/CruiseLine/read_log", { action: "邮轮航线日志" }, ref, {
@@ -155,7 +147,6 @@ const list: React.FC<IModPageProps> = ({ route }) => {
   const actionMap = {
     新增邮轮航线: add(load),
     修改邮轮航线: edit(load),
-    启停邮轮航线: toggle(load),
     邮轮航线日志: cruiselog(load),
   };
 

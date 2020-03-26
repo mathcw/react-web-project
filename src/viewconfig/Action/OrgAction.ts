@@ -29,6 +29,22 @@ const config: ActionConfigItem = {
       data: { id: "id", state:"state"}
     }
   },
+  删除公司:{
+    directlySubmit: true,
+    confirm:'确认删除公司吗?',
+    submit: {
+      url: "/org/Company/destroy",
+      data: { id: "id"}
+    }
+  },
+  删除部门:{
+    directlySubmit: true,
+    confirm:'确认删除部门吗?',
+    submit: {
+      url: "/org/Department/destroy",
+      data: { id: "id"}
+    }
+  },
   // 员工
   重置员工账号密码:{
     directlySubmit: true,

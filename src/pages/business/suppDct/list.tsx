@@ -47,14 +47,6 @@ const add = (reload: () => void) => () => {
   });
 };
 
-// 启停协议
-const toggle = (reload: () => void) => (ref: any) => {
-  submit("/business/SuppDct/toggle/state", { id:ref.id,state:ref.state }).then(r => {
-    message.success(r.message);
-    reload();
-  });
-};
-
 const list: React.FC<IModPageProps> = ({ route }) => {
   const { viewConfig } = route;
   const {
@@ -72,7 +64,6 @@ const list: React.FC<IModPageProps> = ({ route }) => {
 
   const actionMap = {
     新增协议: add(load),
-    启停协议: toggle(load),
   };
 
   const { headerBtns, rowBtns } = useListPageBtn(viewConfig, actionMap);

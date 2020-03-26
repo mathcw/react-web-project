@@ -81,14 +81,6 @@ const edit = (reload: () => void) => (ref: any) => {
   });
 };
 
-// 启停船舶
-const toggle = (reload: () => void) => (ref: any) => {
-  submit("/business/CruiseShip/toggle/state", { id:ref.id,state:ref.state }).then(r => {
-    message.success(r.message);
-    reload();
-  });
-};
-
 // 船舶日志
 const cruiselog = (reload: () => void) => (ref: any) => {
   read("/business/CruiseShip/read_log", { action: "船舶日志" }, ref, {
@@ -157,7 +149,6 @@ const list: React.FC<IModPageProps> = ({ route }) => {
   const actionMap = {
     新增船舶: add(load),
     修改船舶: edit(load),
-    启停船舶: toggle(load),
     船舶日志: cruiselog(load),
   };
 

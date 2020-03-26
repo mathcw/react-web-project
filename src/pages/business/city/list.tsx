@@ -81,22 +81,6 @@ const edit = (reload: () => void) => (ref: any) => {
   });
 };
 
-// 删除城市
-const destroy = (reload: () => void) => (ref: any) => {
-  submit("/business/City/destroy", { id:ref.id}).then(r => {
-    message.success(r.message);
-    reload();
-  });
-};
-
-// 启停城市
-const toggle = (reload: () => void) => (ref: any) => {
-  submit("/business/City/toggle/state", { id:ref.id,state:ref.state }).then(r => {
-    message.success(r.message);
-    reload();
-  });
-};
-
 const list: React.FC<IModPageProps> = ({ route }) => {
   const { viewConfig } = route;
   const {
@@ -115,8 +99,6 @@ const list: React.FC<IModPageProps> = ({ route }) => {
   const actionMap = {
     新增城市: add(load),
     修改城市: edit(load),
-    删除城市: destroy(load),
-    启停城市: toggle(load),
   };
 
   const { headerBtns, rowBtns } = useListPageBtn(viewConfig, actionMap);
