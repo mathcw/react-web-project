@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Col,Modal, Row } from 'antd';
+import { Col, Row } from 'antd';
 import PageHeaderWrapper,{Extra} from '@/components/PageHeaderWrapper';
 import { IModPageProps } from '@/viewconfig/ModConfig';
 
@@ -18,7 +18,7 @@ const del_html_tag = (html:string)=>{
 }
 
 const list:React.FC<IModPageProps> = ({ route }) => {
-    const { viewConfig } = route;
+    const { authority,viewConfig } = route;
     const {
         setCurrent,
         setPageSize,
@@ -28,7 +28,7 @@ const list:React.FC<IModPageProps> = ({ route }) => {
         pageSizeOptions,
         total,
         data
-    } = useListPage(viewConfig)
+    } = useListPage(authority,viewConfig)
 
     useEffect(() => {
         load();

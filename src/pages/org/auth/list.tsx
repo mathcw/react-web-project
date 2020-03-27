@@ -10,7 +10,7 @@ import { useListPage ,useListPageBtn, useListPageSearch} from '@/utils/ListPageH
 const IconPng = require('@/assets/role.png');
 
 const list:React.FC<IModPageProps> = ({ route }) => {
-    const { viewConfig } = route;
+    const {authority,viewConfig } = route;
     const {
         setCurrent,
         setPageSize,
@@ -22,7 +22,7 @@ const list:React.FC<IModPageProps> = ({ route }) => {
         query,
         setQuery,
         data
-    } = useListPage(viewConfig)
+    } = useListPage(authority,viewConfig)
 
     const { headerBtns, rowBtns} = useListPageBtn(viewConfig);
 

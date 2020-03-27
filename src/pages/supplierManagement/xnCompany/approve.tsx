@@ -12,7 +12,7 @@ import { router } from 'umi';
 
 
 const Page: React.FC<IActionPageProps> = ({ route, location }) => {
-    const { viewConfig } = route;
+    const { authority,viewConfig } = route;
     const { state } = location;
     const initData: {
         供应商信息: object,
@@ -33,7 +33,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
         旅行社责任险: '',
     };
 
-    const { data, setData, load, onOk, onCancel, cfg } = useActionPage<typeof initData>(viewConfig, initData, state);
+    const { data, setData, load, onOk, onCancel, cfg } = useActionPage<typeof initData>(authority,viewConfig, initData, state);
 
     useEffect(() => {
         load().then((loadedData: typeof initData) => {

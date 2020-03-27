@@ -41,10 +41,10 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
         '变更名单': [],
         'list_change': '0'
     };
-    const { viewConfig } = route;
+    const { authority,viewConfig } = route;
     const { state: ref } = location;
 
-    const { data, setData, load, onCancel, cfg } = useActionPage<typeof initData>(viewConfig, initData, ref);
+    const { data, setData, load, onCancel, cfg } = useActionPage<typeof initData>(authority,viewConfig, initData, ref);
 
     const [open, setOpen] = useState(true);
     const [loading, setLoading] = useState(true);

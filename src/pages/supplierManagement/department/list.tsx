@@ -117,8 +117,8 @@ const setLeader = (reload: () => void) => (ref: any) => {
 
 
 const list: React.FC<IModPageProps> = ({ route }) => {
-    const { viewConfig } = route;
-    const {setCurrent,setPageSize,load,pageSize,current,pageSizeOptions,total,query,setQuery,data } = useListPage(viewConfig);
+    const { authority,viewConfig } = route;
+    const {setCurrent,setPageSize,load,pageSize,current,pageSizeOptions,total,query,setQuery,data } = useListPage(authority,viewConfig);
     const actionMap = {
         新增供应商部门: add(load),
         修改供应商部门: edit(load),

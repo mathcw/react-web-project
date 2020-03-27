@@ -23,7 +23,7 @@ const selectCfg = {
 };
 
 const Page: React.FC<IActionPageProps> = ({ route, location }) => {
-  const { viewConfig } = route;
+  const { authority,viewConfig } = route;
   const { state: ref } = location;
 
   const initData: {
@@ -46,7 +46,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
   const [pdfLoading, setPdfLoading] = useState(false);
   const [pdfUploading, setPdfUploading] = useState(false);
 
-  const { data, setData, load, onCancel, cfg } = useActionPage<typeof initData>(viewConfig, initData, ref);
+  const { data, setData, load, onCancel, cfg } = useActionPage<typeof initData>(authority,viewConfig, initData, ref);
 
 
   useEffect(() => {

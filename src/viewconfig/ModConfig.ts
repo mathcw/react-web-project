@@ -25,6 +25,7 @@ export interface IModBtn<T = any> {
 export interface IModPageProps extends ProLayoutProps {
   route: ProLayoutProps["route"] & {
     authority: string;
+    viewConfig:string;
   };
 }
 
@@ -64,7 +65,6 @@ export function getAllCfg(){
 export function authMetaInit(authData: string[]) {
   // eslint-disable-next-line array-callback-return
   config = JSON.parse(JSON.stringify({...OfficeMod, ...OrgMod, ...SupplierManagementMod, ...ProductStoreMod,...SaleMod,...ProductManageMod,...BusinessMod,...SysMod,...CheckMod}));
-
   Object.keys(config).map(mod => {
     if (authData.indexOf(mod) === -1) {
       delete config[mod];

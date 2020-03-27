@@ -82,7 +82,7 @@ const edit = (reload: () => void) => (ref: any) => {
 };
 
 const list: React.FC<IModPageProps> = ({ route }) => {
-  const { viewConfig } = route;
+  const { viewConfig,authority } = route;
   const {
     setCurrent,
     setPageSize,
@@ -94,7 +94,7 @@ const list: React.FC<IModPageProps> = ({ route }) => {
     query,
     setQuery,
     data
-  } = useListPage(viewConfig);
+  } = useListPage(authority,viewConfig);
 
   const actionMap = {
     新增城市: add(load),

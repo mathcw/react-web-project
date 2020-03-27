@@ -46,7 +46,7 @@ const mergeMenu = (remoteMenu: object) => {
   const mergeSubMenu = (key:string) =>{
     const childs = {};
     subMenu[key].forEach(mod=>{
-      if(!AllModConfig[mod]) return;
+      if(!AllModConfig[mod] && !subMenu[mod]) return;
       if(remoteMenuKeys.includes(mod)){
         childs[mod] = {
           ...remoteMenu[mod],
@@ -64,10 +64,9 @@ const mergeMenu = (remoteMenu: object) => {
       }else if(subMenu[mod]){
         const subchilds = mergeSubMenu(mod);
         if(subchilds){
-          childs[mod] = {
-            ...AllModConfig[mod],
-            childs:subchilds
-          }
+          Object.keys(subchilds).forEach((subMod:string) =>{
+            childs[subMod] = subchilds[subMod];
+          })
         }
       }
     })
@@ -78,7 +77,7 @@ const mergeMenu = (remoteMenu: object) => {
   }
   Object.keys(sysMenu).forEach(menuKey => {
     sysMenu[menuKey].forEach(modKey =>{
-      if(!AllModConfig[modKey]) return;
+      if(!AllModConfig[modKey] && !subMenu[modKey]) return;
       // 合并 普通菜单配置
       if(remoteMenuKeys.includes(modKey)){
         rst[menuKey] = rst[menuKey] || {};
@@ -100,10 +99,10 @@ const mergeMenu = (remoteMenu: object) => {
       if(subMenu[modKey]){
         const childs = mergeSubMenu(modKey);
         if(childs){
-          rst[menuKey][modKey] = {
-            ...AllModConfig[modKey],
-            childs
-          }
+          rst[menuKey] = rst[menuKey] || {};
+          Object.keys(childs).forEach((subMod:string)=>{
+            rst[menuKey][subMod] = childs[subMod];
+          })
         }
       }
     })
@@ -112,7 +111,7 @@ const mergeMenu = (remoteMenu: object) => {
 }
 
 const Page: React.FC<IActionPageProps> = ({ route, location }) => {
-  const { viewConfig } = route;
+  const { authority,viewConfig } = route;
   const { state } = location;
 
   const initData: {
@@ -122,7 +121,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
     auth: IAuthData
   } = { menu: {}, auth: { name: '', scope: '', actions: [], filters: {} } }
 
-  const { data, setData, load, onOk, onCancel, cfg } = useActionPage<typeof initData>(viewConfig, initData, state);
+  const { data, setData, load, onOk, onCancel, cfg } = useActionPage<typeof initData>(authority,viewConfig, initData, state);
 
   const [filterModalShow, setModalShow] = useState(false);
   const [selectModalCfg, setModalCfg] = useState({ mod: '', field: '', auth_filter: {}, type: '' });

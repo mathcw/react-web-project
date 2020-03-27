@@ -28,10 +28,10 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
         'body_html': '',
         'xml': ''
     };
-    const { viewConfig } = route;
+    const { authority,viewConfig } = route;
     const { state: ref } = location;
 
-    const { data, setData, load, onCancel, cfg } = useActionPage<typeof initData>(viewConfig, initData, ref);
+    const { data, setData, load, onCancel, cfg } = useActionPage<typeof initData>(authority,viewConfig, initData, ref);
 
     const onOk = () => {
         if (cfg.submit) {

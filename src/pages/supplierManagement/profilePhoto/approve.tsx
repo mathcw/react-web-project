@@ -26,10 +26,10 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
         '审批记录': [],
         'flow_id': '0'
     };
-    const { viewConfig } = route;
+    const { authority,viewConfig } = route;
     const { state: ref } = location;
 
-    const { data, setData, load, onCancel, cfg } = useActionPage<typeof initData>(viewConfig, initData, ref);
+    const { data, setData, load, onCancel, cfg } = useActionPage<typeof initData>(authority,viewConfig, initData, ref);
 
     const actionMap = {
         关闭: onCancel,

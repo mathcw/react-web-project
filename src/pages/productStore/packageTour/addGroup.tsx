@@ -153,7 +153,7 @@ interface IGroupType {
 }
 
 const Page: React.FC<IActionPageProps> = ({ route, location }) => {
-  const { viewConfig } = route;
+  const { authority,viewConfig } = route;
   const { state: ref } = location;
 
   const initData: {
@@ -163,7 +163,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
     跟团游开团团期详情: []
   }
 
-  const { data, setData, load, onOk, onCancel, cfg } = useActionPage<typeof initData>(viewConfig, initData, ref);
+  const { data, setData, load, onOk, onCancel, cfg } = useActionPage<typeof initData>(authority,viewConfig, initData, ref);
   const [calendarModal, setCalendarModal] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const actionMap = {

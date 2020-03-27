@@ -361,21 +361,21 @@ const routes: Array<IRouteValue> = [
               {
                 path: "/business/cruise/cruiseCompany",
                 name: "邮轮公司",
-                authority: "邮轮游导航",
+                authority: "邮轮公司",
                 viewConfig:"邮轮公司",
                 component: "./business/cruise/cruiseCompany"
               },
               {
                 path: "/business/cruise/cruiseShip",
                 name: "船舶名称",
-                authority: "邮轮游导航",
+                authority: "船舶名称",
                 viewConfig:"船舶名称",
                 component: "./business/cruise/cruiseShip"
               },
               {
                 path: "/business/cruise/cruiseLine",
                 name: "邮轮航线",
-                authority: "邮轮游导航",
+                authority: "邮轮航线",
                 viewConfig:"邮轮航线",
                 component: "./business/cruise/cruiseLine"
               },
