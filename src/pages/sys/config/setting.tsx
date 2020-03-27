@@ -53,7 +53,7 @@ const ConfigPage: React.FC<IModPageProps> = ({ route }) => {
             <div className={styles.Config}>
                 <Row className={styles.cellBox}>
                     <Col span={24} className={styles.cell}>
-                        <Col className={styles.title}>libreoffice</Col>
+                        <Col className={`${styles.title} ${styles.rowtitle}`}>libreoffice</Col>
                         <Row gutter={8} className={styles.row}>
                             <Col span={10}>
                                 <Input
@@ -76,7 +76,7 @@ const ConfigPage: React.FC<IModPageProps> = ({ route }) => {
                         </Row>
                     </Col>
                     <Col span={24} className={styles.cell}>
-                        <Col className={styles.title}>gs</Col>
+                        <Col className={`${styles.title} ${styles.rowtitle}`}>gs</Col>
                         <Row gutter={8} className={styles.row}>
                             <Col>
                                 <Input
@@ -87,7 +87,7 @@ const ConfigPage: React.FC<IModPageProps> = ({ route }) => {
                         </Row>
                     </Col>
                     <Col span={24} className={styles.cell}>
-                        <Col className={styles.title}>exiftool</Col>
+                        <Col className={`${styles.title} ${styles.rowtitle}`}>exiftool</Col>
                         <Row gutter={8} className={styles.row}>
                             <Col>
                                 <Input
@@ -98,7 +98,7 @@ const ConfigPage: React.FC<IModPageProps> = ({ route }) => {
                         </Row>
                     </Col>
                     <Col span={24} className={styles.cell}>
-                        <Col className={styles.title}>cpdf</Col>
+                        <Col className={`${styles.title} ${styles.rowtitle}`}>cpdf</Col>
                         <Row gutter={8} className={styles.row}>
                             <Col>
                                 <Input
@@ -109,7 +109,7 @@ const ConfigPage: React.FC<IModPageProps> = ({ route }) => {
                         </Row>
                     </Col>
                     <Col span={24} className={styles.cell}>
-                        <Col className={styles.title}>调度者</Col>
+                        <Col className={`${styles.title} ${styles.rowtitle}`}>调度者</Col>
                         <Row gutter={8} className={styles.row}>
                             <Col span={7}>
                                 <Input

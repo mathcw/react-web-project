@@ -75,7 +75,7 @@ const config: ActionConfigItem = {
   修改公告:{
       title:'修改公告',
       path:"/org/announce/edit",
-      read:{url:"/org/Announce/read_edit",data:'id'},
+      read:{url:"/org/Announce/read_edit",data:{ id: "id" }},
       submit:{url:"/org/Announce/submit"},
       btns: {
         关闭: { text: "关闭" },
@@ -88,7 +88,7 @@ const config: ActionConfigItem = {
     confirm:'确认删除公告吗?',
     submit: {
       url: "/org/Announce/destroy",
-      data: "id"
+      data:{ id: "id" }
     }
   },
 
@@ -96,7 +96,7 @@ const config: ActionConfigItem = {
       directlySubmit:true,
       submit:{
           url: "/comm/Flow/submit_by_post/公告审批",
-          data:"id"
+          data:{ id: "id" }
       }
   },
 
@@ -112,7 +112,7 @@ const config: ActionConfigItem = {
   查看公告公告通知:{
     title: '查看公告',
     path:"/office/announcement/see",
-    read:{url:"/notice/Announcement/read_see",data:{'id':'id'}},
+    read:{url:"/notice/Announcement/read_see",data:{id:'id'}},
     btns:{
         关闭: {text:'关闭' }
     }
@@ -121,7 +121,7 @@ const config: ActionConfigItem = {
   公告审批:{
       title:'公告审批',
       path:"/org/announce/approve",
-      read:{url:"/org/Announce/read_approve",data:'id'},
+      read:{url:"/org/Announce/read_approve",data:{id:'id'}},
       submit:{url:"/comm/Flow/approve_by_post/公告审批",data:{flow_id:'flow_id',opinion:'opinion',comment:'comment'}},
       btns:{
           关闭: {text:'关闭' }
@@ -133,7 +133,7 @@ const config: ActionConfigItem = {
     confirm:'确认撤回公告吗?',
     submit:{
         url: "/comm/Flow/cancel/公告审批",
-        data:{'id':'id','flow_id':'flow_id'}
+        data:{id:'id',flow_id:'flow_id'}
     }
   },
 
@@ -141,14 +141,14 @@ const config: ActionConfigItem = {
       directlySubmit:true,
       submit:{
         url: "/org/Announce/edit_publish",
-        data:'id'
+        data:{ id: "id" }
     }
   },
 
   审批管理员头像:{
     title:'头像审核',
     path:"/org/photo/approve",
-    read:{url:"/org/Employee/read_approve",data:'id'},
+    read:{url:"/org/Employee/read_approve",data:{ id: "id" }},
     submit:{url:"/comm/Flow/approve_by_post/管理员头像审批",data:{flow_id:'flow_id',opinion:'opinion','comment':'comment'}},
     btns:{
         关闭: {text:'关闭' }

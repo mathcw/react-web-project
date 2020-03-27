@@ -230,7 +230,7 @@ const setAuth = (reload: () => void) => (ref: any) => {
         online: { text:'是否开启线上接单',required: true, type:'OpenOrClose'}
     };
     const onSubmit = (data: object | undefined) => {
-        submit("/SupplierManagement/Sales/set_auth", data).then(r => {
+        submit("/SupplierManagement/Sales/set_auth", {id:ref.id,...data}).then(r => {
             message.success(r.message);
             modalRef.destroy();
             reload();
