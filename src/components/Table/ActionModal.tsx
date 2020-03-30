@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Icon } from "antd";
+import { MenuOutlined } from '@ant-design/icons';
 
 import { IModBtn } from "@/viewconfig/ModConfig";
 
@@ -36,11 +36,7 @@ const ActionModal: React.FC<IActionModal> = ({
 
   return (
     <div className={styles.actionBox}>
-      <Icon
-        className={styles.actionIcon}
-        type="menu"
-        onClick={() => setPackUp(!packUp)}
-      />
+      <MenuOutlined className={styles.actionIcon} onClick={() => setPackUp(!packUp)} />
       {!packUp && (
         <span
           className={[

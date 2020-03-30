@@ -1,4 +1,51 @@
 .batchModal {
+  border-radius: 4px;
+  padding: 12px;
+  .mod {
+    .modTitle {
+      margin-bottom: 6px;
+      .modTitleText {
+        display: inline-block;
+        border: 1px solid #d9d9d9;
+        padding: 2px 8px;
+        border-radius: 4px;
+      }
+      .add{
+        width: 14px;
+        height: 14px;
+        position: absolute;
+        right:22%;
+        top:20%;
+      }
+    }
+    .modContent {
+      display: flex;
+      .delete{
+        margin-top: 2%;
+        color:#ff4d4f;
+        display: inline;
+      }
+      .cell {
+        margin-bottom: 12px;
+        .modLabel {
+          font-size: 13px;
+          padding: 2px 4px;
+        }
+        .modLabel::after {
+          content: ':';
+          margin-right: 8px;
+        }
+        .modValue {
+          padding: 0 4px;
+          :global {
+            .ant-input-number {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
   .add {
     width: 14px;
     height: 14px;

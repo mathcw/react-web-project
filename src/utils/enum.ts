@@ -164,6 +164,9 @@ export function getEnum(
             case 'SecondaryNav':
                 cascadeSet = dict['SecondaryNavBelong'];
                 break;
+            case 'City':
+                cascadeSet = dict['CityCountry'];
+                break;
             case 'CruiseShip':
                 cascadeSet = dict['CruiseCompanyOfShip'];
                 break;

@@ -5,7 +5,50 @@ import PageHeaderWrapper,{ Extra, Content } from '@/components/PageHeaderWrapper
 import { getRowBtnArray } from '@/utils/utils';
 import AppConst from '@/utils/AppConst';
 
-import GroupTour from './components/GroupTour';
+import GroupTour from './components/GroupTour'; 
+import GroupTourEdit from './components/GroupTour/editModal';
+import { Modal } from 'antd';
+import { get, submit } from '@/utils/req';
+import styles from './list.less';
+
+const editPackageTourGroup = (reload:()=>void,ref:any)=>{
+    get('/Group/PackageTourGroup/read_for_edit', { main_group_id: ref.main_group_id }).then((r) => {
+        if(r.data){
+            const modalRef  = Modal.info({});
+            const onOk = (data:any) =>{
+                submit('/Group/PackageTourGroup/edit',{...data,main_group_id:ref.main_group_id}).then(
+                    (r)=>{
+                        modalRef.destroy();
+                        reload();
+                    }
+                )
+            }
+        
+            const onCancel = () =>{
+                modalRef.destroy();
+            }
+            modalRef.update({
+                title: '修改团期',
+                width:1000,
+                content: (
+                    <GroupTourEdit info={r.data} onOk={onOk} onCancel={onCancel}/>
+                ),
+                okButtonProps: { className: 'hide' },
+                cancelButtonProps: { className: 'hide' },
+            });
+        }
+    });
+}
+
+const editGroup = (reload:()=>void)=>(ref:any)=>{
+    if(ref.type === AppConst.GROUP_PACKAGETOUR){
+        //修改跟团游
+        editPackageTourGroup(reload,ref)
+    }
+    if(ref.type === AppConst.GROUP_TRAFFIC){
+
+    }
+}
 
 interface GroupItemProps{
     data: {
@@ -26,7 +69,7 @@ const GroupItem: React.FC<GroupItemProps> = ({ data, btns = [],orderbtns=[], loa
 } 
 
 const list:React.FC<IModPageProps> = ({route})=>{
-    const { viewConfig } = route;
+    const { authority,viewConfig } = route;
     const {
         setCurrent,
         setPageSize,
@@ -38,7 +81,7 @@ const list:React.FC<IModPageProps> = ({route})=>{
         query,
         setQuery,
         data
-    } = useListPage(viewConfig);
+    } = useListPage(authority,viewConfig);
 
     useEffect(() => {
         load();
@@ -53,6 +96,7 @@ const list:React.FC<IModPageProps> = ({route})=>{
     };
 
     const actionMap = {
+        '修改班期':editGroup(load)
     };
 
     const { headerBtns, rowBtns } = useListPageBtn(viewConfig, actionMap);
@@ -77,15 +121,17 @@ const list:React.FC<IModPageProps> = ({route})=>{
                 textSearch
             )}
         >
-            {data.map((item: any) => (
-                <GroupItem
-                    data={item}
-                    btns={getRowBtnArray(item, rowBtns)}
-                    orderbtns={[]}
-                    load={load}
-                    key={item["id"]}
-                />
-            ))}
+            <div className={styles.ScrollHight}>
+                {data.map((item: any) => (
+                    <GroupItem
+                        data={item}
+                        btns={getRowBtnArray(item, rowBtns)}
+                        orderbtns={[]}
+                        load={load}
+                        key={item["id"]}
+                    />
+                ))}
+            </div>
         </PageHeaderWrapper>)
     
 }

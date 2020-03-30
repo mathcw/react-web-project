@@ -64,6 +64,15 @@ const config: ActionConfigItem = {
       提交: { text: "提交" }
     }
   },
+
+  下架班期:{
+    directlySubmit:true,
+    confirm:'确认下架团队吗？',
+    submit:{
+      url:"/Group/Group/pull_of",
+      data:{main_group_id:"main_group_id"}
+    }
+  }
 };
 
 export default config;

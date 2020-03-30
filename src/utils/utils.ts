@@ -81,10 +81,6 @@ export function getActionButton(key: string) {
   return {};
 }
 
-export function searchChange(cfg: any, field: any, data: any) {
-  return data;
-}
-
 export function getBtnClickEvent(
   key: string
 ): (ref?: object, rs?: (arg0: any) => void, rj?: (arg0: any) => void) => void {
@@ -205,7 +201,7 @@ export const getRowBtnArray = function<T>(data: T, btns: IModBtn[]) {
         const flag = Object.keys(btn.show)
           .map(item => {
             if (btn.show && btn.show[item].indexOf(data[item]) === -1) {
-              if (!Number(data[item]))
+              if (Number(data[item])!==0 && !Number(data[item]))
                 return false;
               if (btn.show[item].indexOf(Number(data[item])) === -1)
                 return false;

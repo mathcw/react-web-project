@@ -1,12 +1,16 @@
 import { BasicLayoutProps as ProLayoutProps } from "@ant-design/pro-layout";
 import { ButtonType, ButtonSize } from "antd/es/button";
-import { CompareFn } from 'antd/es/table';
+import { CompareFn } from 'antd/es/table/interface';
 import OfficeMod from "@/viewconfig/Mod/OfficeMod";
 import OrgMod from "@/viewconfig/Mod/OrgMod";
 import SupplierManagementMod from "@/viewconfig/Mod/SupplierManagementMod";
 import ProductStoreMod from "@/viewconfig/Mod/ProductStoreMod";
 import SaleMod from '@/viewconfig/Mod/SaleMod';
 import ProductManageMod from "@/viewconfig/Mod/ProductManageMod";
+import CheckMod from "@/viewconfig/Mod/CheckMod";
+import BusinessMod from "@/viewconfig/Mod/BusinessMod";
+import SysMod from "@/viewconfig/Mod/SysMod";
+import { IEnumCfg } from "@/utils/enum";
 
 export interface IModBtn<T = any> {
   authority: string;
@@ -21,6 +25,7 @@ export interface IModBtn<T = any> {
 export interface IModPageProps extends ProLayoutProps {
   route: ProLayoutProps["route"] & {
     authority: string;
+    viewConfig:string;
   };
 }
 
@@ -42,7 +47,7 @@ export interface ModConfigItem {
     };
     title?: string;
     textSearch?: object;
-    dropDownSearch?: object;
+    dropDownSearch?: {[key:string]:IEnumCfg};
     headerButtons?: object;
     rowButtons?: object;
     pageSizeOptions?: Array<string>;
@@ -53,10 +58,13 @@ export interface ModConfigItem {
 
 export let config: ModConfigItem = {};
 
+export function getAllCfg(){
+  return JSON.parse(JSON.stringify({...OfficeMod, ...OrgMod, ...SupplierManagementMod, ...ProductStoreMod,...SaleMod,...ProductManageMod,...BusinessMod,...SysMod,...CheckMod}));
+}
+
 export function authMetaInit(authData: string[]) {
   // eslint-disable-next-line array-callback-return
-  config = {...OfficeMod, ...OrgMod, ...SupplierManagementMod, ...ProductStoreMod,...SaleMod,...ProductManageMod};
-
+  config = JSON.parse(JSON.stringify({...OfficeMod, ...OrgMod, ...SupplierManagementMod, ...ProductStoreMod,...SaleMod,...ProductManageMod,...BusinessMod,...SysMod,...CheckMod}));
   Object.keys(config).map(mod => {
     if (authData.indexOf(mod) === -1) {
       delete config[mod];

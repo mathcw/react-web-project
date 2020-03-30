@@ -1,11 +1,11 @@
 import React from 'react';
-import { Col, Modal, Steps, Icon, Tag, Button } from 'antd';
+import { Col, Modal, Tag, Button, Row } from 'antd';
 
 import styles from './index.less';
 import { colDisplay, colorfun } from '@/utils/utils';
 import { get } from '@/utils/req';
 import { IModBtn } from '@/viewconfig/ModConfig';
-const { Step } = Steps;
+import FlowSteps from '@/components/FlowStep';
 
 const defaultPng = require('@/assets/login-bg.png');
 
@@ -24,68 +24,6 @@ function renderImg(list_pic: string, id: string) {
     );
 }
 
-interface IStep {
-    title: string | number;
-    account_id: string | number;
-    external_info: string;
-    opinion?: | '0' | 0 | '1' | 1 | '2' | 2 | '3' | 3 | '4' | 4;
-    comment: string;
-    create_at: string;
-    status: string | number;
-    description: string;
-}
-
-function getDescription(step: IStep) {
-    let description = '';
-    if (step.account_id !== '0' && step.account_id !== 0) {
-        description += colDisplay(step.account_id, 'Account', step);
-    }
-
-    if (step.external_info !== '') {
-        description += step.external_info;
-    }
-    description += `于${step.create_at}`;
-
-    if (step.opinion === '0' || step.opinion === 0) {
-        description += '提交了';
-    } else if (step.opinion === '1' || step.opinion === 1) {
-        description += '通过了本次审批';
-    } else if (step.opinion === '2' || step.opinion === 2) {
-        description += '拒绝了本次审批';
-    } else if (step.opinion === '3' || step.opinion === 3) {
-        description += '取消了本次审批';
-    } else if (step.opinion === '4' || step.opinion === 4) {
-        description += '撤销了本次审批';
-    }
-    if (step.comment != '') {
-        description += `审批备注如下:${step.comment}`;
-    }
-    return description;
-}
-
-function renderStep(step: IStep,key:number) {
-    if (step.opinion) {
-        if (step.opinion === '0') {
-            return <Step key={key} title={colDisplay(step.opinion, 'Opinion', step)} description={getDescription(step)} status='finish' />
-        }
-        if (step.opinion === '1' || step.opinion === 1) {
-            return <Step key={key} title={colDisplay(step.opinion, 'Opinion', step)} description={getDescription(step)} status='finish' />
-        }
-        if (step.opinion === '2' || step.opinion === 2) {
-            return <Step key={key} title={colDisplay(step.opinion, 'Opinion', step)} description={getDescription(step)} status='error' />
-        }
-        if (step.opinion === '3' || step.opinion === 3) {
-            return <Step key={key} title={colDisplay(step.opinion, 'Opinion', step)} description={getDescription(step)} icon={<Icon type="rollback" />} />
-        }
-        if (step.opinion === '4' || step.opinion === 4) {
-            return <Step key={key} title={colDisplay(step.opinion, 'Opinion', step)} description={getDescription(step)} icon={<Icon type="rollback" />} />
-        }
-    } else if (step.status === '2' || step.status === 2) {
-        return <Step key={key} title={step.title} description={step.description} icon={<Icon type="loading" />} />
-    }
-    return null
-}
-
 interface GroupTourProps {
     data: {
         list_pic: string,
@@ -100,16 +38,25 @@ interface GroupTourProps {
 const GroupTour: React.FC<GroupTourProps> = ({ data,btns=[],load }) => {
 
     const showFlowInfo = (data: GroupTourProps['data']) => {
-        get('/comm/Flow/seeDetail', { flow_id: data.flow_id }).then((r) => {
+        if(data.flow_id==='0'){
+            Modal.info({
+                title: '审批记录',
+                content: (
+                  <div>
+                    <p>暂无审批记录</p>
+                  </div>
+                ),
+                onOk() {},
+                okText: '关闭',
+            });
+            return;
+        }
+        get('/comm/FlowList/seeDetail', { flow_id: data.flow_id }).then((r) => {
             if(r.data){
                 Modal.info({
                     title: '审批记录',
                     content: (
-                        <Steps direction="vertical" size="small" current={1}>
-                            {
-                                r.data.map((item:IStep,index:number) => renderStep(item,index))
-                            }
-                        </Steps>
+                        <FlowSteps direction="vertical" size="small" current={1} data={r.data} />
                     ),
                     onOk() { },
                     okText: '关闭',
@@ -132,12 +79,12 @@ const GroupTour: React.FC<GroupTourProps> = ({ data,btns=[],load }) => {
                     <Col style={{ paddingLeft: '20px', flex: '1' }} xs={21} sm={21} md={21} lg={21}>
                         <Col span={20} className={styles.RTop}>
                             <Tag color="blue">团队游</Tag>
-                            <a className={[styles.name, 'text-overflow'].join(' ')} onClick={() => {}} >
+                            <a className={[styles.name, 'text-overflow'].join(' ')} onClick={() =>{}} >
                                 {data.pd_name}
                             </a>
                         </Col>
                         <Col span={18} className={styles.RCenter}>
-                            <Col span={6} className={styles.RCenterL}>
+                            <Col span={8} className={styles.RCenterL}>
                                 <div>
                                     <span className={styles.lable}>商家品牌：</span>{' '}
                                     <span className={[styles.text, 'text-overflow'].join(' ')}>{data.brand}</span>
@@ -151,7 +98,7 @@ const GroupTour: React.FC<GroupTourProps> = ({ data,btns=[],load }) => {
                                     <span className={[styles.text, 'text-overflow'].join(' ')}>{data.mobile}</span>
                                 </div>
                             </Col>
-                            <Col span={6} className={styles.RCenterL}>
+                            <Col span={8} className={styles.RCenterL}>
                                 <div>
                                     <span className={styles.lable}>出发城市： </span>{' '}
                                     <span className={[styles.text, 'text-overflow'].join(' ')}>
@@ -171,7 +118,7 @@ const GroupTour: React.FC<GroupTourProps> = ({ data,btns=[],load }) => {
                                     </span>
                                 </div>
                             </Col>
-                            <Col span={6} className={styles.RCenterL}>
+                            <Col span={8} className={styles.RCenterL}>
                                 <div>
                                     <span className={styles.lable}>在售团期： </span>{' '}
                                     <span className={[styles.text, 'text-overflow'].join(' ')}>{data.saleing_group_number}</span>
@@ -183,28 +130,26 @@ const GroupTour: React.FC<GroupTourProps> = ({ data,btns=[],load }) => {
                             </Col>
                         </Col>
                         <Col span={6} className={styles.Approval}>
-                            <Col span={24} className={styles.infoCell} style={{ textAlign: 'center' }}>
-                                <span className={styles.lable}>审核状态</span>
-                                <div
-                                    className={[styles.text, 'text-overflow'].join(' ')}
-                                    style={colorfun(data)}
-                                >
-                                    {colDisplay(data.flow, 'Flow', data)}
-                                </div>
-                                <Col
-                                    className={styles.plan}
-                                    onClick={() => showFlowInfo(data)}
-                                >
-                                    {
-                                        data.flow_id && data.flow_id != 0 &&
-                                        <img
-                                            src={IconPng}
-                                            className={[styles.text1].join(' ')}
-                                        />
-                                    }
-                                    <div className={styles.query}>进度查询</div>
+                            <Row>
+                                <Col span={12} className={styles.infoCell} style={{ textAlign: 'center' }}>
+                                    <span className={styles.lable}></span>
+                                    <div className={[styles.text, 'text-overflow'].join(' ')} style={colorfun(data)}>
+                                    </div>
                                 </Col>
-                            </Col>
+                                <Col span={12} className={styles.infoCell} style={{ textAlign: 'center' }}>
+                                    <span className={styles.lable}>审核状态</span>
+                                    <div className={[styles.text, 'text-overflow'].join(' ')} style={colorfun(data)}>
+                                        {colDisplay(data.flow, 'Flow', data)}
+                                    </div>
+                                    <Col className={styles.plan} onClick={() => showFlowInfo(data)}>
+                                        {
+                                            data.flow_id && data.flow_id != 0 &&
+                                            <img src={IconPng} className={[styles.text1].join(' ')}/>
+                                        }
+                                        <div className={styles.query}>进度查询</div>
+                                    </Col>
+                                </Col>
+                            </Row>
                         </Col>
                         <Col className={styles.btns}>
                             <Col

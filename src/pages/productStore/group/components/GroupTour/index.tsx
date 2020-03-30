@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Col, Spin, Icon, Button, Tag } from 'antd';
+import { DoubleLeftOutlined } from '@ant-design/icons';
+import { Col, Button, Tag, Row } from 'antd';
 
 import styles from './index.less';
 import { IModBtn } from '@/viewconfig/ModConfig';
@@ -15,11 +16,11 @@ interface GroupTourProps {
     [key: string]: any
   },
   btns?: IModBtn[],
-  orderbtns?:IModBtn[],
+  orderbtns?: IModBtn[],
   load?: () => void,
 }
 
-const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [],orderbtns=[], load }) => {
+const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [], orderbtns = [], load }) => {
   const [packStatus, setPackStatus] = useState(false);
   const [loading, setLoading] = useState(false);
   const [orderListData, setOrderList] = useState<IOrder[]>([]);
@@ -59,30 +60,23 @@ const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [],orderbtns=[], loa
   }
 
   return (
-    <Col className={styles.Schedule}>
-      <Col
+    <div className={styles.Schedule}>
+      <Row
         className={styles.top}
       >
-        <Col className={styles.imgBox} xs={3} sm={3} md={3} lg={3}>
-          <div className={styles.imgWrapper}>
-            <img
-              src={data.list_pic || defaultPng}
-              className={styles.img}
-              alt="产品图片"
-            />
-            <span className={[styles.imgText, 'text-overflow'].join(' ')}>{`产品编号P0${data.pd_id}`}</span>
-          </div>
+        <Col className={styles.imgBox} xs={24} sm={24} md={3} lg={3}>
+          <img src={data.list_pic || defaultPng} className={styles.img} alt="产品图片"/>
+          <span className={styles.imgText}>{`产品编号P0${data.pd_id}`}</span>
         </Col>
-        <Col style={{ paddingLeft: '20px', flex: '1' }} xs={21} sm={21} md={21} lg={21}>
-          <Col className={styles.RTop}>
-            <Tag color="blue">团队游</Tag>
-            <span className={[styles.name, 'text-overflow'].join(' ')}>
-              {data.pd_name}
-            </span>
-
-          </Col>
-          <Col className={styles.RCenter}>
-            <Col span={18} className={styles.RCenterL}>
+        <Col xs={24} sm={24} md={18} lg={18}>
+          <div className={styles.content}>
+            <Col span={24} className={styles.contentTop}>
+              <Tag color="blue">团队游</Tag>
+              <span className={[styles.name, 'text-overflow'].join(' ')}>
+                {data.pd_name}
+              </span>
+            </Col>
+            <Col span={24} className={styles.contentCenter}>
               <Col span={6}>
                 <div className={styles.cell}>
                   <span className={styles.lable}>出团日期：</span>{' '}
@@ -144,65 +138,56 @@ const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [],orderbtns=[], loa
                 </div>
               </Col>
             </Col>
-          </Col>
-          <Col span={6} className={styles.RCenterR}>
-            <Col span={24} className={styles.infoRow}>
-              <Col className={styles.infoCell} style={{ margin: 0 }}>
-                <div className={styles.lable}>团态 </div>
+            <Col span={24} className="text-center">
+              <div
+                className={[styles.openIconBox, 'dib', loading ? 'hide' : ''].join(' ')}
+                onClick={() => { loadMore() }}
+              >
+                {packStatus ? "收起详情" : "展开详情"}
+                {
+                  !packStatus && <DoubleLeftOutlined className={styles.close} />
+                }
+                {
+                  packStatus && <DoubleLeftOutlined className={styles.open} />
+                }
+              </div>
+            </Col>
+          </div>
+        </Col>
+        <Col xs={24} sm={24} md={3} lg={3}>
+          <Row className={styles.left}>
+            <Col span={12} className={styles.infoCell} style={{ textAlign: 'center' }}>
+                <span className={styles.lable}></span>
+                <div className={[styles.text, 'text-overflow'].join(' ')}></div>
+            </Col>
+            <Col span={12} className={styles.infoCell} style={{ textAlign: 'center' }}>
+                <span className={styles.lable}>团态</span>
                 <div style={flowColor} className={[styles.text, 'text-overflow'].join(' ')}>
                   {colDisplay(data.state, 'GroupState', data)}
                 </div>
-              </Col>
             </Col>
-            <Col className={styles.btns}>
-                <Col
-                  className={btns ? '' : 'hide'}
-                >
-                  <div>
-                    {btns.map(btn => (
-                      <Button
-                        className={styles.button}
-                        type="primary"
-                        size="small"
-                        key={btn.text}
-                        onClick={() => {
-                          if (btn.onClick) btn.onClick(data, load);
-                        }}
-                      >
-                        {btn.text || ""}
-                      </Button>
-                    ))}
-                  </div>
-                </Col>
-              </Col>
-          </Col>
-
-          <Col span={4} className="text-center" style={{ position: 'relative', left: '61%' }}>
-            <Col
-              className={[styles.openIconBox, 'dib', loading ? 'hide' : ''].join(' ')}
-              onClick={() => { loadMore() }}
-            >
-              {packStatus ? "收起详情" : "展开详情"}
-              {
-                !packStatus && <Icon
-                  type="double-left"
-                  className={styles.close}
-                />
-              }
-              {
-                packStatus && <Icon
-                  type="double-left"
-                  className={styles.open}
-                />
-              }
-            </Col>
-          </Col>
+          </Row>
         </Col>
-      </Col>
+        <Col className={btns ? styles.btns : 'hide'}>
+          {btns.map(btn => (
+            <Button
+              className={styles.button}
+              type="primary"
+              size="small"
+              key={btn.text}
+              onClick={() => {
+                if (btn.onClick) btn.onClick(data, load);
+              }}
+            >
+              {btn.text || ""}
+            </Button>
+          ))}
+        </Col>
+      </Row>
       {
         packStatus && <OrderListComp data={orderListData} btns={orderbtns} load={load} />
       }
-    </Col>
+    </div>
   );
 }
 

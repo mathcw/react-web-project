@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { Col, Icon, Input, InputNumber, DatePicker, Button } from 'antd';
+import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { Col, Input, InputNumber, DatePicker, Button, Divider } from 'antd';
 
 import styles from './batchModal.less';
 import moment from 'moment';
@@ -65,7 +66,7 @@ function Cell(props: ICell) {
         <React.Fragment>
             {type === 'Text' && <Input onChange={e => onChange(e.target.value, 'text')} value={value} style={{ width: '100%' }} />}
             {type === 'Number' && <InputNumber onChange={v => onChange(v, 'number')} value={value} min={0} />}
-            {type === 'Date' && <DatePicker getCalendarContainer={(node) => node as HTMLElement} style={{ width: '100%' }} format="YYYY-MM-DD" onChange={v => onChange(v, 'date')} value={moment(value)} />}
+            {type === 'Date' && <DatePicker getPopupContainer={(node) => node as HTMLElement} style={{ width: '100%' }} format="YYYY-MM-DD" onChange={v => onChange(v, 'date')} value={moment(value)} />}
             {
                 error && <span style={{ color: 'red' }}>{message}</span>
             }
@@ -175,7 +176,8 @@ class BatchModal extends React.Component<IProps, IState> {
     render() {
         const { data, showWarning } = this.state;
         return (
-            <Col sm={24} md={24} lg={24}>
+            <Col xs={24} sm={24} md={24} lg={24}>
+                <Divider style={{ margin: 0 }} />
                 <Col className={[styles.batchModal, 'clear'].join(' ')}>
                     {data['团期库存信息'] && <Col className={[styles.mod, 'clear'].join(' ')}>
                         <Col className={styles.modTitle}>
@@ -273,12 +275,10 @@ class BatchModal extends React.Component<IProps, IState> {
                         <Col className={styles.modTitle}>
                             <Col className={styles.modTitleText}>其他价格</Col>
                             <Col className={styles.add} style={{ marginRight: '-90px' }}>
-                                <Icon
-                                    type="plus-circle"
+                                <PlusCircleOutlined
                                     className="pointer"
                                     style={{ color: '#1890FF' }}
-                                    onClick={() => this.add_other_price()}
-                                />
+                                    onClick={() => this.add_other_price()} />
                             </Col>
                         </Col>
                         <Col className={[styles.modContent, 'clear'].join(' ')}>
@@ -332,11 +332,7 @@ class BatchModal extends React.Component<IProps, IState> {
                                         </Col>
                                     </Col>
                                     {/* <Col className={styles.cell}> */}
-                                    <Icon
-                                        type="minus-circle"
-                                        className={styles.delete}
-                                        onClick={() => this.del_other_price(index)}
-                                    />
+                                    <MinusCircleOutlined className={styles.delete} onClick={() => this.del_other_price(index)} />
                                     {/* </Col> */}
                                 </Col>
                             );

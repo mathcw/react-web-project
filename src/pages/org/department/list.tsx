@@ -18,6 +18,7 @@ import { submit, read } from "@/utils/req";
 import Grid, { getCols, actionColWidth, renderRowBtns } from '@/components/Table/Grid';
 import ActionModal from "@/components/Table/ActionModal";
 import { ColumnProps } from "antd/es/table";
+import styles from './list.less';
 
 // 新增部门
 const add = (reload: () => void) => () => {
@@ -53,7 +54,7 @@ const edit = (reload: () => void) => (ref: any) => {
     name: { text: "部门名称", required: true }
   };
   const onSubmit = (data: object | undefined) => {
-    submit("/org/Department/submit", data).then(r => {
+    submit("/org/Department/submit", {id:ref.id,...data}).then(r => {
       message.success(r.message);
       modalRef.destroy();
       reload();
@@ -85,7 +86,7 @@ const setLoader = (reload: () => void) => (ref: any) => {
     leader_ids: { text: "领导", multi: true, type: "EmpAccount" }
   };
   const onSubmit = (data: object | undefined) => {
-    submit("/org/Department/set_leader", data).then(r => {
+    submit("/org/Department/set_leader", {id:ref.id,...data}).then(r => {
       message.success(r.message);
       modalRef.destroy();
       reload();
@@ -172,7 +173,7 @@ const departmentLog = (reload: () => void) => (ref: any) => {
 };
 
 const list: React.FC<IModPageProps> = ({ route }) => {
-  const { viewConfig } = route;
+  const { authority,viewConfig } = route;
   const {
     setCurrent,
     setPageSize,
@@ -184,7 +185,7 @@ const list: React.FC<IModPageProps> = ({ route }) => {
     query,
     setQuery,
     data
-  } = useListPage(viewConfig);
+  } = useListPage(authority,viewConfig);
 
   const actionMap = {
     新增部门: add(load),
@@ -256,14 +257,16 @@ const list: React.FC<IModPageProps> = ({ route }) => {
         textSearch
       )}
     >
-      <Grid
-        columns={getCols(cfg.list||{})}
-        dataSource={data}
-        rowKey="id"
-        pagination={false}
-        className={'ListTableStyle'}
-        specCol={opCol}
-      />
+      <div className={styles.ScrollHight}>
+        <Grid
+          columns={getCols(cfg.list||{})}
+          dataSource={data}
+          rowKey="id"
+          pagination={false}
+          className={'ListTableStyle'}
+          specCol={opCol}
+        />
+      </div>
     </PageHeaderWrapper>
   );
 };

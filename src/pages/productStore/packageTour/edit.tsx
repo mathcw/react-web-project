@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Col, Select, message, Row, Input, Button, Upload, Modal, Icon, InputNumber } from 'antd';
+import { DeleteOutlined, LeftOutlined, RightOutlined, CloseOutlined, LoadingOutlined,PlusOutlined } from '@ant-design/icons';
+import { Col, Select, message, Row, Input, Button, Upload, Modal, InputNumber } from 'antd';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper/actionPageHeader';
 import renderHeaderBtns from '@/components/PageHeaderWrapper/headerBtns';
@@ -8,7 +9,6 @@ import { useActionPage, useActionBtn } from '@/utils/ActionPageHooks';
 
 import styles from './edit.less';
 import { getEnum, IEnumCfg, searchChange } from '@/utils/enum';
-import FastSelect from '@/components/FastSelect';
 import { upload, submit } from '@/utils/req';
 import { prePage, nextPage, loadPdf } from '@/utils/pdf';
 import { IModBtn } from '@/viewconfig/ModConfig';
@@ -30,7 +30,6 @@ const renderButtonOther = (btns: IModBtn[]) => {
       {btns.map(btn => (
         <div key={btn.text} className={[styles.btns, 'dib'].join(' ')}>
           <Button
-            icon={btn.icon}
             type={btn.type}
             size={btn.size}
             onClick={() => {
@@ -48,7 +47,8 @@ const renderButtonOther = (btns: IModBtn[]) => {
           </Button>
         </div>
       ))}
-    </div>);
+    </div>
+  );
 
 }
 
@@ -103,7 +103,7 @@ interface IUpdateImg {
 }
 const UploadImg = (props: IUpdateImg) => {
   const [photoLoading, setPhotoLoading] = useState(false);
-  const [originFile, setOriginFile] = useState(null);
+  const [originFile, setOriginFile] = useState<File>();
   const [visiable, setVisiable] = useState(false);
   const { type, photo, update } = props;
 
@@ -124,7 +124,12 @@ const UploadImg = (props: IUpdateImg) => {
   const uploadButton = (
     <div>
       <p className="ant-upload-drag-icon">
-        <Icon type={photoLoading ? 'loading' : 'plus'} />
+        {
+          photoLoading && <LoadingOutlined/>
+        }
+        {
+          !photoLoading && <PlusOutlined/>
+        }
       </p>
       <p className="ant-upload-text">点击或者拖拽到本区域进行上传</p>
     </div>
@@ -200,7 +205,7 @@ const UploadImg = (props: IUpdateImg) => {
 }
 
 const Page: React.FC<IActionPageProps> = ({ route, location }) => {
-  const { viewConfig } = route;
+  const { authority,viewConfig } = route;
   const { state: ref } = location;
 
   const initData: {
@@ -224,7 +229,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
   const [pdfLoading, setPdfLoading] = useState(false);
   const [pdfUploading, setPdfUploading] = useState(false);
 
-  const { data, setData, load, onCancel, cfg } = useActionPage<typeof initData>(viewConfig, initData, ref);
+  const { data, setData, load, onCancel, cfg } = useActionPage<typeof initData>(authority,viewConfig, initData, ref);
 
 
   useEffect(() => {
@@ -281,8 +286,13 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
   // 上传按钮
   const uploadButton = (
     <div>
-      <Icon type={pdfUploading ? 'loading' : 'plus'} />
-      <div className="ant-upload-text">Upload</div>
+      {
+        pdfUploading && <LoadingOutlined/>
+      }
+      {
+        !pdfUploading && <PlusOutlined/>
+      }
+      <div className="ant-upload-text">选择上传</div>
     </div>
   );
 
@@ -292,7 +302,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
   }
 
   // 关闭主题modal(确定)
-  const themeModalOK = (value: any) => {
+  const themeModalOk = (value: any) => {
     const rst = { ...data };
     rst['自建主题'].push(value);
     setThemeModalOpen(false);
@@ -325,8 +335,6 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
         showSearch
         optionFilterProp='children'
         className={styles.cellSelect}
-        maxTagCount={10}
-        maxTagTextLength={8}
         placeholder={cfg.text || ''}
         value={data[field]}
         key={field}
@@ -342,15 +350,25 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
   // 渲染产品标签
   const renderProductTag = () => {
     return (
-      <Col>
+      <>
         {
           Object.keys(selectCfg).map((field) =>
             renderEnumSelect(selectCfg[field], field, data['产品信息'])
           )
         }
-      </Col>
+      </>
     );
   };
+
+  const renderOptions = (options: object) => {
+    return (
+      Object.keys(options || {}).map(item => (
+        <Option value={item} key={item}>
+          {options[item]}
+        </Option>
+      ))
+    )
+  }
 
   // 途径城市
   const changeProCity = (value: any) => {
@@ -370,7 +388,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
 
     return (
       <Col>
-        <FastSelect
+        <Select
           onChange={(value: any) => { changeProTheme(value) }}
           showSearch
           style={{ width: '100%' }}
@@ -378,38 +396,48 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
           mode='multiple'
           placeholder='热卖标签'
           value={data['游玩主题']}
-          options={Enum}
-          type='PdTheme'
-        />
+        >
+          {
+            renderOptions(Enum)
+          }
+        </Select>
       </Col>
     )
   }
 
-  const changeZjTheme = (value: any) => {
-    const rst = { ...data };
-    rst['自建主题'] = [...value];
-    setData(rst);
+  const removeZjTheme = (value: any) => {
+    const rst = [...data['自建主题']];
+    if(rst.indexOf(value)!==-1){
+      rst.splice(rst.indexOf(value),1)
+    }
+    setData({...data,'自建主题':rst});
   }
 
   const renderZjTheme = () => {
-    const Enum = {};
-    data['自建主题'].forEach((item: any) => {
-      Enum[item] = item;
-    })
-
     return (
       <Col>
-        <FastSelect
-          onChange={(value: any) => { changeZjTheme(value) }}
-          showSearch
-          style={{ width: '100%' }}
-          optionFilterProp='children'
-          mode='multiple'
-          placeholder='如果上述热卖标签没有适用您产品的，可在这里自建标签！'
-          value={data['自建主题']}
-          options={Enum}
-          type='自建主题'
-        />
+        <span className={styles.zjTheme}>
+          {
+            (!data['自建主题'] || data['自建主题'].length === 0) && 
+            <span className={styles.placeholder}>
+              如果上述热卖标签没有适用您产品的，可在这里自建标签!
+            </span>
+          }
+          {
+            data['自建主题'] && data['自建主题'].length>0 && data['自建主题'].map(item =>
+              <span className={styles.item}>
+                <span className={styles.itemContent}>
+                  {
+                    item
+                  }
+                </span>
+                <span className={styles.remove}>
+                  <CloseOutlined onClick={() => removeZjTheme(item)} />
+                </span>
+              </span>
+            )
+          }
+        </span>
       </Col>
     )
   }
@@ -492,296 +520,303 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
     );
   }
 
-  return <PageHeaderWrapper
-    title={cfg.title || ''}
-    extra={renderHeaderBtns(btns)}
-  >
-    <Row>
-      <Col className={styles.add}>
-        <Col className={[styles.addMod, 'clear'].join(' ')}>
-          <Col className={styles.title}>
-            <Col className={styles.titleL} xs={24} sm={24} md={10} lg={10}>
-              <Col className={styles.text}>产品图片</Col>
-              <Col className={styles.backgroundtext}>(上传一张即可,1M以内,尺寸建议比例16:9)</Col>
-            </Col>
-            <Col className={styles.titleR}>
-              <Col className={styles.text}>产品信息</Col>
-            </Col>
-          </Col>
-          {/* 产品图片 */}
-          <Col xs={24} sm={24} md={10} lg={10} className={styles.imgWrapper}>
-            <Col className={styles.imgBox}>
-              <UploadImg photo={data['产品图片'][0]} type='productPic' update={handlePicUpload} />
-            </Col>
-          </Col>
-          {/* 产品信息 */}
-          <Col
-            className={styles.content}
-            xs={24}
-            sm={24}
-            md={14}
-            lg={14}
-            style={{ paddingLeft: '24px' }}
-          >
-            <Col className={[styles.cell, 'clear'].join(' ')}>
-              <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
-                产品名称
-                  </Col>
-              <Col className={styles.cellInput} xs={24} sm={20} md={20} lg={20}>
-                <Input
-                  placeholder="请输入产品名称"
-                  value={data['产品信息']['pd_name'] || ''}
-                  onChange={e => changeProInfo('pd_name', e.target.value)}
-                />
-              </Col>
-            </Col>
-            {/* 导航标签 */}
-            <Col className={[styles.cell, 'clear'].join(' ')}>
-              <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
-                导航标签
-                  </Col>
-              <Col className={styles.cellInput} xs={24} sm={20} md={20} lg={20}>
-                {renderProductTag()}
-              </Col>
-            </Col>
-            {/* 途径地区 */}
-            <Col className={[styles.cell, 'clear'].join(' ')}>
-              <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
-                途径地区
-                  </Col>
-              <Col className={styles.cellInput} xs={24} sm={20} md={20} lg={20}>
-                {data['产品信息'] && data['产品信息']['pd_direction'] && <FastSelect
-                  onChange={(value) => { changeProCity(value) }}
-                  showSearch
-                  style={{ width: '100%' }}
-                  optionFilterProp='children'
-                  mode='multiple'
-                  placeholder='出游方向选出境,只能选择国家,如果选国内,只能选省份'
-                  value={data['途径城市']}
-                  options={data['产品信息'] && data['产品信息']['pd_direction'] === '1' ? getEnum('Country') : getEnum('CNProvince')}
-                  type={data['产品信息'] && data['产品信息']['pd_direction'] === '1' ? 'Country' : 'CNProvince'}
-                />}
-                {data['产品信息'] && !data['产品信息']['pd_direction'] && <FastSelect
-                  onChange={(value) => { changeProCity(value) }}
-                  showSearch
-                  style={{ width: '100%' }}
-                  optionFilterProp='children'
-                  mode='multiple'
-                  placeholder='出游方向选出境,只能选择国家,如果选国内,只能选省份'
-                  value={data['途径城市']}
-                  type=''
-                  options={{}}
-                />}
-              </Col>
-            </Col>
-            {/* 往返城市 */}
-            <Col className={[styles.cell, 'clear'].join(' ')}>
-              <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
-                出发城市
-                  </Col>
-              <Col className={styles.cellInput} xs={24} sm={8} md={8} lg={8}>
-                <FastSelect
-                  showSearch
-                  value={data['产品信息']['dep_city_id'] || ''}
-                  onChange={val => changeProInfo('dep_city_id', val)}
-                  className={styles.cellSelect1}
-                  maxTagCount={10}
-                  maxTagTextLength={8}
-                  options={getEnum('City')}
-                  type='City'
-                />
-              </Col>
-              <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
-                返回城市
-                  </Col>
-              <Col className={styles.cellInput} xs={24} sm={8} md={8} lg={8}>
-                <FastSelect
-                  showSearch
-                  value={data['产品信息']['back_city_id'] || ''}
-                  onChange={val => changeProInfo('back_city_id', val)}
-                  className={styles.cellSelect1}
-                  maxTagCount={10}
-                  maxTagTextLength={8}
-                  options={getEnum('City')}
-                  type='City'
-                />
-              </Col>
-            </Col>
-            {/* 天数晚数 */}
-            <Col className={[styles.cell, 'clear'].join(' ')}>
-              <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
-                晚数
-                  </Col>
-              <Col className={styles.cellInput} xs={24} sm={8} md={8} lg={8}>
-                <InputNumber
-                  min={1}
-                  max={999}
-                  value={data['产品信息']['nights'] || 0}
-                  onChange={val => changeProInfo('nights', val)}
-                  style={{ width: '77%' }}
-                />
-                &nbsp; 晚
-                  </Col>
-              <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
-                天数
-                  </Col>
-              <Col className={styles.cellInput} xs={24} sm={8} md={8} lg={8}>
-                <InputNumber
-                  min={1}
-                  max={999}
-                  value={data['产品信息']['days'] || 0}
-                  onChange={val => changeProInfo('days', val)}
-                  style={{ width: '77%' }}
-                />
-                &nbsp; 天
-                  </Col>
-            </Col>
-            <Col className={[styles.cell, 'clear'].join(' ')}>
-              <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
-                自费情况
-                  </Col>
-              <Col className={styles.cellInput} xs={24} sm={8} md={8} lg={8}>
-                <FastSelect
-                  showSearch
-                  value={data['产品信息']['own_expense'] || ''}
-                  onChange={val => changeProInfo('own_expense', val)}
-                  className={styles.cellSelect1}
-                  maxTagCount={10}
-                  maxTagTextLength={8}
-                  options={getEnum('HaveNo')}
-                  type='HaveNo'
-                />
-              </Col>
-              <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
-                购物情况
-                  </Col>
-              <Col className={styles.cellInput} xs={24} sm={8} md={8} lg={8}>
-                <FastSelect
-                  showSearch
-                  value={data['产品信息']['shopping'] || ''}
-                  onChange={val => changeProInfo('shopping', val)}
-                  className={styles.cellSelect1}
-                  maxTagCount={10}
-                  maxTagTextLength={8}
-                  options={getEnum('HaveNo')}
-                  type='HaveNo'
-                />
-              </Col>
-            </Col>
-            {/* 游玩主题 */}
-            <Col className={[styles.cell, 'clear'].join(' ')}>
-              <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
-                特色标签
-                  </Col>
-              <Col className={styles.cellInput} xs={24} sm={20} md={20} lg={20}>
-                {
-                  renderProductTheme()
-                }
-              </Col>
-            </Col>
-          </Col>
-        </Col>
-
-        {/* 自建标签 */}
-        <Col className={styles.addMod}>
-          <Col className={styles.title}>
-            <Col className={styles.titleL}>
-              <Col className={styles.text} style={{ margin: '2px' }}>自建标签</Col>
-              <Col className={styles.btns}>
-                <Button onClick={addTheme} style={{ padding: '0px 5px', height: '27px', fontSize: '12px' }}>自建标签</Button>
-              </Col>
-              <Col className={styles.backgroundtext}>(如果上述热卖标签没有适用您产品的,可在这里自建标签)</Col>
-            </Col>
-          </Col>
-          <Col className={styles.content1}>
-            {
-              renderZjTheme()
-            }
-          </Col>
-        </Col>
-
-        {/* 产品特色 */}
-        <Col className={styles.addMod}>
-          <Col className={styles.title}>
-            <Col className={styles.titleL}>
-              <Col className={styles.text}>产品特色</Col>
-              <Col className={styles.backgroundtext}>(请注意文字排版的整齐美观)</Col>
-            </Col>
-          </Col>
-          <Col className={styles.content2}>
-            <Input.TextArea
-              className={styles.product}
-              placeholder="请输入产品特色"
-              autoSize={{ minRows: 4, maxRows: 8 }}
-              onChange={e => changeProInfo('feature', e.target.value)}
-              value={data['产品信息']['feature']}
-            />
-          </Col>
-        </Col>
-
-        {/* 产品行程 */}
-        <Col className={styles.addMod}>
-          <Col className={styles.title}>
-            <Col className={styles.titleL}>
-              <Col className={styles.text}>产品行程</Col>
-              <Col className={styles.backgroundtext}>(直接将您的行程文件上传,文件要小于8M,请注意去掉您自己公司的LOGO,以便门市下载后转发给客户)</Col>
-            </Col>
-          </Col>
-          <Col className={styles.content}>
-            <Col className={styles.scheduling}>
-              <Col className={styles.schedulingT}>
-                <Col className={styles.schedulingTBtn}>
-                  <Button shape="circle" icon="delete" onClick={() => deletePdf()} />
-                </Col>
-              </Col>
-              <Col className={styles.schedulingContent}>
-                <Col className={styles.backgroundBtn} span={2} onClick={() => minusPage()}>
-                  <Button
-                    shape="circle"
-                    icon="left"
-                    disabled={pdfPageNum <= 1}
-                  />
-                </Col>
-                <Upload
-                  name="avatar"
-                  listType="picture-card"
-                  className="avatar-uploader"
-                  showUploadList={false}
-                  onChange={handleChange}
-                  customRequest={({ file }) => handlePdfUpload({ file })}
-                  beforeUpload={beforeUpload}
-                >
-                  {data.pdfUrl ? renderPdf() : uploadButton}
-                </Upload>
-                <Col span={2} className={styles.backgroundBtn} onClick={() => addPage()}>
-                  <Button shape="circle" icon="right" />
-                </Col>
-              </Col>
-            </Col>
-            <Col className={styles.bottom}>
-              <Col className={styles.bottomContent}>
-                {
-                  renderButtonOther(btns)
-                }
-              </Col>
-            </Col>
-          </Col>
-
-        </Col>
-      </Col>
-    </Row>
-    <Modal
-      title='新增主题'
-      visible={themeModalOpen}
-      okButtonProps={{ className: 'hide' }}
-      cancelButtonProps={{ className: 'hide' }}
-      onCancel={themeModalCancel}
-      footer={null}
-      destroyOnClose
+  return (
+    <PageHeaderWrapper
+      title={cfg.title || ''}
+      extra={renderHeaderBtns(btns)}
     >
-      <ThemeContent onOk={themeModalOK} onCancel={themeModalCancel} />
-    </Modal>
-  </PageHeaderWrapper>
+      <Row>
+        <Col className={styles.add}>
+          <div className={styles.addMod}>
+            <Row className={styles.title}>
+              <Col className={styles.titleL} xl={10} lg={10} md={24} sm={24} xs={24}>
+                <Col className={styles.text}>产品图片</Col>
+                <Col className={styles.backgroundtext}>(上传一张即可,1M以内,尺寸建议比例16:9)</Col>
+              </Col>
+              <Col className={styles.titleR}>
+                <Col className={styles.text}>产品信息</Col>
+              </Col>
+            </Row>
+            {/* 产品图片 */}
+            <Row>
+              <Col xs={24} sm={24} md={10} lg={10} className={styles.imgWrapper}>
+                <Col className={styles.imgBox}>
+                  <UploadImg photo={data['产品图片'][0]} type='productPic' update={handlePicUpload} />
+                </Col>
+              </Col>
+              {/* 产品信息 */}
+              <Col
+                className={styles.content}
+                xs={24}
+                sm={24}
+                md={14}
+                lg={14}
+                style={{ paddingLeft: '24px' }}
+              >
+                <Row className={[styles.cell, 'clear'].join(' ')}>
+                  <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
+                    产品名称
+                    </Col>
+                  <Col className={styles.cellInput} xs={24} sm={20} md={20} lg={20}>
+                    <Input
+                      placeholder="请输入产品名称"
+                      value={data['产品信息']['pd_name'] || ''}
+                      onChange={e => changeProInfo('pd_name', e.target.value)}
+                    />
+                  </Col>
+                </Row>
+                {/* 导航标签 */}
+                <Row className={[styles.cell, 'clear'].join(' ')}>
+                  <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
+                    导航标签
+                    </Col>
+                  <Col className={styles.cellInput} xs={24} sm={20} md={20} lg={20}>
+                    <div style={{ display: 'flex' }}>
+                      {renderProductTag()}
+                    </div>
+                  </Col>
+                </Row>
+                {/* 途径地区 */}
+                <Row className={[styles.cell, 'clear'].join(' ')}>
+                  <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
+                    途径地区
+                    </Col>
+                  <Col className={styles.cellInput} xs={24} sm={20} md={20} lg={20}>
+                    {data['产品信息'] && <Select
+                      onChange={(value) => { changeProCity(value) }}
+                      showSearch
+                      disabled={!data['产品信息']['pd_direction']}
+                      style={{ width: '100%' }}
+                      optionFilterProp='children'
+                      mode='multiple'
+                      placeholder='出游方向选出境,只能选择国家,如果选国内,只能选省份'
+                      value={data['途径城市']}
+                    >
+                      {
+                        data['产品信息']['pd_direction'] === '1' && renderOptions(getEnum('Country'))
+                      }
+                      {
+                        data['产品信息']['pd_direction'] && data['产品信息']['pd_direction'] !== '1' && renderOptions(getEnum('CNProvince'))
+                      }
+                    </Select>}
+                  </Col>
+                </Row>
+                {/* 往返城市 */}
+                <Row className={[styles.cell, 'clear'].join(' ')}>
+                  <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
+                    出发城市
+                    </Col>
+                  <Col className={styles.cellInput} xs={24} sm={8} md={8} lg={8}>
+                    <Select
+                      showSearch
+                      onChange={val => changeProInfo('dep_city_id', val)}
+                      className={styles.cellSelect1}
+                      optionFilterProp='children'
+                      value={data['产品信息']['dep_city_id']}
+                    >
+                      {
+                        renderOptions(getEnum('City'))
+                      }
+                    </Select>
+                  </Col>
+                  <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
+                    返回城市
+                    </Col>
+                  <Col className={styles.cellInput} xs={24} sm={8} md={8} lg={8}>
+                    <Select
+                      showSearch
+                      onChange={val => changeProInfo('back_city_id', val)}
+                      className={styles.cellSelect1}
+                      optionFilterProp='children'
+                      value={data['产品信息']['back_city_id']}
+                    >
+                      {
+                        renderOptions(getEnum('City'))
+                      }
+                    </Select>
+                  </Col>
+                </Row>
+                {/* 天数晚数 */}
+                <Row className={[styles.cell, 'clear'].join(' ')}>
+                  <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
+                    晚数
+                    </Col>
+                  <Col className={styles.cellInput} xs={24} sm={8} md={8} lg={8}>
+                    <InputNumber
+                      min={1}
+                      max={999}
+                      value={data['产品信息']['nights'] || 0}
+                      onChange={val => changeProInfo('nights', val)}
+                      style={{ width: '77%' }}
+                    />
+                    &nbsp; 晚
+                    </Col>
+                  <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
+                    天数
+                    </Col>
+                  <Col className={styles.cellInput} xs={24} sm={8} md={8} lg={8}>
+                    <InputNumber
+                      min={1}
+                      max={999}
+                      value={data['产品信息']['days'] || 0}
+                      onChange={val => changeProInfo('days', val)}
+                      style={{ width: '77%' }}
+                    />
+                    &nbsp; 天
+                    </Col>
+                </Row>
+                <Row className={[styles.cell, 'clear'].join(' ')}>
+                  <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
+                    自费情况
+                    </Col>
+                  <Col className={styles.cellInput} xs={24} sm={8} md={8} lg={8}>
+                    <Select
+                      showSearch
+                      onChange={val => changeProInfo('own_expense', val)}
+                      className={styles.cellSelect1}
+                      optionFilterProp='children'
+                      value={data['产品信息']['own_expense']}
+                    >
+                      {
+                        renderOptions(getEnum('HaveNo'))
+                      }
+                    </Select>
+                  </Col>
+                  <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
+                    购物情况
+                    </Col>
+                  <Col className={styles.cellInput} xs={24} sm={8} md={8} lg={8}>
+                    <Select
+                      showSearch
+                      onChange={val => changeProInfo('shopping', val)}
+                      className={styles.cellSelect1}
+                      optionFilterProp='children'
+                      value={data['产品信息']['shopping']}
+                    >
+                      {
+                        renderOptions(getEnum('HaveNo'))
+                      }
+                    </Select>
+                  </Col>
+                </Row>
+                {/* 游玩主题 */}
+                <Row className={[styles.cell, 'clear'].join(' ')}>
+                  <Col className={styles.cellLabel} xs={24} sm={3} md={3} lg={3}>
+                    特色标签
+                    </Col>
+                  <Col className={styles.cellInput} xs={24} sm={20} md={20} lg={20}>
+                    {
+                      renderProductTheme()
+                    }
+                  </Col>
+                </Row>
+              </Col>
+
+            </Row>
+
+          </div>
+
+          {/* 自建标签 */}
+          <Col className={styles.addMod}>
+            <Col className={styles.title}>
+              <Col className={styles.zjtitleL}>
+                <Col className={styles.zjtext} style={{ margin: '2px' }}>自建标签</Col>
+                <Col className={styles.zjbackgroundtext}>(如果上述热卖标签没有适用您产品的,可在这里自建标签)</Col>
+                <Col className={styles.zjbtns}>
+                  <Button onClick={addTheme} style={{ padding: '0px 5px', height: '27px', fontSize: '12px' }}>自建标签</Button>
+                </Col>
+              </Col>
+            </Col>
+            <Col className={styles.content1}>
+              {
+                renderZjTheme()
+              }
+            </Col>
+          </Col>
+
+          {/* 产品特色 */}
+          <Col className={styles.addMod}>
+            <Col className={styles.title}>
+              <Col className={styles.titleL}>
+                <Col className={styles.text}>产品特色</Col>
+                <Col className={styles.backgroundtext}>(请注意文字排版的整齐美观)</Col>
+              </Col>
+            </Col>
+            <Col className={styles.content2}>
+              <Input.TextArea
+                className={styles.product}
+                placeholder="请输入产品特色"
+                autoSize={{ minRows: 4, maxRows: 8 }}
+                onChange={e => changeProInfo('feature', e.target.value)}
+                value={data['产品信息']['feature']}
+              />
+            </Col>
+          </Col>
+
+          {/* 产品行程 */}
+          <Col className={styles.addMod}>
+            <Col className={styles.title}>
+              <Col className={styles.titleL}>
+                <Col className={styles.text}>产品行程</Col>
+                <Col className={styles.backgroundtext}>(直接将您的行程文件上传,文件要小于8M,请注意去掉您自己公司的LOGO,以便门市下载后转发给客户)</Col>
+              </Col>
+            </Col>
+            <Col className={styles.content}>
+              <Col className={styles.scheduling}>
+                <Col className={styles.schedulingT}>
+                  <Col className={styles.schedulingTBtn}>
+                    <Button shape="circle" icon={<DeleteOutlined />} onClick={() => deletePdf()} />
+                  </Col>
+                </Col>
+                <Col className={styles.schedulingContent}>
+                  <Col className={styles.backgroundBtn} span={2} onClick={() => minusPage()}>
+                    <Button
+                      shape="circle"
+                      icon={<LeftOutlined />}
+                      disabled={pdfPageNum <= 1}
+                    />
+                  </Col>
+                  <Upload
+                    name="avatar"
+                    listType="picture-card"
+                    className="avatar-uploader"
+                    showUploadList={false}
+                    onChange={handleChange}
+                    customRequest={({ file }) => handlePdfUpload({ file })}
+                    beforeUpload={beforeUpload}
+                  >
+                    {data.pdfUrl ? renderPdf() : uploadButton}
+                  </Upload>
+                  <Col span={2} className={styles.backgroundBtn} onClick={() => addPage()}>
+                    <Button shape="circle" icon={<RightOutlined />} />
+                  </Col>
+                </Col>
+              </Col>
+              <Col className={styles.bottom}>
+                <Col className={styles.bottomContent}>
+                  {
+                    renderButtonOther(btns)
+                  }
+                </Col>
+              </Col>
+            </Col>
+
+          </Col>
+        </Col>
+      </Row>
+      <Modal
+        title='新增自建主题'
+        visible={themeModalOpen}
+        okButtonProps={{ className: 'hide' }}
+        cancelButtonProps={{ className: 'hide' }}
+        onCancel={themeModalCancel}
+        footer={null}
+        destroyOnClose
+      >
+        <ThemeContent onOk={themeModalOk} onCancel={themeModalCancel} />
+      </Modal>
+    </PageHeaderWrapper>
+  );
 }
 
 export default Page;

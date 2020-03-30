@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { Col, Input, message, Upload, Icon } from 'antd';
+import { PictureFilled } from '@ant-design/icons';
+import { Col, Input, message, Upload } from 'antd';
 import BraftEditor, { EditorState, ControlType, ExtendControlType } from 'braft-editor'
 import { ContentUtils } from 'braft-utils'
 import 'braft-editor/dist/index.css'
@@ -27,10 +28,10 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
         'body_html': '',
         'xml': ''
     };
-    const { viewConfig } = route;
+    const { authority,viewConfig } = route;
     const { state: ref } = location;
 
-    const { data, setData, load, onCancel, cfg } = useActionPage<typeof initData>(viewConfig, initData, ref);
+    const { data, setData, load, onCancel, cfg } = useActionPage<typeof initData>(authority,viewConfig, initData, ref);
 
     const onOk = () => {
         if (cfg.submit) {
@@ -39,8 +40,8 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                 body: data.body,
                 body_html: data.body_html
             }
-            if (ref && ref.id) {
-                post_data['id'] = ref.id
+            if (ref && ref['id']) {
+                post_data['id'] = ref['id']
             }
 
             submit(cfg.submit.url, post_data, cfg.submit.data).then((r: any) => {
@@ -99,7 +100,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                     customRequest={uploadHandler}
                 >
                     <button type="button" className="control-item button upload-button" data-title="插入图片">
-                        <Icon type="picture" theme="filled" />
+                        <PictureFilled />
                     </button>
                 </Upload>
             )

@@ -10,7 +10,6 @@ export default (btns: IModBtn[]) => (
     {btns.map(btn => (
       <div key={btn.authority} className="dib">
         <Button
-          icon={btn.icon}
           type={btn.type}
           size={btn.size}
           onClick={() => {
