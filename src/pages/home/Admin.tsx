@@ -229,7 +229,7 @@ const page:React.FC<IModPageProps> = ({ route }) => {
                   <Divider style={{ margin: 0 }} />
                   <Col className={`${styles.content} ${styles.contentc}`}>
                     {data.msg_flow.map((item, index) => (
-                      <Row>
+                      <Row key={index}>
                         <Col span={8} className={styles['times']}>
                           {item.create_at}
                         </Col>
@@ -258,7 +258,7 @@ const page:React.FC<IModPageProps> = ({ route }) => {
                   <Divider style={{ margin: 0 }} />
                   <Col className={`${styles.content} ${styles.contentc}`}>
                     {data.announce.map((item, index) => (
-                      <Row>
+                      <Row key={index}>
                         <Col span={8} className={styles['times']}>
                           {item.create_at}
                         </Col>
@@ -333,7 +333,7 @@ const page:React.FC<IModPageProps> = ({ route }) => {
                   <Divider style={{ margin: 0 }} />
                   <Col className={`${styles.content} ${styles.contentc}`}>
                     {data.msg.map((item, index) => (
-                      <Row>
+                      <Row key={index}>
                         <Col span={8} className={styles['times']}>
                           {item.create_at}
                         </Col>
