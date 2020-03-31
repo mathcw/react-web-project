@@ -68,7 +68,7 @@ const list:React.FC<IModPageProps> = ({ route }) => {
         >
         <div className={styles.ScrollHight}>
             {data.map((item) => (
-                <React.Fragment>
+                <React.Fragment key={item['id']}>
                     <Row className={styles.container}>
                         <Col span={3} className={styles.left}>
                             <div className={styles.headerIcon}>

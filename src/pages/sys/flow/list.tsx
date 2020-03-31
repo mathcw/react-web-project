@@ -149,7 +149,7 @@ const list: React.FC<IModPageProps> = ({ route }) => {
                         data={item}
                         btns={getRowBtnArray(item, rowBtns)}
                         load={load}
-                        key={item["id"]}
+                        key={item["schema_name"]}
                     />
                 ))}
             </div>
