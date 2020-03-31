@@ -3,6 +3,7 @@ import {useState} from 'react';
 import { getModConfig, btnClickEvent, getModHeaderButton,getModRowButton, getModDropDownSearch, getModTextSearch } from './utils';
 import { read } from './req';
 import { IModBtn } from '@/viewconfig/ModConfig';
+import { log } from './core';
 
 export function useListPage(authority:string,viewConfig:string) {
 
@@ -18,15 +19,21 @@ export function useListPage(authority:string,viewConfig:string) {
         pageSizeOptions = [...cfg.pageSizeOptions];
     }
 
-    const load = () => {
+    const load = async () => {
         if(cfg.read){
-            read(cfg.read.url, { mod: authority,
-                ...query,
-                start: pageSize * (current - 1),
-                limit: pageSize }).then(r => {
-                setData([...r.data]);
-                setTotal(r.total);
-            })
+            try {
+                const r = await read(cfg.read.url, { mod: authority,
+                    ...query,
+                    start: pageSize * (current - 1),
+                    limit: pageSize });
+                if(r.data){
+                    setData([...r.data]);
+                    setTotal(r.total);
+                }
+            } catch (error) {
+                // log(error);
+                // do
+            }
         }
     }
     
