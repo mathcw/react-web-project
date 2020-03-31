@@ -4,6 +4,7 @@ import { Subscription, Effect } from 'dva';
 import { NoticeIconData } from '@/components/NoticeIcon';
 import { queryNotices } from '@/services/user';
 import { ConnectState } from './connect.d';
+import { Modal } from 'antd';
 
 export interface NoticeItem extends NoticeIconData {
   id: string;
@@ -131,6 +132,7 @@ const GlobalModel: GlobalModelType = {
         if (typeof window.ga !== 'undefined') {
           window.ga('send', 'pageview', pathname + search);
         }
+        Modal.destroyAll();
       });
     },
   },

@@ -5,7 +5,6 @@ const routes: Array<IRouteValue> = [
     routes: [
       {
         name: "办公中心",
-        icon: "sitemap",
         path: "/office",
         routes: [
           {
@@ -23,6 +22,13 @@ const routes: Array<IRouteValue> = [
             component: "./office/announcement/list"
           },
           {
+            path:"/office/announcement/see",
+            name:"查看公告",
+            viewConfig:"查看公告公告通知",
+            hideInMenu:true,
+            component:"./org/announce/see",
+          },
+          {
             path: "/office/msgflow/list",
             name: "审批任务",
             authority: "审批任务",
@@ -33,7 +39,6 @@ const routes: Array<IRouteValue> = [
       },
       {
         name: "行政管理",
-        icon: "sitemap",
         path: "/org",
         routes: [
           {
@@ -107,7 +112,6 @@ const routes: Array<IRouteValue> = [
           {
             path:"/org/announce/see",
             name:"查看公告",
-            authority:"查看公告",
             viewConfig:"查看公告",
             hideInMenu:true,
             component:"./org/announce/see",
@@ -140,7 +144,6 @@ const routes: Array<IRouteValue> = [
       },
       {
         name: "商家管理",
-        icon: "sitemap",
         path: "/supplierManagement",
         routes: [
           {
@@ -151,7 +154,15 @@ const routes: Array<IRouteValue> = [
 
             component: "./supplierManagement/tbCompany/list"
           },
-          // 提报相关action to do
+          {
+            path: "/supplierManagement/company/perfect",
+            name: "完善供应商",
+            authority: "完善吸纳供应商",
+            viewConfig:"完善吸纳供应商",
+            hideInMenu: true,
+            component: "./supplierManagement/company/edit"
+          },
+
           {
             path: "/supplierManagement/xnCompany/list",
             name: "吸纳审核",
@@ -159,7 +170,16 @@ const routes: Array<IRouteValue> = [
             viewConfig: "吸纳供应商管理",
             component: "./supplierManagement/xnCompany/list"
           },
-          // 吸纳相关action to do
+          {
+            path: "/supplierManagement/xnCompany/approve",
+            name: "吸纳供应商审批",
+            authority: "审批吸纳供应商",
+            viewConfig:"审批吸纳供应商",
+            hideInMenu:true,
+            component: "./supplierManagement/xnCompany/approve"
+          },
+          
+
           {
             path: "/supplierManagement/company/list",
             name: "公司管理",
@@ -168,6 +188,39 @@ const routes: Array<IRouteValue> = [
             component: "./supplierManagement/company/list"
           },
           // 供应商公司管理相关 action to do
+          {
+            path: "/supplierManagement/company/add",
+            name: "新增供应商",
+            authority: "新增供应商公司",
+            viewConfig:"新增供应商公司",
+            hideInMenu: true,
+            component: "./supplierManagement/company/edit"
+          },
+          {
+            path: "/supplierManagement/company/modify",
+            name: "修改供应商",
+            authority: "修改供应商公司",
+            viewConfig:"修改供应商公司",
+            hideInMenu: true,
+            component: "./supplierManagement/company/edit"
+          },
+          {
+            path: "/supplierManagement/company/maintenance",
+            name: "维护供应商",
+            authority: "维护供应商公司",
+            viewConfig:"维护供应商公司",
+            hideInMenu: true,
+            component: "./supplierManagement/company/edit"
+          },
+          {
+            path: "/supplierManagement/Company/approve",
+            name: "供应商审批",
+            authority: "审批供应商公司",
+            viewConfig:"审批供应商公司",
+            hideInMenu:true,
+            component: "./supplierManagement/xnCompany/approve"
+          },
+          
           {
             path: "/supplierManagement/department/list",
             name: "部门管理",
@@ -191,7 +244,31 @@ const routes: Array<IRouteValue> = [
             viewConfig: "供应商权限管理",
             component: "./supplierManagement/auth/list"
           },
-          // 供应商权限相关 action to do
+          {
+            path: "/supplierManagement/auth/add",
+            name: "新增供应商权限",
+            authority: "新增供应商权限",
+            viewConfig:"新增供应商权限",
+            hideInMenu: true,
+            component: "./supplierManagement/auth/edit"
+          },
+          {
+            path: "/supplierManagement/auth/edit",
+            name: "编辑供应商权限",
+            authority: "编辑供应商权限",
+            viewConfig:"编辑供应商权限",
+            hideInMenu: true,
+            component: "./supplierManagement/auth/edit"
+          },
+          {
+            path: "/supplierManagement/auth/copy",
+            name: "复制供应商权限",
+            authority: "复制供应商权限",
+            viewConfig:"复制供应商权限",
+            hideInMenu: true,
+            component: "./supplierManagement/auth/edit"
+          },
+
           {
             path: "/supplierManagement/bindCompany/list",
             name: "绑定管理",
@@ -206,12 +283,19 @@ const routes: Array<IRouteValue> = [
             authority:"供应商头像审批",
             viewConfig:"供应商头像审批",
             component:"./supplierManagement/profilePhoto/list"
-          }
+          },
+          {
+            path: "/SupplierManagement/profilePhoto/approve",
+            name: "供应商头像",
+            authority: "审批供应商头像",
+            viewConfig:"审批供应商头像",
+            hideInMenu: true,
+            component: "./SupplierManagement/profilePhoto/approve"
+          },
         ]
       },
       {
         name: "产品管理",
-        icon: "sitemap",
         path: "/productManage",
         routes: [
           {
@@ -248,7 +332,6 @@ const routes: Array<IRouteValue> = [
       },
       {
         name: "业务配置",
-        icon: "sitemap",
         path: "/business",
         routes: [
           {
@@ -330,7 +413,6 @@ const routes: Array<IRouteValue> = [
       },
       {
         name: "系统设置",
-        icon: "sitemap",
         path: "/sys",
         routes: [
           {
@@ -339,6 +421,13 @@ const routes: Array<IRouteValue> = [
             authority: "业务流程",
             viewConfig: "业务流程",
             component: "./sys/flow/list"
+          },
+          {
+            path:"/sys/flow/edit",
+            name:"修改流程",
+            viewConfig:"修改流程",
+            hideInMenu:true,
+            component:"./sys/flow/edit",
           },
           {
             path: "/sys/api/list",

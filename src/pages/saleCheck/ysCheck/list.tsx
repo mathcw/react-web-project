@@ -19,7 +19,7 @@ import GroupTour from './components/GroupTour';
 import CheckModal from './components/CheckModal';
 import NzCheckModal from './components/CheckModal/nz';
 import { Modal } from 'antd';
-
+import styles from './list.less';
 
 const check =  (reload: () => void) => (ref: any) => {
     get('/Sale/Order/read_for_dz', { id: ref.id }).then((r) => {
@@ -117,7 +117,7 @@ const OrderItem:React.FC<OrderItemProps> = ({data,btns = [],load})=>{
 } 
 
 const list: React.FC<IModPageProps> = ({ route }) => {
-    const { viewConfig } = route;
+    const { authority,viewConfig } = route;
     const {
         setCurrent,
         setPageSize,
@@ -129,7 +129,7 @@ const list: React.FC<IModPageProps> = ({ route }) => {
         query,
         setQuery,
         data
-    } = useListPage(viewConfig);
+    } = useListPage(authority,viewConfig);
 
     useEffect(() => {
         load();
@@ -170,14 +170,16 @@ const list: React.FC<IModPageProps> = ({ route }) => {
                 textSearch
             )}
         >
-            {data.map((item: any) => (
-                <OrderItem
-                    data={item}
-                    btns={getRowBtnArray(item, rowBtns)}
-                    load={load}
-                    key={item["id"]}
-                />
-            ))}
+            <div className={styles.ScrollHight}>
+                {data.map((item: any) => (
+                    <OrderItem
+                        data={item}
+                        btns={getRowBtnArray(item, rowBtns)}
+                        load={load}
+                        key={item["id"]}
+                    />
+                ))}
+            </div>
         </PageHeaderWrapper>
     )
 };

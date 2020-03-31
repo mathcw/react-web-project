@@ -9,6 +9,7 @@ import GroupTour from './components/GroupTour';
 import GroupTourEdit from './components/GroupTour/editModal';
 import { Modal } from 'antd';
 import { get, submit } from '@/utils/req';
+import styles from './list.less';
 
 const editPackageTourGroup = (reload:()=>void,ref:any)=>{
     get('/Group/PackageTourGroup/read_for_edit', { main_group_id: ref.main_group_id }).then((r) => {
@@ -68,7 +69,7 @@ const GroupItem: React.FC<GroupItemProps> = ({ data, btns = [],orderbtns=[], loa
 } 
 
 const list:React.FC<IModPageProps> = ({route})=>{
-    const { viewConfig } = route;
+    const { authority,viewConfig } = route;
     const {
         setCurrent,
         setPageSize,
@@ -80,7 +81,7 @@ const list:React.FC<IModPageProps> = ({route})=>{
         query,
         setQuery,
         data
-    } = useListPage(viewConfig);
+    } = useListPage(authority,viewConfig);
 
     useEffect(() => {
         load();
@@ -120,15 +121,17 @@ const list:React.FC<IModPageProps> = ({route})=>{
                 textSearch
             )}
         >
-            {data.map((item: any) => (
-                <GroupItem
-                    data={item}
-                    btns={getRowBtnArray(item, rowBtns)}
-                    orderbtns={[]}
-                    load={load}
-                    key={item["id"]}
-                />
-            ))}
+            <div className={styles.ScrollHight}>
+                {data.map((item: any) => (
+                    <GroupItem
+                        data={item}
+                        btns={getRowBtnArray(item, rowBtns)}
+                        orderbtns={[]}
+                        load={load}
+                        key={item["id"]}
+                    />
+                ))}
+            </div>
         </PageHeaderWrapper>)
     
 }

@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import moment from 'moment';
-import { Form, DatePicker, TimePicker, Input, Col, Button } from 'antd';
-import { FormItemProps } from 'antd/es/form';
+import { DatePicker, TimePicker, Input, Col, Button, Form, Row } from 'antd';
 
 import styles from './index.less';
 
@@ -11,55 +10,26 @@ interface IModal {
     onCancel: () => void
 }
 
-interface ICfg {
-    text: string; //label 名
-    editable?: boolean; // 可否编辑
-    required?: boolean; // 是否必填
-}
-
-const initFormItemMap = (list: { [field: string]: ICfg }) => {
-    const rst: { [field: string]: FormItemProps } = {};
-    Object.keys(list).forEach(field => {
-        rst[field] = {
-            label: (
-                <label className={list[field].required ? "ant-form-item-required" : ""}>
-                    {list[field].text}
-                </label>
-            )
-        };
-    });
-    return rst;
-};
-
-const init = (info:any) =>{
+const init = (info: any) => {
     const data = {
         占位时限日志: info['占位时限日志'] ? [...info['占位时限日志']] : [],
-        end_date: info.end_date ?moment(info.end_date).format('YYYY-MM-DD'): moment(new Date()).add(1, 'hour').format('YYYY-MM-DD'),
-        hour: info.hour ?info.hour: moment(new Date()).format('HH:mm'),
-        timer_end_date: info.timer_end_date || moment(new Date()).format('YYYY-MM-DD HH:mm'),
+        end_date: !!info.end_date ? moment(info.end_date, 'YYYY-MM-DD') : moment(new Date(),'YYYY-MM-DD'),
+        hour: !!info.hour&&info.hour!=='0' ? moment(info.hour, 'HH:mm') : moment(new Date(), 'HH:mm'),
+        timer_end_date: !! info.timer_end_date ? moment(info.timer_end_date).format('YYYY-MM-DD HH:mm') : moment(new Date()).format('YYYY-MM-DD HH:mm'),
     };
-    data.timer_end_date = data.end_date + ' ' + data.hour;
+    data.timer_end_date = moment(data.end_date).format('YYYY-MM-DD ') + ' ' + moment(data.hour).format('HH:mm');
     return data;
 }
 
 const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
+    const data = init(info);
+    const formData = {
+        end_date:data['end_date'],
+        hour:data['hour'],
+        timer_end_date:data['timer_end_date']
+    }
 
-    const [data, setData] = useState(init(info));
-
-    const [formItemMap, setFormItemMap] = useState(initFormItemMap(
-        {
-            end_date: {
-                text: '时限日期',
-                editable: true,
-                required: true,
-            },
-            hour: {
-                text: '时限时间',
-                editable: true,
-                required: true,
-            },
-        }
-    ));
+    const [form] = Form.useForm();
 
     const cancel = () => {
         if (onCancel) {
@@ -69,96 +39,112 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel }) => {
 
     const ok = () => {
         if (onOk) {
-            onOk(data)
+            form.validateFields().then(
+                (formValues:any)=>{
+                    onOk({
+                        end_date: formValues['end_date'].format('YYYY-MM-DD'),
+                        hour:formValues['hour'].format('HH:mm'),
+                        timer_end_date:formValues['timer_end_date']
+                    })
+                },()=>{
+
+                }
+            );
         }
     }
 
     const log = () => {
         if (data['占位时限日志'] && data['占位时限日志'].length > 0) {
             return (
-                <Col style={{ margin: '12px 0 24px 0' }} >
+                <>
+                <Row style={{ margin: '12px 0 5px 0' }} >
                     <Col span={24} className={styles.title}>时限日志:</Col>
-                    <Col>
-                        <Col span={10}>
-                            提交时间
+                </Row>
+                <Row>
+                    <Col span={10}>
+                        提交时间
                     </Col>
-                        <Col span={12}>
-                            到期时间
+                    <Col span={12}>
+                        到期时间
                     </Col>
-                    </Col>
-                    {
-                        data['占位时限日志'].map((item, index) => (
-                            <Col key={`${item.id}index${index}`}>
-                                <Col span={10}>
-                                    {item.create_at}
-                                </Col>
-                                <Col span={12}>
-                                    {item.timer_end_date}
-                                </Col>
+                </Row>
+                {
+                    data['占位时限日志'].map((item, index) => (
+                        <Row key={`${item.id}index${index}`}>
+                            <Col span={10}>
+                                {item.create_at}
                             </Col>
-                        ))
-                    }
-
+                            <Col span={12}>
+                                {item.timer_end_date}
+                            </Col>
+                        </Row>
+                    ))
+                }
+                <Row>
                     <Col span={24} className={styles.change} >变更时限:</Col>
-                </Col>
+                </Row>
+                </>
             );
         }
         return (
-            <Col style={{ margin: '0' }} >
-            </Col>
+            <Row style={{ margin: '0' }} >
+            </Row>
         );
     }
 
-    const onChange = (field: string, val: moment.Moment|null,format:string) => {
-        
-        const rst = { ...data };
+    const onChange = (field: string, val: moment.Moment | null, format: string) => {
+        const formValues = form.getFieldsValue();
         if(val){
-            rst[field] = val.format(format);
+            formValues[field] = val;
+            form.setFieldsValue(
+                {timer_end_date:formValues['end_date'].format('YYYY-MM-DD') + ' ' + formValues['hour'].format('HH:mm')}
+            )
         }else{
-            rst[field] = '';
+            form.setFieldsValue(
+                {timer_end_date:''}
+            )
         }
-        rst.timer_end_date = rst.end_date + ' ' + rst.hour;
-        setData(rst);
     }
 
     return (
         <>
             {log()}
-            <Form.Item
-                style={{ margin: "5px 0" }}
-                label='时限日期'
-                key='end_date'
-                {...formItemMap['end_date']}
-            >
-                <DatePicker
-                    style={{ width: "100%" }}
-                    format="YYYY-MM-DD"
-                    value={ moment(data['end_date'], 'YYYY-MM-DD')}
-                    getCalendarContainer={(node)=>{return node as HTMLElement}}
-                    onChange={val => onChange('end_date', val,'YYYY-MM-DD')}
-                />
-            </Form.Item>
-            <Form.Item
-                style={{ margin: "5px 0" }}
-                label='时限时间'
-                key='hour'
-                {...formItemMap['end_date']}
-            >
-                <TimePicker
-                    style={{ width: "100%" }}
-                    format="HH:mm"
-                    value={moment(data['hour'], 'HH:mm') }
-                    getPopupContainer={(node)=>{return node as HTMLElement}}
-                    onChange={val => onChange('hour', val,'HH:mm')}
-                />
-            </Form.Item>
-            <Form.Item
-                style={{ margin: "5px 0" }}
-                label='到期时间'
-                key='timer_end_date'
-            >
-                <Input value={data.timer_end_date} readOnly />
-            </Form.Item>
+            <Form layout="vertical" form={form} initialValues={formData}>
+                <Form.Item
+                    style={{ margin: "10px 0" }}
+                    label='时限日期'
+                    name='end_date'
+                    rules={[{ required: true ,message: '时限日期是必填的'}]}
+                >
+                    <DatePicker
+                        style={{ width: "100%" }}
+                        format="YYYY-MM-DD"
+                        getPopupContainer={(node) => { return node as HTMLElement }}
+                        onChange={val => onChange('end_date', val, 'YYYY-MM-DD')}
+                    />
+                </Form.Item>
+                <Form.Item
+                    style={{ margin: "10px 0" }}
+                    label='时限时间'
+                    name='hour'
+                    rules={[{ required: true,message: '时限时间是必填的' }]}
+                >
+                    <TimePicker
+                        style={{ width: "100%" }}
+                        format="HH:mm"
+                        getPopupContainer={(node) => { return node as HTMLElement }}
+                        onChange={val => onChange('hour', val, 'HH:mm')}
+                    />
+                </Form.Item>
+                <Form.Item
+                    style={{ margin: "10px 0" }}
+                    label='到期时间'
+                    key='timer_end_date'
+                    name='timer_end_date'
+                >
+                    <Input readOnly />
+                </Form.Item>
+            </Form>
 
             <Col className={styles.footerBtns}>
                 <Button

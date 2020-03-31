@@ -19,6 +19,7 @@ import { ColumnProps } from "antd/es/table";
 import { colDisplay, getModConfig } from "@/utils/utils";
 import ModalForm from "@/components/ModalForm";
 import { submit, read } from "@/utils/req";
+import styles from './list.less';
 
 // 新增邮轮航线
 const add = (reload: () => void) => () => {
@@ -52,7 +53,7 @@ const edit = (reload: () => void) => (ref: any) => {
     name: { text: "航线名称", required: true }
   };
   const onSubmit = (data: object | undefined) => {
-    submit("/business/CruiseLine/submit", data).then(r => {
+    submit("/business/CruiseLine/submit", {id:ref.id,...data}).then(r => {
       message.success(r.message);
       modalRef.destroy();
       reload();
@@ -75,14 +76,6 @@ const edit = (reload: () => void) => (ref: any) => {
     ),
     okButtonProps: { className: "hide" },
     cancelButtonProps: { className: "hide" }
-  });
-};
-
-// 启停邮轮航线
-const toggle = (reload: () => void) => (ref: any) => {
-  submit("/business/CruiseLine/toggle/state", { id:ref.id,state:ref.state }).then(r => {
-    message.success(r.message);
-    reload();
   });
 };
 
@@ -137,7 +130,7 @@ const modalContent = (data: any[]) => {
 };
 
 const list: React.FC<IModPageProps> = ({ route }) => {
-  const { viewConfig } = route;
+  const { authority,viewConfig } = route;
   const {
     setCurrent,
     setPageSize,
@@ -149,12 +142,11 @@ const list: React.FC<IModPageProps> = ({ route }) => {
     query,
     setQuery,
     data
-  } = useListPage(viewConfig);
+  } = useListPage(authority,viewConfig);
 
   const actionMap = {
     新增邮轮航线: add(load),
     修改邮轮航线: edit(load),
-    启停邮轮航线: toggle(load),
     邮轮航线日志: cruiselog(load),
   };
 
@@ -222,14 +214,16 @@ const list: React.FC<IModPageProps> = ({ route }) => {
         textSearch
       )}
     >
-      <Grid
-        columns={getCols(cfg.list||{})}
-        dataSource={data}
-        rowKey="id"
-        pagination={false}
-        className={'ListTableStyle'}
-        specCol={opCol}
-      />
+      <div className={styles.ScrollHight}>
+        <Grid
+          columns={getCols(cfg.list||{})}
+          dataSource={data}
+          rowKey="id"
+          pagination={false}
+          className={'ListTableStyle'}
+          specCol={opCol}
+        />
+      </div>
     </PageHeaderWrapper>
   );
 };

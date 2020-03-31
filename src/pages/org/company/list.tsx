@@ -18,6 +18,7 @@ import { submit, read } from "@/utils/req";
 import Grid, { getCols, actionColWidth, renderRowBtns } from '@/components/Table/Grid';
 import ActionModal from "@/components/Table/ActionModal";
 import { ColumnProps } from "antd/es/table";
+import styles from './list.less';
 
 // 新增公司
 const add = (reload: () => void) => () => {
@@ -51,7 +52,7 @@ const edit = (reload: () => void) => (ref: any) => {
     name: { text: "公司名称", rq: true }
   };
   const onSubmit = (data: object | undefined) => {
-    submit("/org/Company/submit", data).then(r => {
+    submit("/org/Company/submit", {id:ref.id,...data}).then(r => {
       message.success(r.message);
       modalRef.destroy();
       reload();
@@ -88,7 +89,7 @@ const setLoader = (reload: () => void) => (ref: any) => {
     leader_ids: { text: "领导", multi: true, type: "EmpAccount" }
   };
   const onSubmit = (data: object | undefined) => {
-    submit("/org/Company/set_leader", data).then(r => {
+    submit("/org/Company/set_leader", {id:ref.id,...data}).then(r => {
       message.success(r.message);
       modalRef.destroy();
       reload();
@@ -97,6 +98,11 @@ const setLoader = (reload: () => void) => (ref: any) => {
   const onCancel = () => {
     modalRef.destroy();
   };
+  let formData = { ...ref };
+  if (ref.leader_ids) {
+    const leaders = JSON.parse(ref.leader_ids);
+    formData = { ...formData, leader_ids: leaders };
+  }
   modalRef.update({
     title: "设置公司领导",
     // eslint-disable-next-line max-len
@@ -106,7 +112,7 @@ const setLoader = (reload: () => void) => (ref: any) => {
         list={list}
         onSubmit={onSubmit}
         onCancel={onCancel}
-        data={{ ...ref }}
+        data={{ ...formData }}
       />
     ),
     okButtonProps: { className: "hide" },
@@ -170,7 +176,7 @@ const companyLog = (reload: () => void) => (ref: any) => {
 };
 
 const list: React.FC<IModPageProps> = ({ route }) => {
-  const { viewConfig } = route;
+  const { authority,viewConfig } = route;
   const {
     setCurrent,
     setPageSize,
@@ -182,7 +188,7 @@ const list: React.FC<IModPageProps> = ({ route }) => {
     query,
     setQuery,
     data
-  } = useListPage(viewConfig);
+  } = useListPage(authority,viewConfig);
 
   const actionMap = {
     新增公司: add(load),
@@ -256,14 +262,16 @@ const list: React.FC<IModPageProps> = ({ route }) => {
         textSearch
       )}
     >
-      <Grid
-        columns={getCols(cfg.list||{})}
-        dataSource={data}
-        rowKey="id"
-        pagination={false}
-        className={'ListTableStyle'}
-        specCol={opCol}
-      />
+      <div className={styles.ScrollHight}>
+        <Grid
+          columns={getCols(cfg.list||{})}
+          dataSource={data}
+          rowKey="id"
+          pagination={false}
+          className={'ListTableStyle'}
+          specCol={opCol}
+        />
+      </div>
     </PageHeaderWrapper>
   );
 };

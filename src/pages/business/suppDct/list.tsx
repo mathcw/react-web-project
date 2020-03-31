@@ -19,6 +19,7 @@ import { ColumnProps } from "antd/es/table";
 
 import { getModConfig } from "@/utils/utils";
 import { submit } from "@/utils/req";
+import styles from './list.less';
 
 // 新增协议
 const add = (reload: () => void) => () => {
@@ -46,16 +47,8 @@ const add = (reload: () => void) => () => {
   });
 };
 
-// 启停协议
-const toggle = (reload: () => void) => (ref: any) => {
-  submit("/business/SuppDct/toggle/state", { id:ref.id,state:ref.state }).then(r => {
-    message.success(r.message);
-    reload();
-  });
-};
-
 const list: React.FC<IModPageProps> = ({ route }) => {
-  const { viewConfig } = route;
+  const { authority,viewConfig } = route;
   const {
     setCurrent,
     setPageSize,
@@ -67,11 +60,10 @@ const list: React.FC<IModPageProps> = ({ route }) => {
     query,
     setQuery,
     data
-  } = useListPage(viewConfig);
+  } = useListPage(authority,viewConfig);
 
   const actionMap = {
     新增协议: add(load),
-    启停协议: toggle(load),
   };
 
   const { headerBtns, rowBtns } = useListPageBtn(viewConfig, actionMap);
@@ -138,14 +130,16 @@ const list: React.FC<IModPageProps> = ({ route }) => {
         textSearch
       )}
     >
-      <Grid
-        columns={getCols(cfg.list||{})}
-        dataSource={data}
-        rowKey="id"
-        pagination={false}
-        className={'ListTableStyle'}
-        specCol={opCol}
-      />
+      <div className={styles.ScrollHight}>
+        <Grid
+          columns={getCols(cfg.list||{})}
+          dataSource={data}
+          rowKey="id"
+          pagination={false}
+          className={'ListTableStyle'}
+          specCol={opCol}
+        />
+      </div>
     </PageHeaderWrapper>
   );
 };

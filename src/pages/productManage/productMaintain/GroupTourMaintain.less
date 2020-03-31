@@ -1,217 +1,289 @@
 // 新增 跟团游
 .picUpload {
-    width: 100%;
-    height: 100%;
-    height: 304px;
+  width: 100%;
+  height: 100%;
+  height: 304px;
+}
+.add {
+  width: 100%;
+  .breadcrumb {
+    height: 44px;
+    display: flex;
+    align-items: center;
   }
-  .add {
-    .breadcrumb {
+  .addMod {
+    margin-top: 10px;
+    
+    // 产品图片
+    .imgWrapper {
+      background: #fff;
+      height: 323px;
+      margin-top: 1px;
+      .imgBox {
+        width: 100%;
+        height: 100%;
+        /* padding-bottom: 75%; */
+        position: relative;
+        .backtext {
+          z-index: 1;
+          font-size: 13px;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+        .Carousel {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 100;
+          & div {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+
+    .title {
+      background: #fff;
       height: 44px;
       display: flex;
       align-items: center;
-    }
-    .addMod {
-      margin-top: 10px;
-      // 产品图片
-      .imgWrapper {
-        background: #fff;
-        height: 323px;
-        margin-top: 1px;
-        .imgBox {
-          width: 100%;
-          height: 100%;
-          /* padding-bottom: 75%; */
-          position: relative;
-          .backtext {
-            z-index: 1;
-            font-size: 13px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-          }
-          .Carousel {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 100;
-            & div {
-              width: 100%;
-              height: 100%;
-            }
-          }
-        }
-      }
-  
-      .title {
-        background: #fff;
-        height: 44px;
+      padding: 0 16px;
+      .titleL {
         display: flex;
-        align-items: center;
-        padding: 0 16px;
-        .titleL {
-          display: flex;
-          .text {
-            font-size: 16px;
-            font-weight: 600;
-            color: #2e3a4e;
-          }
-          .backgroundtext {
-            font-size: 12px;
-            margin: 5px 10px;
-          }
+        .text {
+          font-size: 16px;
+          font-weight: 600;
+          color: #2e3a4e;
+          flex: 0 0 auto;
         }
-        .titleR {
-          display: flex;
-          padding: 0px 16px;
-          .text {
-            font-size: 16px;
-            font-weight: 600;
-            color: #2e3a4e;
-          }
+        .backgroundtext {
+          font-size: 12px;
+          margin: 5px 10px;
         }
       }
-      .content1 {
-        background: #fff;
-        padding: 5px 16px;
-        margin-top: 1px;
-        height: 82px;
-        overflow: hidden;
-      }
-      .content2 {
-        background: #fff;
-        padding: 8px 16px;
-        margin-top: 1px;
-        overflow: hidden;
-      }
-      .content {
-        background: #fff;
+      .titleR {
+        display: flex;
         padding: 0px 16px;
-        margin-top: 1px;
-        .product {
-          border: 1px solid #fff;
+        .text {
+          font-size: 16px;
+          font-weight: 600;
+          color: #2e3a4e;
         }
-        .cell {
-          margin: 12px 0;
-          .cellLabel {
-            line-height: 32px;
-          }
-          .cellLabelcity {
-            width: 26%;
-            vertical-align: bottom;
-            margin-top: 7px;
-            margin-left: 3px;
-            font-size: 14px;
-          }
-          .cellInput {
-            line-height: 32px;
-            .cellSelect {
-              width: 30.333%;
-              margin-right: 10px;
-              // min-width: 160px;
-              // margin-right: 12px;
-            }
-            .cellSelect1 {
-              width: 77%;
-            }
-          }
-          .cellInput2 {
-            margin-top: 12px;
-            .cellSelect {
-              width: 33.333%;
-              // min-width: 160px;
-              // margin-right: 12px;
-            }
-          }
+      }
+      .zjtitleL {
+        display: flex;
+        flex: 0 0 auto;
+        .zjtext {
+          font-size: 16px;
+          font-weight: 600;
+          color: #2e3a4e;
         }
-        .flowAgree {
-          width: 80px;
-          background-color: aqua;
-        }
-        .flowReject {
-          width: 80px;
-          background-color: red;
+        .zjbackgroundtext {
+          font-size: 12px;
+          margin: 5px 10px;
         }
       }
     }
-  
-    // 产品行程
-    .scheduling {
-      padding: 12px 24px;
-      /* border: 1px solid #d9d9d9; */
-      border-radius: 4px;
+    .content1 {
+      background: #fff;
+      padding: 5px 16px;
+      margin-top: 1px;
+      overflow: hidden;
     }
-    .schedulingT {
-      border-bottom: 1px solid #d9d9d9;
-      padding: 8px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .content2 {
+      background: #fff;
+      padding: 8px 16px;
+      margin-top: 1px;
+      overflow: hidden;
     }
-    .schedulingTBtn > button {
-      margin: 0 8px;
-    }
-    .schedulingTPageNumInput {
-      margin: 0 8px;
-      width: 54px;
-    }
-  
-    .schedulingContent {
-      padding: 12px 0;
-      min-height: 400px;
-      display: flex;
-      :global {
-        .avatar-uploader {
-          display: flex;
-          width: 100%;
-          justify-content: center;
-          align-items: center;
+    .content {
+      background: #fff;
+      padding: 0px 16px;
+      margin-top: 1px;
+      .product {
+        border: 1px solid #fff;
+      }
+      .cell {
+        margin: 12px 0;
+        .cellLabel {
+          line-height: 32px;
         }
-        .ant-upload.ant-upload-select-picture-card {
-          // display: flex;
-          width: 100%;
-          min-height: 400px;
-          // height: 100%;
-          text-align: center;
-          vertical-align: top;
-          background-color: #fafafa;
-          border: 1px dashed #d9d9d9;
-          border-radius: 4px;
-          cursor: pointer;
-          transition: border-color 0.3s;
+        .cellLabelcity {
+          width: 26%;
+          vertical-align: bottom;
+          margin-top: 7px;
+          margin-left: 3px;
+          font-size: 14px;
         }
-        .ant-upload.ant-upload-select-picture-card:hover {
-          border-color: #1890ff;
+        .cellInput {
+          line-height: 32px;
+          .cellSelect {
+            width: 30.333%;
+            margin-right: 10px;
+            // min-width: 160px;
+            // margin-right: 12px;
+          }
+          .cellSelect1 {
+            width: 77%;
+          }
         }
-        .ant-upload.ant-upload-select-picture-card > .ant-upload {
-          display: flex;
-          width: 100%;
-          height: 100%;
-          padding: 8px;
-          justify-content: center;
-          align-items: center;
+        .cellInput2 {
+          margin-top: 12px;
+          .cellSelect {
+            width: 33.333%;
+            // min-width: 160px;
+            // margin-right: 12px;
+          }
         }
+      }
+      .flowAgree {
+        width: 80px;
+        background-color: aqua;
+      }
+      .flowReject {
+        width: 80px;
+        background-color: red;
       }
     }
   }
-  
-  .bottomContent {
-    right: 0%;
-    position: absolute;
-    button{
-      margin-right:8px;
-      border: 2px solid #5f6368;
+
+  // 产品行程
+  .scheduling {
+    padding: 12px 24px;
+    /* border: 1px solid #d9d9d9; */
+    border-radius: 4px;
+  }
+  .schedulingT {
+    border-bottom: 1px solid #d9d9d9;
+    padding: 8px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .schedulingTBtn > button {
+    margin: 0 8px;
+  }
+  .schedulingTPageNumInput {
+    margin: 0 8px;
+    width: 54px;
+  }
+
+  .schedulingContent {
+    padding: 12px 0;
+    min-height: 400px;
+    display: flex;
+    :global {
+      .avatar-uploader {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+      }
+      .ant-upload.ant-upload-select-picture-card {
+        // display: flex;
+        width: 100%;
+        min-height: 400px;
+        // height: 100%;
+        text-align: center;
+        vertical-align: top;
+        background-color: #fafafa;
+        border: 1px dashed #d9d9d9;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: border-color 0.3s;
+      }
+      .ant-upload.ant-upload-select-picture-card:hover {
+        border-color: #1890ff;
+      }
+      .ant-upload.ant-upload-select-picture-card > .ant-upload {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        padding: 8px;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
-  
-  .bottom {
-    height: 44px;
-    background: #fff;
+}
+
+.zjTheme{
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 1px 4px;
+  .placeholder{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    opacity: 0.4;
   }
-  
-  // 审批
-.approve{
+  .item{
+    position: relative;
+    display: flex;
+    flex: none;
+    box-sizing: border-box;
+    max-width: 100%;
+    height: 24px;
+    margin-top: 2px;
+    margin-right: 4px;
+    margin-bottom: 2px;
+    padding: 0 4px 0 8px;
+    line-height: 22px;
+    background: #f5f5f5;
+    border: 1px solid #f0f0f0;
+    border-radius: 2px;
+    cursor: default;
+    transition: font-size 0.3s, line-height 0.3s, height 0.3s;
+    .itemContent{
+      display: inline-block;
+      margin-right: 4px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      transform: translateY(-1px);
+    }
+    .remove{
+      color: inherit;
+      font-style: normal;
+      line-height: 0;
+      text-align: center;
+      text-transform: none;
+      vertical-align: -0.125em;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      color: rgba(0, 0, 0, 0.45);
+      font-weight: bold;
+      font-size: 12px;
+      line-height: inherit;
+      cursor: pointer;
+      display: inline-block;
+      font-size: 10px;
+    }
+  }
+}
+
+.bottomContent {
+  right: 0%;
+  position: absolute;
+  button{
+    margin-right:8px;
+    border: 2px solid #5f6368;
+  }
+}
+
+.bottom {
+  height: 44px;
   background: #fff;
 }

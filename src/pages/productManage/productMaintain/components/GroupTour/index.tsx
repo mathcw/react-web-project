@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Col, Modal, Steps, Icon, Tag, Button } from 'antd';
+import { Col, Modal, Steps, Tag, Button } from 'antd';
 
 import styles from './index.less';
 import { colDisplay, colorfun } from '@/utils/utils';
@@ -39,7 +39,20 @@ interface GroupTourProps {
 const GroupTour: React.FC<GroupTourProps> = ({ data,btns=[],load }) => {
 
     const showFlowInfo = (data: GroupTourProps['data']) => {
-        get('/comm/Flow/seeDetail', { flow_id: data.flow_id }).then((r) => {
+        if(data.flow_id==='0'){
+            Modal.info({
+                title: '审批记录',
+                content: (
+                  <div>
+                    <p>暂无审批记录</p>
+                  </div>
+                ),
+                onOk() {},
+                okText: '关闭',
+            });
+            return;
+        }
+        get('/comm/FlowList/seeDetail', { flow_id: data.flow_id }).then((r) => {
             if(r.data){
                 Modal.info({
                     title: '审批记录',

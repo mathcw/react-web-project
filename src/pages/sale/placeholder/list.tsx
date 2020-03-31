@@ -18,6 +18,7 @@ import GroupTour from './components/GroupTour';
 import Zw from './components/Zw';
 import { Modal } from 'antd';
 import { submit, get } from '@/utils/req';
+import styles from './list.less';
 
 const sx = (reload:()=>void) =>(ref:any)=>{
     get('/Sale/Order/read_set_sx', { id: ref.id }).then((r:any)=>{
@@ -35,16 +36,15 @@ const sx = (reload:()=>void) =>(ref:any)=>{
           modalRef.destroy();
         };
         modalRef.update({
-          title: "时限",
-          icon: null,
-          width:520,
-          className: 'modal-confirm-body',
-          content: <Zw info={r.data} onOk={onOk} onCancel={onCancel}/>,
-          okButtonProps: { className: "hide" },
-          cancelButtonProps: { className: "hide" }
+            title: "时限",
+            icon: null,
+            width:520,
+            className: 'modal-confirm-body',
+            content: <Zw info={r.data} onOk={onOk} onCancel={onCancel}/>,
+            okButtonProps: { className: "hide" },
+            cancelButtonProps: { className: "hide" }
         });
     })
-
 }
 
 const lw = (reload:()=>void)=>(ref:any)=>{
@@ -59,16 +59,16 @@ const lw = (reload:()=>void)=>(ref:any)=>{
         )
     };
     const onCancel = () => {
-      modalRef.destroy();
+        modalRef.destroy();
     };
     modalRef.update({
-      title: "留位",
-      icon: null,
-      width:520,
-      className: 'modal-confirm-body',
-      content: <Zw info={ref} onOk={onOk} onCancel={onCancel}/>,
-      okButtonProps: { className: "hide" },
-      cancelButtonProps: { className: "hide" }
+        title: "留位",
+        icon: null,
+        width:520,
+        className: 'modal-confirm-body',
+        content: <Zw info={ref} onOk={onOk} onCancel={onCancel}/>,
+        okButtonProps: { className: "hide" },
+        cancelButtonProps: { className: "hide" }
     });
 }
 
@@ -92,7 +92,7 @@ const OrderItem:React.FC<OrderItemProps> = ({data,btns = [],load})=>{
 } 
 
 const list: React.FC<IModPageProps> = ({ route }) => {
-    const { viewConfig } = route;
+    const { authority,viewConfig } = route;
     const {
         setCurrent,
         setPageSize,
@@ -104,7 +104,7 @@ const list: React.FC<IModPageProps> = ({ route }) => {
         query,
         setQuery,
         data
-    } = useListPage(viewConfig);
+    } = useListPage(authority,viewConfig);
 
     useEffect(() => {
         load();
@@ -145,14 +145,16 @@ const list: React.FC<IModPageProps> = ({ route }) => {
                 textSearch
             )}
         >
-            {data.map((item: any) => (
-                <OrderItem
-                    data={item}
-                    btns={getRowBtnArray(item, rowBtns)}
-                    load={load}
-                    key={item["id"]}
-                />
-            ))}
+            <div className={styles.ScrollHight}>
+                {data.map((item: any) => (
+                    <OrderItem
+                        data={item}
+                        btns={getRowBtnArray(item, rowBtns)}
+                        load={load}
+                        key={item["id"]}
+                    />
+                ))}
+            </div>
         </PageHeaderWrapper>
     )
 };

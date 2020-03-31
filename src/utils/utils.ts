@@ -81,10 +81,6 @@ export function getActionButton(key: string) {
   return {};
 }
 
-export function searchChange(cfg: any, field: any, data: any) {
-  return data;
-}
-
 export function getBtnClickEvent(
   key: string
 ): (ref?: object, rs?: (arg0: any) => void, rj?: (arg0: any) => void) => void {

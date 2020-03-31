@@ -10,11 +10,11 @@ import PageHeaderWrapper, {
     Extra,
     Content
 } from "@/components/PageHeaderWrapper";
-import { getRowBtnArray, colDisplay } from '@/utils/utils';
+import { getRowBtnArray } from '@/utils/utils';
 import { getEnum } from '@/utils/enum';
 
 import styles from './list.less';
-import { Col, Button } from 'antd';
+import { Col, Button, Row } from 'antd';
 
 const defaultPng = require('@/assets/role.png');
 
@@ -38,58 +38,60 @@ interface IAuthProps {
 
 const Auth: React.FC<IAuthProps> = ({ data, btns, load }) => {
     return (
-        <Col className={styles.container}>
-            <Col span={4} className={styles.left}>
-                <img src={defaultPng} className={styles.img} alt="图标" />
-            </Col>
-            <Col span={12} className={styles.middle}>
-                <Col span={24} className={styles.top}>
-                    <span className={styles.lable}>{data.name}</span>
-                </Col>
-                <Col span={8} className={styles.centerL}>
-                    <div>
-                        <span className={styles.lable}>适用公司：</span>{' '}
-                        <span className={[styles.text, 'text-overflow'].join(' ')}>
-                            {data.branch_company_name}
-                        </span>
-                    </div>
-                    <div>
-                        <span className={styles.lable}>启停状态：</span>{' '}
-                        <span className={[styles.text, 'text-overflow'].join(' ')}>
-                            {getEnum('State')[data.state]}
-                        </span>
-                    </div>
-                </Col>
-                <Col span={12} className={styles.centerR}>
-                    <div className={styles.address}>
-                        <span className={styles.lable}>审批步骤：</span>{' '}
-                        <span className={[styles.text, 'text-overflow'].join(' ')}>{data.flow_step}</span>
-                    </div>
-                </Col>
-            </Col>
-            <Col className={styles.btn}>
-                <div className={styles.button}>
-                    {btns.map(btn => (
-                        <Button
-                            className={styles.approval}
-                            type="primary"
-                            size="small"
-                            key={btn.text}
-                            onClick={() => {
-                                if (btn.onClick) btn.onClick(data, load);
-                            }}
-                        >
-                            {btn.text || ""}
-                        </Button>
-                    ))}
-                </div>
-            </Col>
-        </Col>
+        <React.Fragment>
+                <Row className={styles.container}>
+                    <Col span={3} className={styles.left}>
+                        <div className={styles.headerIcon}>
+                            <img src={defaultPng} alt="icon" className={styles.img} />
+                        </div>
+                    </Col>
+                    <Col span={17} className={styles.middle}>
+                        <Col span={24} className={styles.top}>
+                            <span className={[styles.text, 'text-overflow'].join(' ')}>{data['name']}</span>
+                        </Col>
+                        <Row>
+                            <Col xl={8} lg={8} md={24} sm={24} xs={24} className={styles.centerL}>
+                                <div>
+                                    <span className={styles.lable}>适用公司：</span>{' '}&nbsp;&nbsp;&nbsp;
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>{data.branch_company_name}</span>
+                                </div>
+                                <div>
+                                    <span className={styles.lable}>启停状态：</span>{' '}&nbsp;&nbsp;&nbsp;
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>{getEnum('State')[data.state]}</span>
+                                </div>
+                            </Col>
+                            <Col xl={12} lg={12} md={24} sm={24} xs={24} className={styles.centerL}>
+                                <div>
+                                    <span className={styles.lable}>审批步骤：</span>{' '}
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>{data.flow_step}</span>
+                                </div>
+                            </Col>
+                        </Row>
+                    </Col>
+                    <Col span={4} className={styles.Approval}>
+                        <Col className={btns ? styles.btns : 'hide'}>
+                            {btns.map(btn => (
+                                <Button
+                                    className={styles.button}
+                                    type="primary"
+                                    size="small"
+                                    key={btn.text}
+                                    onClick={() => {
+                                        if (btn.onClick) btn.onClick(data, load);
+                                    }}
+                                >
+                                    {btn.text || ""}
+                                </Button>
+                            ))}
+                        </Col>
+                    </Col>
+                </Row>
+        </React.Fragment>
     )
 }
 
 const list: React.FC<IModPageProps> = ({ route }) => {
-    const { viewConfig } = route;
+    const { authority,viewConfig } = route;
     const {
         setCurrent,
         setPageSize,
@@ -101,7 +103,7 @@ const list: React.FC<IModPageProps> = ({ route }) => {
         query,
         setQuery,
         data
-    } = useListPage(viewConfig);
+    } = useListPage(authority,viewConfig);
 
     useEffect(() => {
         load();
@@ -115,7 +117,9 @@ const list: React.FC<IModPageProps> = ({ route }) => {
         setPageSize(size);
     };
 
-    const actionMap = {};
+    const actionMap = {
+
+    };
 
     const { headerBtns, rowBtns } = useListPageBtn(viewConfig, actionMap);
     const { dropDownSearch, textSearch } = useListPageSearch(viewConfig);
@@ -139,14 +143,16 @@ const list: React.FC<IModPageProps> = ({ route }) => {
                 textSearch
             )}
         >
-            {data.map((item: any) => (
-                <Auth
-                    data={item}
-                    btns={getRowBtnArray(item, rowBtns)}
-                    load={load}
-                    key={item["id"]}
-                />
-            ))}
+            <div className={styles.ScrollHight}>
+                {data.map((item: any) => (
+                    <Auth
+                        data={item}
+                        btns={getRowBtnArray(item, rowBtns)}
+                        load={load}
+                        key={item["schema_name"]}
+                    />
+                ))}
+            </div>
         </PageHeaderWrapper>
     )
 };

@@ -12,6 +12,7 @@ export enum ActionType {
 
 export interface IUser {
   account_id: string;
+  type?:number;
 }
 
 export interface IRootState {

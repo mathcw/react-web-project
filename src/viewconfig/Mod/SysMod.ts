@@ -2,7 +2,7 @@ import { ModConfigItem } from '@/viewconfig/ModConfig';
 
 const config: ModConfigItem = {
     '业务流程': {
-        read: { url: "/comm/Flow/read" },
+        read: { url: "/comm/FlowList/read" },
         title: "业务流程",
         textSearch: {
             name: { text: '流程名称' },

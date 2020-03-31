@@ -19,6 +19,7 @@ import { ColumnProps } from "antd/es/table";
 import { getModConfig } from "@/utils/utils";
 import ModalForm from "@/components/ModalForm";
 import { submit } from "@/utils/req";
+import styles from './list.less';
 
 // 新增跟团游二级导航
 const add = (reload: () => void) => () => {
@@ -56,7 +57,7 @@ const edit = (reload: () => void) => (ref: any) => {
     name: { text: "二级导航", required: true }
   };
   const onSubmit = (data: object | undefined) => {
-    submit("/business/SecondaryNav/submit", data).then(r => {
+    submit("/business/SecondaryNav/submit", {id:ref.id,...data}).then(r => {
       message.success(r.message);
       modalRef.destroy();
       reload();
@@ -83,7 +84,7 @@ const edit = (reload: () => void) => (ref: any) => {
 };
 
 const list: React.FC<IModPageProps> = ({ route }) => {
-  const { viewConfig } = route;
+  const { authority,viewConfig } = route;
   const {
     setCurrent,
     setPageSize,
@@ -95,7 +96,7 @@ const list: React.FC<IModPageProps> = ({ route }) => {
     query,
     setQuery,
     data
-  } = useListPage(viewConfig);
+  } = useListPage(authority,viewConfig);
 
   const actionMap = {
     新增跟团游二级导航: add(load),
@@ -166,14 +167,16 @@ const list: React.FC<IModPageProps> = ({ route }) => {
         textSearch
       )}
     >
-      <Grid
-        columns={getCols(cfg.list||{})}
-        dataSource={data}
-        rowKey="id"
-        pagination={false}
-        className={'ListTableStyle'}
-        specCol={opCol}
-      />
+      <div className={styles.ScrollHight}>
+        <Grid
+          columns={getCols(cfg.list||{})}
+          dataSource={data}
+          rowKey="id"
+          pagination={false}
+          className={'ListTableStyle'}
+          specCol={opCol}
+        />
+      </div>
     </PageHeaderWrapper>
   );
 };

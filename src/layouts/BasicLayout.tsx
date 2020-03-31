@@ -104,7 +104,9 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
         if (menuItemProps.isUrl || menuItemProps.children) {
           return defaultDom;
         }
-        return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+        if(menuItemProps.path)
+          return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+        return null
       }}
       breadcrumbRender={(routers = []) => [
         {
@@ -128,7 +130,8 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
       menuDataRender={menuDataRender}
       formatMessage={formatMessage}
       rightContentRender={rightProps => <RightContent {...rightProps} />}
-      contentStyle={{ padding: "0px 175px" }}
+      // contentStyle={{ padding: "0px 175px"}}
+      contentStyle={{ margin:'0'}}
       {...props}
       {...settings}
     >

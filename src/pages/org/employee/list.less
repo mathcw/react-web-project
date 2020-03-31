@@ -1,181 +1,242 @@
-.container {
-  margin-top: 10px;
-  width: 100%;
-  height: 130px;
-  background: rgba(255, 255, 255, 1);
-  border-radius: 4px;
-  padding: 16px;
-  .left {
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    //border:1px solid black;
-    margin-left: 10px;
-    margin-top: 17px;
-    img {
-      width: 65px;
-      height: 65px;
-      border-radius: 50%;
+@import '~antd/es/style/themes/default.less';
+.Org {
+    border-radius: 4px;
+    margin: 12px 0;
+    background: #fff;
+    overflow: hidden;
+    &:hover {
+        box-shadow: @box-shadow-base;
+        background: #fff;
     }
-  }
-  .middle {
-    margin: 0px 0px 0px 20px;
     .top {
-      .lable {
-        font-size: 14px;
-        font-weight: 400;
-        color: rgba(46, 58, 78, 1);
-        line-height: 20px;
-      }
-    }
-    .centerL {
-      margin-top: 5px;
-      .lable {
-        font-size: 12px;
-        font-weight: 400;
-        color: rgba(177, 188, 209, 1);
-        line-height: 17px;
-      }
-      .text {
-        font-size: 12px;
-        font-weight: 400;
-        color: rgba(71, 86, 114, 1);
-        line-height: 20px;
-      }
-    }
-    .centerR {
-      margin-top: 5px;
-      margin-left: 25%;
-      .lable {
-        font-size: 12px;
-        font-weight: 400;
-        color: rgba(177, 188, 209, 1);
-        line-height: 17px;
-      }
-      .text {
-        font-size: 12px;
-        font-weight: 400;
-        color: rgba(71, 86, 114, 1);
-        line-height: 20px;
-      }
-    }
-  }
-  .right {
-    float: left;
-    margin-left: 74%;
-    position: absolute;
-    .rightL {
-      position: absolute;
-      .head {
-        text-align: center;
-        .lable {
-          font-size: 14px;
-          font-weight: 400;
-          color: rgba(46, 58, 78, 1);
-          line-height: 20px;
-        }
-      }
-      .state {
-        text-align: center;
-        .text {
-          font-size: 14px;
-          font-family: PingFang-SC-Regular, PingFang-SC;
-          font-weight: 400;
-          color: rgba(46, 58, 78, 1);
-          line-height: 17px;
-          margin-top: 3px;
-        }
-      }
-    }
-    .rightR {
-      position: absolute;
-      margin-left: 40%;
-      .head {
-        text-align: center;
-        .lable {
-          font-size: 14px;
-          font-weight: 400;
-          color: rgba(46, 58, 78, 1);
-          line-height: 20px;
-        }
-      }
-      .state {
-        text-align: center;
-        .text {
-          font-size: 14px;
-          font-family: PingFang-SC-Regular, PingFang-SC;
-          font-weight: 400;
-          color: rgba(0, 163, 106, 1);
-          line-height: 17px;
-          margin-top: 3px;
-        }
-      }
-    }
-
-    .button {
-      float: right;
-      position: absolute;
-      margin-top: 70px;
-      right: 23%;
-      .approval {
-        float: right;
-        background: rgba(255, 255, 255, 1);
+        padding: 10px;
+        border: 1px solid #edf1f5;
         border-radius: 4px;
-        border: 1px solid rgba(177, 188, 209, 1);
-        font-size: 12px;
-        font-weight: 400;
-        color: rgba(46, 58, 78, 1);
-        line-height: 17px;
+        overflow: hidden;
+        display: flex;
+        .imgBox {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            padding-left: 20px;
+            .img {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+            }
+            .text {
+                font-size:12px;
+                font-weight:400;
+                color:#6384E7;
+                line-height:17px;
+                top: 70%;
+                left: 31%;
+                position: absolute;
+            }
+        }
+        .RTop {
+            display: flex;
+            align-items: center;
+            .name {
+                max-width: 500px;
+                font-size:14px;
+                font-weight:400;
+                color:rgba(46,58,78,1);
+                line-height:20px;
+            }
+            .tag {
+                font-size: 12px;
+                line-height: 20px;
+                padding: 0px 8px;
+                font-weight:400;
+                color:rgba(86,121,225,1);
+                border-radius:9px;
+                border:1px solid rgba(90,125,230,1);
+            }
+        }
+        .RCenter {
+            font-size: 12px;
+            padding-top: 2px;
+            text-align: left;
+            display: flex;
+            height: 73px;
+            margin-top: 4px;
+            .RCenterL {
+                line-height: 24px;
+                padding-right: 8px;
+                .lable {
+                    color: #b1bcd1;
+                    display: inline-block;
+                }
+                .text {
+                    display: inline-block;
+                    vertical-align: bottom;
+                }
+                .text2 {
+                    width: 120px !important;
+                    vertical-align: bottom;
+                }
+            }
+            .RCenterR {
+                line-height: 24px;
+                padding-left: 8px;
+                margin-left: -30px;
+                .infoRow {
+                    display: flex;
+                    .infoCell {
+                        width: 160px;
+                        margin-right: 24px;
+                        .lable {
+                            width: 64px;
+                            color: #b1bcd1;
+                            display: inline-block;
+                        }
+                        .text {
+                            width: 96px;
+                            display: inline-block;
+                            vertical-align: bottom;
+                        }
+                    }
+                }
+            }
+        }
+        .Approval{
+            width: 200px;
+            position: absolute;
+            top: 0%;
+            right: 1%;
+            .lable{ 
+                font-size:14px;
+                font-weight:400;
+                color:rgba(72,87,113,1);
+                line-height:20px;
+            }
+            .text{
+                font-size:14px;
+                font-weight:400;
+                line-height:20px;
+                margin-top: 3px;
+                text-align: center;
+            }
+            .plan{
+                margin-top: 4px;
+                cursor: pointer;
+                .text1{
+                    width: 25px;
+                    height: 25px;
+                }
+                .query{
+                    font-size: 12px;
+                    line-height: 25px;
+                    color: #518FEF;
+                }
+            }           
+        }
+        .RBtm {
+            height: 32px;
+            line-height: 32px;
+            clear: both;
+            margin-bottom: -3px;
+            .RBtmL {
+                height: 32px;
+                overflow: hidden;
+                & > div {
+                    font-size: 12px;
+                    font-weight:400;
+                    line-height:18px;
+                    color: rgba(177,188,209,1);
+                    border-radius:12px;
+                    border:1px solid rgba(177,188,209,1);
+                    padding: 0 8px;
+                    margin-right: 16px;
+                    display: inline-block;
+                    cursor: pointer;
+                }
+            }
+            .btns {
+                margin: 0 4px;
+                background:rgba(255,255,255,1);
+                border-radius:4px;
+                border:1px solid rgba(177,188,209,1);
+                font-size:12px;
+                font-weight:400;
+                color:rgba(46,58,78,1);
+                line-height:17px;
+            }
+        }
+    }
+    .topActive {
+        border: 1px solid #3d81ea;
+    }
+}
+
+.btns{
+    float: right;
+    position: absolute;
+    right: 3%;
+    top: 75%;
+    z-index: 99;
+    .button{
+        background:rgba(255,255,255,1);
+        border-radius:4px;
+        border:1px solid rgba(177,188,209,1);
+        font-size:12px;
+        font-weight:400;
+        color:rgba(46,58,78,1);
+        line-height:17px;
         height: 21px;
         margin-right: 5px;
-      }
     }
-  }
 }
+
 .addMod {
-  margin-top: 5px;
-  .title {
-    width: 100%;
-    height: 44px;
-    background: rgba(255, 255, 255, 1);
-    border-radius: 4px;
-    .text {
-      font-size: 16px;
-      font-weight: 600;
-      color: rgba(46, 58, 78, 1);
-      line-height: 22px;
-      padding: 12px 20px;
+    margin-top: 5px;
+    .title {
+        width: 100%;
+        height: 44px;
+        background: rgba(255, 255, 255, 1);
+        border-radius: 4px;
+        .text {
+            font-size: 16px;
+            font-weight: 600;
+            color: rgba(46, 58, 78, 1);
+            line-height: 22px;
+            padding: 12px 20px;
+        }
     }
-  }
-  .content {
-    width: 100%;
-    margin-top: 1px;
-    .menu {
-      width: 100%;
-      height: 44px;
-      background: rgba(255, 255, 255, 1);
-      .name {
-        text-align: center;
-        font-size: 14px;
-        font-weight: 400;
-        color: rgba(72, 87, 113, 1);
-        line-height: 20px;
-        padding: 12px 0px;
-      }
+    .content {
+        width: 100%;
+        margin-top: 1px;
+        .menu {
+            width: 100%;
+            height: 44px;
+            background: rgba(255, 255, 255, 1);
+            .name {
+                text-align: center;
+                font-size: 14px;
+                font-weight: 400;
+                color: rgba(72, 87, 113, 1);
+                line-height: 20px;
+                padding: 12px 0px;
+            }
+        }
+        .information {
+            width: 100%;
+            background: rgba(255, 255, 255, 1);
+            margin-top: 1px;
+            height: 44px;
+            .text {
+                text-align: center;
+                font-size: 12px;
+                font-weight: 400;
+                color: rgba(72, 87, 113, 1);
+                line-height: 17px;
+                padding: 12px 0px;
+            }
+        }
     }
-    .information {
-      width: 100%;
-      background: rgba(255, 255, 255, 1);
-      margin-top: 1px;
-      height: 44px;
-      .text {
-        text-align: center;
-        font-size: 12px;
-        font-weight: 400;
-        color: rgba(72, 87, 113, 1);
-        line-height: 17px;
-        padding: 12px 0px;
-      }
-    }
-  }
+}
+.ScrollHight {
+    height : 100vh;
+    overflow: auto;
 }

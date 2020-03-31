@@ -1,57 +1,84 @@
-import { Alert,notification } from 'antd';
-import {  formatMessage,FormattedMessage } from 'umi-plugin-react/locale';
-import React, { Component } from 'react';
+import { notification, Tabs, Form, Input, Button } from 'antd';
+import React, { useState } from 'react';
 
-import { Dispatch, AnyAction } from 'redux';
-import { FormComponentProps } from 'antd/es/form';
-import { connect } from 'dva';
-import { StateType } from '@/models/login';
-import LoginComponents from './components/Login';
 import styles from './style.less';
-import { ConnectState } from '@/models/connect';
-
-import AppConst from '@/utils/AppConst';
 import { sys } from '@/utils/core';
 import { req } from '@/utils/req';
+import AppConst from '@/utils/AppConst';
 import { router } from 'umi';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-const { Tab, UserName, Password,Submit } = LoginComponents;
 
-interface LoginProps {
-  dispatch: Dispatch<AnyAction>;
-  userLogin: StateType;
-  submitting: boolean;
-}
-interface LoginState {
-  type: string;
-}
-interface LoginParam {
-  account:string;
-  password:string;
-}
-
-const loginFun = async (values:any, href:string) => {
+const loginFun = async (values: any, href: string) => {
   const { user: r } = await req('/UserLogin/login', values);
   localStorage[`${sys.APP_NAME}_sid`] = r.sid;
   router.replace(href);
 }
 
-@connect(({ login, loading }: ConnectState) => ({
-  userLogin: login,
-  submitting: loading.effects['login/login'],
-}))
-class Login extends Component<LoginProps, LoginState> {
-  loginForm: FormComponentProps['form'] | undefined | null = undefined;
-
-  state: LoginState = {
-    type: 'SUPPLIER',
+interface LoginFormProps {
+  onSubmit: (p:any) => void
+  fieldMap:{
+    username:string,
+    password:string
+  }
+}
+const LoginForm: React.FC<LoginFormProps> = ({ onSubmit,fieldMap }) => {
+  const onFinish = (values: any) => {
+    if(onSubmit){
+      onSubmit(values);
+    }
   };
 
-  handleSubmit = (err: unknown, values: any) => {
-    const { type } = this.state;
-    const field :LoginParam = {account:'',password:''};
+  const onFinishFailed = (errorInfo:any) => {
+    console.log('Failed:', errorInfo);
+  };
+
+  return (
+    <Form
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+      size="large"
+    >
+      <Form.Item
+        name={fieldMap.username}
+        rules={[{ required: true, message: '请输入用户名!' }]}
+      >
+        <Input prefix={<UserOutlined className={styles.icon}/>} placeholder="用户名" className={styles.input}/>
+      </Form.Item>
+      <Form.Item
+        name={fieldMap.password}
+        rules={[{ required: true, message: '请输入密码!' }]}
+      >
+        <Input.Password
+          prefix={<LockOutlined className={styles.icon}/>}
+          type="password"
+          placeholder="密码"
+          className={styles.input}
+        />
+      </Form.Item>
+
+      <Form.Item style={{ textAlign: 'center' }}>
+        <Button type="primary" htmlType="submit" className={styles.btn}>
+          登录
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+}
+
+const Login: React.FC = () => {
+
+  const [type, setType] = useState<string>('SUPPLIER');
+  const onTabChange = (type: string) => {
+    setType(type);
+  }
+  const handleSubmit = (values:any) => {
+    const field:{
+      account?:string,
+      password?:string
+    } = {};
+    let userType ;
     let href = '';
-    let userType:number;
     if (type === 'SUPPLIER') {
       field.account = values.supplierAccount;
       field.password = values.supplierPassword;
@@ -69,110 +96,33 @@ class Login extends Component<LoginProps, LoginState> {
       });
       return;
     }
-    if (!err) {
-      loginFun({ ...field, userType }, href).catch(() => {
-        // TODO ...
-      });
-    }
-  };
-
-  onTabChange = (type: string) => {
-    this.setState({ type });
-  };
-
-  renderMessage = (content: string) => (
-    <Alert style={{ marginBottom: 24 }} message={content} type="error" showIcon />
-  );
-
-  render() {
-    const { userLogin, submitting } = this.props;
-    const { status, type: loginType } = userLogin;
-    const { type } = this.state;
-    return (
-      <div className={styles.main}>
-        <LoginComponents
-          defaultActiveKey={type}
-          onTabChange={this.onTabChange}
-          onSubmit={this.handleSubmit}
-          onCreate={(form?: FormComponentProps['form']) => {
-            this.loginForm = form;
-          }}
-        >
-          <Tab key='SUPPLIER' tab={formatMessage({ id: 'user-login.login.supplier' })}>
-            {status === 'error' &&
-              loginType === 'SUPPLIER' &&
-              !submitting &&
-              this.renderMessage(
-                formatMessage({ id: 'user-login.login.message-invalid-credentials' }),
-              )}
-            <UserName
-              name="supplierAccount"
-              placeholder={`${formatMessage({ id: 'user-login.login.userName' })}`}
-              rules={[
-                {
-                  required: loginType === 'SUPPLIER' && true,
-                  message: formatMessage({ id: 'user-login.userName.required' }),
-                },
-              ]}
-            />
-            <Password
-              name="supplierPassword"
-              placeholder={`${formatMessage({ id: 'user-login.login.password' })}`}
-              rules={[
-                {
-                  required: loginType === 'SUPPLIER' && true,
-                  message: formatMessage({ id: 'user-login.password.required' }),
-                },
-              ]}
-              onPressEnter={e => {
-                e.preventDefault();
-                if (this.loginForm) {
-                  this.loginForm.validateFields(this.handleSubmit);
-                }
-              }}
-            />
-          </Tab>
-          <Tab key='EMPLOYEE' tab={formatMessage({ id: 'user-login.login.employee' })}>
-            {status === 'error' &&
-              loginType === 'EMPLOYEE' &&
-              !submitting &&
-              this.renderMessage(
-                formatMessage({ id: 'user-login.login.message-invalid-credentials' }),
-              )}
-            <UserName
-              name="account"
-              placeholder={`${formatMessage({ id: 'user-login.login.userName' })}`}
-              rules={[
-                {
-                  required: loginType === 'EMPLOYEE' && true,
-                  message: formatMessage({ id: 'user-login.userName.required' }),
-                },
-              ]}
-            />
-            <Password
-              name="password"
-              placeholder={`${formatMessage({ id: 'user-login.login.password' })}`}
-              rules={[
-                {
-                  required: loginType === 'EMPLOYEE' && true,
-                  message: formatMessage({ id: 'user-login.password.required' }),
-                },
-              ]}
-              onPressEnter={e => {
-                e.preventDefault();
-                if (this.loginForm) {
-                  this.loginForm.validateFields(this.handleSubmit);
-                }
-              }}
-            />
-          </Tab>
-          <Submit loading={submitting}>
-            <FormattedMessage id="user-login.login.login" />
-          </Submit>
-        </LoginComponents>
-      </div>
-    );
+    loginFun({ ...field, userType }, href).catch(() => {
+      // TODO ...
+    });
   }
+
+  return (
+    <div className={styles.main}>
+      <Tabs defaultActiveKey={type} onChange={onTabChange}>
+        <Tabs.TabPane tab="供应商登录" key='SUPPLIER'>
+          <LoginForm onSubmit={handleSubmit} fieldMap={
+            {
+              username:'supplierAccount',
+              password:'supplierPassword'
+            }
+          }/>
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="管理员登录" key='EMPLOYEE'>
+          <LoginForm onSubmit={handleSubmit} fieldMap={
+            {
+              username:'account',
+              password:'password'
+            }
+          }/>
+        </Tabs.TabPane>
+      </Tabs>
+    </div>
+  )
 }
 
 export default Login;

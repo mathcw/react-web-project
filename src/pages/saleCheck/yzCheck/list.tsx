@@ -14,7 +14,49 @@ import PageHeaderWrapper, {
 import { getRowBtnArray } from '@/utils/utils';
 
 import AppConst from '@/utils/AppConst';
+import { submit, get } from '@/utils/req';
 import GroupTour from './components/GroupTour';
+import NzCheckModal from './components/CheckModal/nz';
+import { Modal } from 'antd';
+import styles from './list.less';
+
+const nzCheck = (reload:()=>void) =>(ref:any)=>{
+    get('/Sale/Order/read_for_dz', { id: ref.id }).then((r) => {
+        if(r.data){
+            const modalRef  = Modal.info({});
+            const onOk = (data:any) =>{
+                submit('/Sale/Order/dz',{...data,id:ref.id}).then(
+                    (r)=>{
+                        modalRef.destroy();
+                        reload();
+                    }
+                )
+            }
+
+            const onSubmit = (data:any)=>{
+                submit('/Sale/Order/dz',{...data,approve:1,id:ref.id}).then(
+                    (r)=>{
+                        modalRef.destroy();
+                        reload();
+                    }
+                )
+            }
+        
+            const onCancel = () =>{
+                modalRef.destroy();
+            }
+            modalRef.update({
+                title: '订单应转对账',
+                width:1000,
+                content: (
+                    <NzCheckModal info={r.data} onOk={onOk} onCancel={onCancel} onSubmit={onSubmit}/>
+                ),
+                okButtonProps: { className: 'hide' },
+                cancelButtonProps: { className: 'hide' },
+            });
+        }
+    });
+}
 
 interface OrderItemProps {
     data: {
@@ -36,7 +78,7 @@ const OrderItem:React.FC<OrderItemProps> = ({data,btns = [],load})=>{
 } 
 
 const list: React.FC<IModPageProps> = ({ route }) => {
-    const { viewConfig } = route;
+    const { authority,viewConfig } = route;
     const {
         setCurrent,
         setPageSize,
@@ -48,7 +90,7 @@ const list: React.FC<IModPageProps> = ({ route }) => {
         query,
         setQuery,
         data
-    } = useListPage(viewConfig);
+    } = useListPage(authority,viewConfig);
 
     useEffect(() => {
         load();
@@ -63,11 +105,12 @@ const list: React.FC<IModPageProps> = ({ route }) => {
     };
 
     const actionMap = {
+        '订单应转对账':nzCheck(load)
     };
 
     const { headerBtns, rowBtns } = useListPageBtn(viewConfig, actionMap);
     const { dropDownSearch, textSearch } = useListPageSearch(viewConfig);
-
+    
     return (
         <PageHeaderWrapper
             extra={Extra(
@@ -87,14 +130,16 @@ const list: React.FC<IModPageProps> = ({ route }) => {
                 textSearch
             )}
         >
-            {data.map((item: any) => (
-                <OrderItem
-                    data={item}
-                    btns={getRowBtnArray(item, rowBtns)}
-                    load={load}
-                    key={item["id"]}
-                />
-            ))}
+            <div className={styles.ScrollHight}>
+                {data.map((item: any) => (
+                    <OrderItem
+                        data={item}
+                        btns={getRowBtnArray(item, rowBtns)}
+                        load={load}
+                        key={item["id"]}
+                    />
+                ))}
+            </div>
         </PageHeaderWrapper>
     )
 };

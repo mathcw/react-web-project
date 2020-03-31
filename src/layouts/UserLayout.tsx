@@ -46,10 +46,10 @@ const UserLayout: React.FC<UserLayoutProps> = props => {
             <img src={IconPng} alt="icon" className={styles.img} />
           </Col>
           <Col span={12} className={styles.r}>
-            <Col className={styles.r_login}>
-              <Col className={styles.r_name}>兔兔同业助手<span style={{ fontSize: '23px' }}>V1.0</span></Col>
-              <Col >{children}</Col>
-            </Col>
+            <div className={styles.r_login}>
+              <div className={styles.r_name}>兔兔同业助手<span style={{ fontSize: '23px' }}>V1.0</span></div>
+              <div >{children}</div>
+            </div>
           </Col>
         </Row>
       </div>

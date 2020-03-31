@@ -6,7 +6,7 @@ const config: ModConfigItem = {
         title: "提报处理",
         textSearch: {
             full_name: { text: '公司全称' }
-        },
+        }, 
         dropDownSearch: {
             city_id: { text: '所在城市', type: 'City' }
         },
@@ -34,7 +34,7 @@ const config: ModConfigItem = {
 
         },
         rowButtons: {
-            审批吸纳供应商: { text: '通过', show: { flow: [2] } },
+            审批吸纳供应商: { text: '审批', show: { flow: [2] } },
         }
     },
 

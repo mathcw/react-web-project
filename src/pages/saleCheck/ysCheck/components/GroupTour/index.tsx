@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Icon, Tag, Button, Modal } from 'antd';
+import { DoubleLeftOutlined } from '@ant-design/icons';
+import { Col, Tag, Button, Modal, Row } from 'antd';
 
 import styles from './index.less';
 import { colDisplay, colorfun } from '@/utils/utils';
@@ -12,14 +13,14 @@ const IconPng = require('@/assets/plan.png');
 
 function renderImg(list_pic: string, id: string) {
     return (
-        <div className={styles.imgWrapper}>
+        <>
             <img
                 src={list_pic || defaultPng}
                 className={styles.img}
                 alt="产品图片"
             />
             <span className={[styles.imgText, 'text-overflow'].join(' ')}>{`产品编号P0${id}`}</span>
-        </div>
+        </>
     );
 }
 
@@ -84,44 +85,44 @@ const Detail: React.FC<GroupTourDetail> = ({ detail }) => {
     }
 
     return (
-        <Col className={styles.children}>
-            <Col className={[styles.childrenMod, 'clear'].join(' ')}>
-                <Col className={styles.ModTitle}>基础信息</Col>
-                <Col className={styles.ModContent}>
-                    <Col className={[styles.ModCell, 'clear'].join(' ')}>
+        <div className={styles.children}>
+            <div className={[styles.childrenMod, 'clear'].join(' ')}>
+                <div className={styles.ModTitle}>基础信息</div>
+                <div className={styles.ModContentoth}>
+                    <Row className={[styles.ModCell, 'clear'].join(' ')}>
                         <Col span={6}>客户简称： {detail.retailer_name}</Col>
                         <Col span={7}>订单编号： D0{detail.retailer_order_id}</Col>
                         <Col span={9}>报名人： {detail.retailer_name}-{detail.creator.split('-')[2]}-{detail.creator.split('-')[3]}</Col>
-                    </Col>
-                    <Col className={[styles.ModCell, 'clear'].join(' ')}>
+                    </Row>
+                    <Row className={[styles.ModCell, 'clear'].join(' ')}>
                         <Col span={6}>产品编号： P0{detail.pd_id}</Col>
                         <Col span={7} onClick={() => lookOver()}>
                             订单人数： <span className={styles.button}>{detail.num_of_people}人</span>
                         </Col>
                         <Col span={9}>确认人： {`${detail.supplier_brand}-${detail.name}-${detail.mobile}`}</Col>
-                    </Col>
-                    <Col className={[styles.ModCell, 'clear'].join(' ')}>
+                    </Row>
+                    <Row className={[styles.ModCell, 'clear'].join(' ')}>
                         <Col span={6}>团&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号： {detail.gp_num}</Col>
                         <Col span={7}>订单状态：
                             {colDisplay(detail.state, 'OrderState', detail)}
                         </Col>
                         <Col span={9}>接单人： {detail.retailer_name}-{detail.assitant.split('-')[2]}-{detail.assitant.split('-')[3]}</Col>
-                    </Col>
-                </Col>
-            </Col>
+                    </Row>
+                </div>
+            </div>
 
-            <Col className={[styles.childrenMod, 'clear'].join(' ')}>
-                <Col className={styles.ModTitle}>应转明细</Col>
-                <Col className={styles.ModContent}>
-                    <Col className={[styles.ModCell, 'clear'].join(' ')}>
+            <div className={[styles.childrenMod, 'clear'].join(' ')}>
+                <div className={styles.ModTitle}>应转明细</div>
+                <div className={styles.ModContent}>
+                    <Row className={[styles.ModCell, 'clear'].join(' ')}>
                         <Col span={6}>转入对象： {detail.assitant}</Col>
                         <Col span={6}>应转金额： {detail.settle_amount}</Col>
                         <Col span={6}>已转金额： {detail.settled_amount}</Col>
                         <Col span={6}>未转金额： {detail.settle_amount - detail.settled_amount}</Col>
                         <span className={styles.detail} onClick={() => setShow(!isShow)}> {isShow ? '收起' : '详情'}</span>
-                    </Col>
-                    <Col className={styles.childrenother} style={isShow ? { display: 'block' } : { display: 'none' }}>
-                        <Col className={[styles.cTitle, 'clear'].join(' ')}>
+                    </Row>
+                    <div className={styles.childrenother} style={isShow ? { display: 'block' } : { display: 'none' }}>
+                        <Row className={[styles.cTitle, 'clear'].join(' ')}>
                             <Col span={6} className="text-center">
                                 价格类型
                             </Col>
@@ -134,33 +135,33 @@ const Detail: React.FC<GroupTourDetail> = ({ detail }) => {
                             <Col span={6} className="text-center">
                                 小计
                             </Col>
-                        </Col>
+                        </Row>
                         {
                             detail['订单应转'] && detail['订单应转'].map((snap: any, yzIndex: number) => (
-                                <Col className={[styles.cCell, 'clear'].join(' ')} key={'应转' + yzIndex}>
+                                <Row className={[styles.cCell, 'clear'].join(' ')} key={'应转' + yzIndex}>
                                     <Col span={6} className="text-center">{snap.price_comment}</Col>
                                     <Col span={6} className="text-center">{snap.peer_price}</Col>
                                     <Col span={6} className="text-center">{snap.number}</Col>
                                     <Col span={6} className="text-center">{snap.total}</Col>
-                                </Col>
+                                </Row>
                             ))
                         }
-                    </Col>
-                </Col>
-            </Col>
+                    </div>
+                </div>
+            </div>
 
-            <Col className={[styles.childrenMod, 'clear'].join(' ')}>
-                <Col className={styles.ModTitle}>对账明细</Col>
-                <Col className={styles.ModContent}>
-                    <Col className={[styles.ModCell, 'clear'].join(' ')}>
+            <div className={[styles.childrenMod, 'clear'].join(' ')}>
+                <div className={styles.ModTitle}>对账明细</div>
+                <div className={styles.ModContent}>
+                    <Row className={[styles.ModCell, 'clear'].join(' ')}>
                         <Col span={6}>收款对象: {detail.retailer_name}</Col>
                         <Col span={6}>应收金额: {detail.payable}</Col>
                         <Col span={6}>已收金额: {detail.paid}</Col>
                         <Col span={6}>未收金额: {detail.pay_diff}</Col>
                         <span className={styles.detail} onClick={() => setDzShow(!isDzShow)}> {isDzShow ? '收起' : '详情'}</span>
-                    </Col>
-                    <Col className={styles.childrenother} style={isShow ? { display: 'block' } : { display: 'none' }}>
-                        <Col className={[styles.cTitle, 'clear'].join(' ')}>
+                    </Row>
+                    <div className={styles.childrenother} style={isShow ? { display: 'block' } : { display: 'none' }}>
+                        <Row className={[styles.cTitle, 'clear'].join(' ')}>
                             <Col span={8} className="text-center">
                                 类型
                             </Col>
@@ -170,56 +171,56 @@ const Detail: React.FC<GroupTourDetail> = ({ detail }) => {
                             <Col span={8} className="text-center">
                                 备注
                             </Col>
-                        </Col>
+                        </Row>
                         {
-                            detail['订单对账'] && detail['订单对账'].map((snap:any,dzIndex:number) => (
-                                <Col className={[styles.cCell, 'clear'].join(' ')} key={'对账'+dzIndex}>
+                            detail['订单对账'] && detail['订单对账'].map((snap: any, dzIndex: number) => (
+                                <Row className={[styles.cCell, 'clear'].join(' ')} key={'对账' + dzIndex}>
                                     <Col span={8} className="text-center">{snap.xy_name}</Col>
                                     <Col span={8} className="text-center">{snap.amount}</Col>
                                     <Col span={8} className="text-center">{snap.comment}</Col>
-                                </Col>
+                                </Row>
                             ))
                         }
-                    </Col>
-                </Col>
-            </Col>
+                    </div>
+                </div>
+            </div>
 
 
-            <Col className={[styles.childrenMod, 'clear'].join(' ')}>
-                <Col className={styles.ModTitle}>订单备注</Col>
-                <Col className={styles.ModContent}>
-                    <Col className={styles.childrenother}>
-                        <Col className={[styles.cTitle, 'clear'].join(' ')}>
+            <div className={[styles.childrenMod, 'clear'].join(' ')}>
+                <div className={styles.ModTitle}>订单备注</div>
+                <div className={styles.ModContent}>
+                    <div className={styles.childrenother}>
+                        <Row className={[styles.cTitle, 'clear'].join(' ')}>
                             <Col span={4} className="text-center">备注人</Col>
                             <Col span={6} className="text-center">备注时间</Col>
                             <Col span={14} className="text-center">备注内容</Col>
-                        </Col>
+                        </Row>
                         {
                             detail['订单备注'] && detail['订单备注'].map((val: any, cIndex: number) => (
-                                <Col className={[styles.cCell, 'clear'].join(' ')} key={'备注' + cIndex}>
+                                <Row className={[styles.cCell, 'clear'].join(' ')} key={'备注' + cIndex}>
                                     <Col span={4} className="text-center">{val.creator.split('-')[2]}</Col>
                                     <Col span={6} className="text-center">{val.create_at}</Col>
                                     <Col span={14} className="text-center">{val.comment}</Col>
-                                </Col>
+                                </Row>
                             ))
                         }
-                    </Col>
-                </Col>
-            </Col>
+                    </div>
+                </div>
+            </div>
 
-            <Col className={[styles.childrenMod, 'clear'].join(' ')}>
-                <Col className={styles.ModTitle}>对账审批</Col>
-                <Col className={styles.ModContent}>
-                    <Col className={styles.childrenother}>
-                        <Col className={[styles.cTitle, 'clear'].join(' ')}>
+            <div className={[styles.childrenMod, 'clear'].join(' ')}>
+                <div className={styles.ModTitle}>对账审批</div>
+                <div className={styles.ModContent}>
+                    <div className={styles.childrenother}>
+                        <Row className={[styles.cTitle, 'clear'].join(' ')}>
                             <Col span={4} className="text-center">操作人</Col>
                             <Col span={4} className="text-center">动作</Col>
                             <Col span={6} className="text-center">操作时间</Col>
                             <Col span={10} className="text-center">审批备注</Col>
-                        </Col>
+                        </Row>
                         {
                             detail['订单审批日志'] && detail['订单审批日志'].map((item: any, flowIndex: number) => (
-                                <Col className={[styles.cCell, 'clear'].join(' ')} key={'日志' + flowIndex}>
+                                <Row className={[styles.cCell, 'clear'].join(' ')} key={'日志' + flowIndex}>
                                     <Col span={4} className="text-center">{item.flower.split('-').filter((e: any, i: number) => i != 1).join('-')}</Col>
                                     <Col span={4} className="text-center">
                                         {
@@ -228,13 +229,13 @@ const Detail: React.FC<GroupTourDetail> = ({ detail }) => {
                                     </Col>
                                     <Col span={6} className="text-center">{item.create_at}</Col>
                                     <Col span={10} className="text-center">{item.comment}</Col>
-                                </Col>
+                                </Row>
                             ))
                         }
-                    </Col>
-                </Col>
-            </Col>
-        </Col>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }
 
@@ -259,7 +260,20 @@ const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [], load }) => {
     }, [detail])
 
     const showFlowInfo = (data: GroupTourProps['data']) => {
-        get('/comm/Flow/seeDetail', { flow_id: data.order_change_flow_id }).then((r) => {
+        if(data.check_flow_id==='0'){
+            Modal.info({
+                title: '审批记录',
+                content: (
+                  <div>
+                    <p>暂无审批记录</p>
+                  </div>
+                ),
+                onOk() {},
+                okText: '关闭',
+            });
+            return;
+        }
+        get('/comm/FlowList/seeDetail', { flow_id: data.check_flow_id }).then((r) => {
             if (r.data) {
                 Modal.info({
                     title: '审批记录',
@@ -288,165 +302,134 @@ const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [], load }) => {
     const renderMore = () => <Detail detail={detail} />
 
     return (
-        <>
-            <Col className={styles.OrderList}>
-                <Col className={styles.item}>
-                    <Col className={styles.list}>
-                        <Col className={styles.content}>
-                            <Col className={styles.imgBox} xs={24} sm={24} md={3} lg={3}>
-                                {
-                                    renderImg(data.list_pic, data.id)
-                                }
-                            </Col>
-
-                            <Col xs={24} sm={24} md={18} lg={18}>
-                                <Col className={styles.top} style={{ paddingLeft: '14px' }} xs={24} sm={24} md={24} lg={24}>
-                                    <Tag color="blue">团队游</Tag>
-                                    <Col className={[styles.title, 'text-overflow'].join(' ')}>
-                                        {data.pd_name}
-                                    </Col>
-                                </Col>
-                                <Col className={styles.center} style={{ paddingLeft: '14px' }} xs={24} sm={24} md={24} lg={24}>
-                                    <Col className={styles.cloumn} xs={24} sm={24} md={5} lg={5} xl={5}>
-                                        <Col className={styles.row}>
-                                            <span className={styles.key}>客户简称： </span>
-                                            <span>{data.retailer_name}</span>
-                                        </Col>
-                                        <Col className={styles.row}>
-                                            <span className={styles.key}>订&nbsp;&nbsp;单&nbsp;号： </span>
-                                            <span>D0{data.retailer_order_id}</span>
-                                        </Col>
-                                        <Col className={styles.row}>
-                                            <span className={styles.key}>订单人数： </span>
-                                            <span>{data.num_of_people}人</span>
-                                        </Col>
-                                    </Col>
-
-                                    <Col className={styles.cloumn} xs={24} sm={24} md={5} lg={5} xl={5}>
-                                        <Col className={styles.row}>
-                                            <div className={styles.obj}>
-                                                <span className={styles.key}>出团日期：</span>
-                                                <span className={styles.val}>{data.dep_date}</span>
-                                            </div>
-                                        </Col>
-                                        <Col className={styles.row}>
-                                            <div className={styles.obj}>
-                                                <span className={styles.key}>回团日期：</span>
-                                                <span className={styles.val}>{data.back_date}</span>
-                                            </div>
-                                        </Col>
-                                        <Col className={styles.row}>
-                                            <div className={styles.obj}>
-                                                <span className={styles.key}>出发城市：</span>
-                                                <span className={styles.val}>
-                                                    {colDisplay(data.dep_city_id, 'City', data)}
-                                                </span>
-                                            </div>
-                                        </Col>
-                                    </Col>
-
-                                    <Col className={styles.cloumn} xs={24} sm={24} md={5} lg={5} xl={5}>
-                                        <Col className={styles.row}>
-                                            <span className={styles.key}>应内转： </span>
-                                            <span>{data.settle_amount}</span>
-                                        </Col>
-                                        <Col className={styles.row}>
-                                            <span className={styles.key}>已内转： </span>
-                                            <span>{`${data.settled_amount}`}</span>
-                                        </Col>
-                                        <Col className={styles.row}>
-                                            <span className={styles.key}>未内转： </span>
-                                            <span>{data.settle_diff}</span>
-                                        </Col>
-                                    </Col>
-
-                                    <Col className={styles.cloumn} xs={24} sm={24} md={5} lg={5} xl={5}>
-                                        <Col className={styles.row}>
-                                            <span className={styles.key}>应收款： </span>
-                                            <span>{data.payable}</span>
-                                        </Col>
-                                        <Col className={styles.row}>
-                                            <span className={styles.key}>已收款： </span>
-                                            <span>{`${data.paid}`}</span>
-                                        </Col>
-                                        <Col className={styles.row}>
-                                            <span className={styles.key}>未收款： </span>
-                                            <span>{(parseFloat(data.payable) - parseFloat(data.paid)).toFixed(2)}</span>
-                                        </Col>
-                                    </Col>
-
-                                    <Col className={styles.cloumn} xs={24} sm={24} md={4} lg={4} xl={4}>
-                                        <Col className={styles.row}>
-                                            <span className={styles.key}>报名人： </span>
-                                            <span>{data.creator.split('-')[2]}</span>
-                                        </Col>
-                                        <Col className={styles.row}>
-                                            <span className={styles.key}>确认人： </span>
-                                            <span>{`${data.name}`}</span>
-                                        </Col>
-                                        <Col className={styles.row}>
-                                            <span className={styles.key}>接单人： </span>
-                                            <span>{data.assitant.split('-')[2]}</span>
-                                        </Col>
-                                    </Col>
-                                </Col>
-
-                                <Col className={styles.bottom} style={{ paddingLeft: '14px' }}
-                                    xs={24} sm={24} md={24} lg={24}
-                                    onClick={() => { loadMore() }}
-                                >
-                                    <span style={more ? {} : { marginRight: '5px' }}>{more ? "收起详情" : "展开详情"}</span>
-                                    <Icon type="double-left" className={more ? styles.close : styles.open} style={{ padding: '0px' }} />
-                                </Col>
-
-                            </Col>
-
-                            <Col xs={24} sm={24} md={3} lg={3} className={styles.rightcontent}>
-                                <Col xs={24} sm={24} md={24} lg={24}>
-                                    <span className={styles.lable1}>对账审批</span>
-                                    <br />
-                                    <div style={colorfun({ flow: data.check_flow })} className={[styles.text1, 'text-overflow'].join(' ')}>
-                                        {colDisplay(data.check_flow, 'Flow', data)}
-                                    </div>
-                                </Col>
-                                <Col className={styles.plan} onClick={() => showFlowInfo(data)}>
-                                    <img
-                                        src={IconPng}
-                                        className={styles.text2}
-                                    />
-                                    <div className={styles.query}>进度查询</div>
-                                </Col>
-                            </Col>
-                        </Col>
-                        <Col className={btns ? styles.btns : 'hide'}>
-                            <div>
-                                {btns.map(btn => (
-                                    <Button
-                                        className={styles.button}
-                                        key={btn.text}
-                                        onClick={() => {
-                                            if (btn.onClick) btn.onClick(data, load);
-                                        }}
-                                    >
-                                        {btn.text || ""}
-                                    </Button>
-                                ))}
-                            </div>
-                        </Col>
-                    </Col>
+        <div className={styles.OrderList}>
+            <Row className={styles.item}>
+                <Col className={styles.imgBox} xs={24} sm={24} md={3} lg={3}>
                     {
-                        more && renderMore()
+                        renderImg(data.list_pic, data.id)
                     }
                 </Col>
-            </Col>
-        </>
-    )
+                <Col xs={24} sm={24} md={18} lg={18}>
+                    <div className={styles.content}>
+                        <Col span={24} className={styles.contentTop}>
+                            <Tag color="blue">团队游</Tag>
+                            <span className={styles.name}>
+                                {data.pd_name}
+                            </span>
+                        </Col>
+                        <Col span={24} className={styles.contentCenter}>
+                            <Col span={5}>
+                                <div className={styles.cell}>
+                                    <span className={styles.lable}>客户简称： </span>
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>{data.retailer_name}</span>
+                                </div>
+                                <div className={styles.cell}>
+                                    <span className={styles.lable}>订&nbsp;&nbsp;单&nbsp;号： </span>
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>D0{data.retailer_order_id}</span>
+                                </div>
+                                <div className={styles.cell}>
+                                    <span className={styles.lable}>订单人数： </span>
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>{data.num_of_people}人</span>
+                                </div>
+                            </Col>
+                            <Col span={5}>
+                                <div className={styles.cell}>
+                                    <span className={styles.lable}>出团日期：</span>
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>{data.dep_date}</span>
+                                </div>
+                                <div className={styles.cell}>
+                                    <span className={styles.lable}>回团日期：</span>
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>{data.back_date}</span>
+                                </div>
+                                <div className={styles.cell}>
+                                    <span className={styles.lable}>出发城市： </span>
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>{colDisplay(data.dep_city_id, 'City', data)}</span>
+                                </div>
+                            </Col>
+                            <Col span={5}>
+                                <div className={styles.cell}>
+                                    <span className={styles.lable}>应内转：</span>
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>{data.settle_amount}</span>
+                                </div>
+                                <div className={styles.cell}>
+                                    <span className={styles.lable}>已内转：</span>
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>{data.settled_amount}</span>
+                                </div>
+                                <div className={styles.cell}>
+                                    <span className={styles.lable}>未内转： </span>
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>{data.settle_diff}</span>
+                                </div>
+                            </Col>
+                            <Col className={styles.cloumn} span={5}>
+                                <div className={styles.cell}>
+                                    <span className={styles.lable}>应收款：</span>
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>{data.payable}</span>
+                                </div>
+                                <div className={styles.cell}>
+                                    <span className={styles.lable}>已收款：</span>
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>{data.paid}</span>
+                                </div>
+                                <div className={styles.cell}>
+                                    <span className={styles.lable}>未收款： </span>
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>{(parseFloat(data.payable) - parseFloat(data.paid)).toFixed(2)}</span>
+                                </div>
+                            </Col>
+                            <Col span={4}>
+                                <div className={styles.cell}>
+                                    <span className={styles.lable}>报名人：</span>
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>{data.creator.split('-')[2]}</span>
+                                </div>
+                                <div className={styles.cell}>
+                                    <span className={styles.lable}>确认人：</span>
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>{data.name}</span>
+                                </div>
+                                <div className={styles.cell}>
+                                    <span className={styles.lable}>接单人： </span>
+                                    <span className={[styles.text, 'text-overflow'].join(' ')}>{data.assitant.split('-')[2]}</span>
+                                </div>
+                            </Col>
+                        </Col>
+                        <Col span={24} className={styles.contentBottom} onClick={() => { loadMore() }}>
+                            <span style={more ? {} : { marginRight: '5px' }}>{more ? "收起详情" : "展开详情"}</span>
+                            <DoubleLeftOutlined className={more ? styles.close : styles.open} style={{ padding: '0px' }} />
+                        </Col>
+                    </div>
+                </Col>
+                <Col xs={24} sm={24} md={3} lg={3} className={styles.Approval}>
+                    <Row>
+                        <Col span={24} className={styles.infoCell} style={{ textAlign: 'center' }}>
+                            <span className={styles.lable}>对账审批</span>
+                            <div style={colorfun({ flow: data.check_flow })} className={[styles.text, 'text-overflow'].join(' ')}>
+                                {colDisplay(data.check_flow, 'Flow', data)}
+                            </div>
+                            <div className={styles.plan} onClick={() => showFlowInfo(data)}>
+                                <img src={IconPng} className={styles.planimg}/>
+                                <div className={styles.query}>进度查询</div>
+                            </div>
+                        </Col>
+                    </Row>
+                </Col>
+                
+                <Col className={btns ? styles.btns : 'hide'}>
+                    {btns.map(btn => (
+                        <Button
+                            className={styles.button}
+                            type="primary"
+                            size="small"
+                            key={btn.text}
+                            onClick={() => {
+                                if (btn.onClick) btn.onClick(data, load);
+                            }}
+                        >
+                            {btn.text || ""}
+                        </Button>
+                    ))}
+                </Col>
+            </Row>
+            {
+                more && renderMore()
+            }
+        </div>);
 }
 
 export default GroupTour;
-
-
-
-
-
-

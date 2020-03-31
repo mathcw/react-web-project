@@ -1,5 +1,6 @@
 import React from 'react';
-import { Row, Col, Checkbox, Calendar, Divider, DatePicker, Modal, Icon, message } from 'antd';
+import { LeftCircleOutlined, RightCircleOutlined } from '@ant-design/icons';
+import { Row, Col, Checkbox, Calendar, Divider, DatePicker, Modal, message } from 'antd';
 import moment from 'moment';
 
 import styles from './index.less';
@@ -43,17 +44,18 @@ const InitState = () =>{
 class Util extends React.Component<IUtilProp, IUtilState> {
     readonly state = InitState();
     startDate: moment.Moment = moment();
-    calendarsNum: number = 6;
+    calendarsNum: number = 4;
 
     selectDate = (date?:moment.Moment) => {
         if(date){
             const dateString = date.format('YYYY-MM-DD');
-            const { dateArr } = this.state;
+            let { dateArr } = this.state;
             if (dateArr.indexOf(dateString) === -1) {
                 dateArr.push(dateString);
             } else {
                 dateArr.splice(dateArr.indexOf(dateString), 1);
             }
+            this.setState({dateArr})
         }
     };
 
@@ -62,17 +64,9 @@ class Util extends React.Component<IUtilProp, IUtilState> {
         let addClass = 'ant-calendar-date multdate ';
         if (dateArr.indexOf(date.format('YYYY-MM-DD')) !== -1) {
             addClass = styles.selected;
+            return <div className={addClass}>{date.date()}</div>;
         }
-        if (
-            !date.isBetween(
-                moment(calendar.range[0]).subtract(1, 'd'),
-                moment(calendar.range[1]).add(1, 'd'),
-                'day'
-            )
-        ) {
-            addClass = styles.disabled;
-        }
-        return <div className={addClass}>{date.date()}</div>;
+        return <div>{date.date()}</div>;
     };
 
     renderCalendarList = () => {
@@ -90,23 +84,18 @@ class Util extends React.Component<IUtilProp, IUtilState> {
                 );
             }
             const end = moment(moment(start).endOf('month'));
-            const range = [start, end];
+            const range:[moment.Moment, moment.Moment] = [start, end];
 
             arr.push({ val: start, range });
         }
         return arr.map(item => (
-            <Col style={{ width: 200 }} key={item.val.toString()}>
+            <Col style={{ width: 300 }} key={item.val.toString()}>
                 <Calendar
                     fullscreen={false}
-                    value={item.val}
+                    defaultValue={item.val}
+                    validRange={item.range}
                     headerRender={() => {
                         return <div className={styles.calendarHeader}>{item.val.format('YYYY-MM')}</div>;
-                    }}
-                    disabledDate={current => {
-                        if (this.startDate.month() === current.month()) {
-                            return current.date() < this.startDate.date();
-                        }
-                        return item.val.month() !== current.month();
                     }}
                     dateFullCellRender={date => this.dateFullCellRender(date, item)}
                     onSelect={this.selectDate}
@@ -166,11 +155,10 @@ class Util extends React.Component<IUtilProp, IUtilState> {
         const { onOk } = this.props;
         if(onOk){
             const dateArr = this.promptAndDateArr();
-            if (!dateArr) return false
-            onOk(dateArr);
-            this.setState({ dateArr: [] });
+            if(dateArr){
+                onOk(dateArr);
+            }
         }
-        return true;
     }
 
     onModalCancel = () => {
@@ -179,6 +167,10 @@ class Util extends React.Component<IUtilProp, IUtilState> {
             onCancel();
         }
     };
+
+    afterClose = () =>{
+        this.setState({ ...InitState() });
+    }
 
     plusPage = () => {
         let { page } = this.state;
@@ -228,6 +220,10 @@ class Util extends React.Component<IUtilProp, IUtilState> {
     promptAndDateArr = () => {
         const { tab, dateArr, everyDays, weekly } = this.state;
         if (tab === 1) {
+            if(dateArr.length === 0){
+                message.error('请选择日期!');
+                return false;
+            }
             return dateArr;
         }
         if (tab === 2) {
@@ -276,7 +272,8 @@ class Util extends React.Component<IUtilProp, IUtilState> {
                 visible={visible}
                 onCancel={this.onModalCancel}
                 onOk={this.onModalOk}
-                destroyOnClose={true}
+                afterClose={this.afterClose}
+                bodyStyle={{padding:0}}
             >
                 <Col className={styles.BatchOpen}>
                     <Col className={styles.tabBox}>
@@ -285,42 +282,37 @@ class Util extends React.Component<IUtilProp, IUtilState> {
                             onClick={() => this.changeTab(1)}
                         >
                             固定日期开团
-            </div>
+                        </div>
                         <div
                             className={[styles.tabItem, tab === 2 ? styles.active : ''].join(' ')}
                             onClick={() => this.changeTab(2)}
                         >
                             批量天天开团
-            </div>
+                        </div>
                         <div
                             className={[styles.tabItem, tab === 3 ? styles.active : ''].join(' ')}
                             onClick={() => this.changeTab(3)}
                         >
                             按周循环开团
-            </div>
+                        </div>
                     </Col>
                     <Divider style={{ margin: 0 }} />
                     {/* 固定日期开团 */}
                     <Row
                         gutter={8}
-                        type="flex"
                         justify="space-between"
                         className={[styles.calendarsBox, tab !== 1 ? 'hide' : ''].join(' ')}
                     >
                         {this.renderCalendarList()}
-                        <Icon className={styles.pervPage} type="left-circle" onClick={() => this.plusPage()} />
-                        <Icon
-                            className={styles.nextPage}
-                            type="right-circle"
-                            onClick={() => this.minusPage()}
-                        />
+                        <LeftCircleOutlined className={styles.pervPage} onClick={() => this.plusPage()} />
+                        <RightCircleOutlined className={styles.nextPage} onClick={() => this.minusPage()} />
                     </Row>
                     {/* 批量天天开团 */}
                     <Row className={[tab !== 2 ? 'hide' : '', styles.everyDays].join(' ')}>
                         <Col className={styles.DatePicker}>
                             <span>开始日期：</span>
                             <DatePicker
-                                getCalendarContainer={(triggerNode: Element) => triggerNode as HTMLElement}
+                                getPopupContainer={(triggerNode: Element) => triggerNode as HTMLElement}
                                 onChange={date => this.onEveryDaysChange('start', date)}
                                 disabledDate={current => this.startDateDisabled('everyDays', current)}
                             />
@@ -329,7 +321,7 @@ class Util extends React.Component<IUtilProp, IUtilState> {
                         <Col className={styles.DatePicker}>
                             <span>结束日期：</span>
                             <DatePicker
-                                getCalendarContainer={(triggerNode: Element) => triggerNode as HTMLElement}
+                                getPopupContainer={(triggerNode: Element) => triggerNode as HTMLElement}
                                 onChange={date => this.onEveryDaysChange('end', date)}
                                 disabledDate={current => this.endDateDisabled('everyDays', current)}
                             />
@@ -338,11 +330,11 @@ class Util extends React.Component<IUtilProp, IUtilState> {
                     </Row>
                     {/* 按周循环开团 */}
                     <Row className={[tab !== 3 ? 'hide' : '', styles.weekOpen].join(' ')}>
-                        <Col className={[styles.date, 'clear'].join(' ')}>
+                        <Col className={styles.date} span={24}>
                             <Col span={9}>
                                 <span>开始日期：</span>
                                 <DatePicker
-                                    getCalendarContainer={(triggerNode: Element) => triggerNode as HTMLElement}
+                                    getPopupContainer={(triggerNode: Element) => triggerNode as HTMLElement}
                                     onChange={date => this.onWeeklyChange('start', date)}
                                     disabledDate={current => this.startDateDisabled('weekly', current)}
                                 />
@@ -350,7 +342,7 @@ class Util extends React.Component<IUtilProp, IUtilState> {
                             <Col span={9}>
                                 <span>结束日期：</span>
                                 <DatePicker
-                                    getCalendarContainer={(triggerNode: Element) => triggerNode as HTMLElement}
+                                    getPopupContainer={(triggerNode: Element) => triggerNode as HTMLElement}
                                     onChange={date => this.onWeeklyChange('end', date)}
                                     disabledDate={current => this.endDateDisabled('weekly', current)}
                                 />

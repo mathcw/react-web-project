@@ -11,7 +11,7 @@ import PageLoading from '@/components/PageLoading';
 import { signalInit } from '@/utils/signal';
 
 async function init() {
-  const r = await req('/PublicApi/get_react_init');
+  const r = await req('/PublicApi/init');
   if (r.data.enum_ver) {
     enumInit(r.data.enum_ver)
   } else {

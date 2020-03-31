@@ -1,3 +1,4 @@
+@import "~antd/es/style/themes/default.less";
 .Mod {
   .ModTitle {
     font-size: 16px;
@@ -66,4 +67,107 @@
         margin-bottom: 0;
         margin-top: 0;
     }
+}
+.Schedule {
+  border-radius: 4px;
+  margin: 12px 0;
+  background: #fff;
+  overflow: hidden;
+  &:hover {
+    box-shadow: @box-shadow-base;
+    background: #fff;
+  }
+  .top {
+    position:relative;
+    padding: 10px;
+    border: 1px solid #edf1f5;
+    border-radius: 4px;
+    overflow: hidden;
+    .imgBox {
+      display: flex;
+      flex-direction: column;
+      .img {
+          width: 100%;
+          height: 110px;
+          border-radius: 4px 4px 0 0;
+      }
+      .imgText{
+        font-size: 11px;
+        width: 100%;
+        height: 24px;
+        line-height: 22px;
+        text-align: center;
+        border: 1px solid #d9d9d9;
+        border-radius: 0 0 4px 4px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+    .content{
+      padding-left: 20px;
+      display: flex;
+      flex-direction:column;
+      flex-wrap: nowrap;
+      .contentTop{
+        .name {
+          max-width: 500px;
+          font-size: 16px;
+          line-height: 24px;
+          margin-left: 10px;
+        }
+        .tag {
+          font-size: 12px;
+          line-height: 20px;
+          padding: 0px 8px;
+          border-radius: 9px;
+          border: 1px solid rgba(90, 125, 230, 1);
+          font-weight: 400;
+          color: rgba(86, 121, 225, 1);
+        }
+      }
+      .contentCenter{
+        display: flex;
+        font-size: 12px;
+        padding-top: 16px;
+        text-align: left;
+        line-height: 24px;
+        padding-right: 8px;
+        .cell {
+          display: flex;
+          overflow: hidden;
+        }
+        .lable {
+          color: #b1bcd1;
+          display: inline-block;
+        }
+        .text {
+          display: inline-block;
+          vertical-align: bottom;
+        }
+      }
+    }
+    .left{
+      width: 200px;
+      position: absolute;
+      top: 0%;
+      right: 1%;
+      .lable{ 
+          font-size:14px;
+          font-weight:400;
+          color:rgba(72,87,113,1);
+          line-height:20px;
+      }
+      .text{
+          font-size:14px;
+          font-weight:400;
+          line-height:20px;
+          margin-top: 3px;
+          text-align: center;
+      }
+    }
+    .active{
+      border-color: #3d81ea !important;
+    }
+  }
 }

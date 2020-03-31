@@ -7,7 +7,7 @@ export interface IRouteValue{
     component?: string,
     authority?: string,
     viewConfig?:string,
-    icon?: string,
+    // icon?: string, antd4 中不再支持icon string定义图标
     parent?: string,
     name?: string,
     hideInMenu?: boolean,
@@ -59,7 +59,8 @@ function init() {
               routes:[
                   {
                   path: '/',
-                  redirect: '/welcome',
+                  name:'home',
+                  component: './Welcome',
                   },
                   ...routes,
                   {
