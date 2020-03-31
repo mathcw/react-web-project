@@ -59,7 +59,8 @@ function init() {
               routes:[
                   {
                   path: '/',
-                  redirect: '/welcome',
+                  name:'home',
+                  component: './Welcome',
                   },
                   ...routes,
                   {

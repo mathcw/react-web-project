@@ -24,7 +24,6 @@ interface LoginFormProps {
 }
 const LoginForm: React.FC<LoginFormProps> = ({ onSubmit,fieldMap }) => {
   const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
     if(onSubmit){
       onSubmit(values);
     }
@@ -50,7 +49,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit,fieldMap }) => {
         name={fieldMap.password}
         rules={[{ required: true, message: '请输入密码!' }]}
       >
-        <Input
+        <Input.Password
           prefix={<LockOutlined className={styles.icon}/>}
           type="password"
           placeholder="密码"
