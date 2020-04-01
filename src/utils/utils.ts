@@ -6,6 +6,7 @@ import { config, IModBtn } from "@/viewconfig/ModConfig";
 import { config as ActionCfg } from "@/viewconfig/ActionConfig";
 import { submit } from "@/utils/req";
 import { getEnum } from "./enum";
+import globalActionMap from "./globalActionMap";
 
 /* eslint no-useless-escape:0 import/prefer-default-export:0 */
 const reg = /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/;
@@ -84,6 +85,17 @@ export function getActionButton(key: string) {
 export function getBtnClickEvent(
   key: string
 ): (ref?: object, rs?: (arg0: any) => void, rj?: (arg0: any) => void) => void {
+  if(globalActionMap[key]){
+    const rst = (
+      ref?: object,
+      rs?: (arg0: any) => void,
+      rj?: (arg0: any) => void
+    ) => {
+      const fn  = globalActionMap[key];
+      fn(rs)(ref);
+    }
+    return rst;
+  }
   const cfg = ActionCfg[key];
   if (!cfg) {
     return () => {
@@ -176,7 +188,7 @@ export function btnClickEvent(btns?: object, actionMap?: object) {
     Object.keys(btns).forEach(btn => {
       if (actionMap && actionMap[btn]) {
         newBtns.push({ ...btns[btn], onClick: actionMap[btn], authority: btn });
-      } else {
+      }else {
         newBtns.push({
           ...btns[btn],
           onClick: getBtnClickEvent(btn),
