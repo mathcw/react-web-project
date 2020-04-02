@@ -34,7 +34,10 @@ export function useActionPage<T extends object>(authority: string, viewconfig: s
                     }
                 })
             }
-
+        }else{
+            return new Promise<any>((rs,rj)=>{
+                rs(data);
+            })
         }
     }
 
