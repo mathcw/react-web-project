@@ -84,7 +84,7 @@ const setLeader = (reload: () => void) => (ref: any) => {
         leader_ids:   { text:'领导',multi:true,type:'SupplierAccount',cascade:'supplier_id'}
     };
     const onSubmit = (data: object | undefined) => {
-        submit("/SupplierManagement/Department/set_leader", data).then(r => {
+        submit("/SupplierManagement/Department/set_leader", {id:ref.id,...data}).then(r => {
             message.success(r.message);
             modalRef.destroy();
             reload();

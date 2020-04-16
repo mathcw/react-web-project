@@ -59,17 +59,17 @@ const ModalForm: React.FC<IModalForm> = ({
       cField = clearCascade(cField);
     }
     form.setFieldsValue(
-      {...rst}
+      { ...rst }
     )
   }
 
   const renderArraySelect = (
     cfg: any,
     field: string,
+    row:any,
     disabled: boolean = false
   ) => {
-    const formValues = form.getFieldsValue();
-    const Enum = getEnum(cfg, formValues) || [];
+    const Enum = getEnum(cfg, row) || [];
     if (cfg.multi) {
       return <Select
         showSearch
@@ -104,10 +104,10 @@ const ModalForm: React.FC<IModalForm> = ({
   const renderEnumSelect = (
     cfg: any,
     field: string,
+    row:any,
     disabled: boolean = false
   ) => {
-    const formValues = form.getFieldsValue();
-    const Enum = getEnum(cfg, formValues) || {};
+    const Enum = getEnum(cfg, row) || {};
     if (cfg.multi) {
       return (
         <Select
@@ -213,6 +213,7 @@ const ModalForm: React.FC<IModalForm> = ({
       onCancel();
     }
   };
+  
   return (
     <React.Fragment>
       <Col className={styles.ModalForm}>
@@ -250,7 +251,7 @@ const ModalForm: React.FC<IModalForm> = ({
                     label={list[field].text}
                     name={field}
                   >
-                    {renderArraySelect(list[field], field, true)}
+                    {renderArraySelect(list[field], field,formData, true)}
                   </Form.Item>
                 )}
               {list[field].editable === false &&
@@ -276,7 +277,7 @@ const ModalForm: React.FC<IModalForm> = ({
                     label={list[field].text}
                     name={field}
                   >
-                    {renderEnumSelect(list[field], field, true)}
+                    {renderEnumSelect(list[field], field,formData, true)}
                   </Form.Item>
                 )}
               {list[field].editable !== false && !list[field].type && (
@@ -334,7 +335,7 @@ const ModalForm: React.FC<IModalForm> = ({
                     name={field}
                     rules={[{ required: list[field].required, message: `请输入${list[field].text}` }]}
                   >
-                    {renderArraySelect(list[field], field)}
+                    {renderArraySelect(list[field], field,formData)}
                   </Form.Item>
                 )}
               {list[field].editable !== false &&
@@ -366,7 +367,7 @@ const ModalForm: React.FC<IModalForm> = ({
                       return !!list[field].cascade && (prevValues[list[field].cascade] !== currentValues[list[field].cascade]);
                     }}
                   >
-                    {({ getFieldValue }) => {
+                    {({ getFieldValue,getFieldsValue }) => {
                       if (!list[field].cascade) {
                         return (
                           <Form.Item
@@ -374,26 +375,29 @@ const ModalForm: React.FC<IModalForm> = ({
                             label={list[field].text}
                             name={field}
                             rules={[{ required: list[field].required, message: `请输入${list[field].text}` }]}>
-                            {renderEnumSelect(list[field], field)}
+                            {renderEnumSelect(list[field], field,formData)}
                           </Form.Item>
                         )
                       }
                       // @ts-ignore
                       const shouldUpdate = getFieldValue(list[field].cascade) !== '' && getFieldValue(list[field].cascade) !== undefined && getFieldValue(list[field].cascade) !== null;
+                      const formInsData = {};
+                       // @ts-ignore
+                      formInsData[list[field].cascade] = getFieldValue(list[field].cascade)
                       return shouldUpdate ? (
                         <Form.Item
                           style={{ margin: "12px 0" }}
                           label={list[field].text}
                           name={field}
                           rules={[{ required: list[field].required, message: `请输入${list[field].text}` }]}>
-                          {renderEnumSelect(list[field], field)}
+                          {renderEnumSelect(list[field],field,formInsData)}
                         </Form.Item>
                       ) : <Form.Item
                         style={{ margin: "12px 0" }}
                         label={list[field].text}
                         name={field}
                         rules={[{ required: list[field].required, message: `请输入${list[field].text}` }]}>
-                          {renderEnumSelect(list[field], field)}
+                          {renderEnumSelect(list[field], field,formData)}
                         </Form.Item>;
                     }}
                   </Form.Item>

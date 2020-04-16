@@ -8,7 +8,7 @@ const config: ActionConfigItem = {
     submit: { url: "/org/Auth/submit", data: "auth" },
     btns: {
       关闭: { text: "关闭" },
-      提交: { text: "提交" }
+      提交: { text: "保存" }
     }
   },
   编辑权限: {
@@ -18,7 +18,7 @@ const config: ActionConfigItem = {
     submit: { url: "/org/Auth/submit", data: "auth" },
     btns: {
       关闭: { text: "关闭" },
-      提交: { text: "提交" }
+      提交: { text: "保存" }
     }
   },
   // 公司
@@ -68,7 +68,7 @@ const config: ActionConfigItem = {
       submit:{url:"/org/Announce/submit"},
       btns: {
         关闭: { text: "关闭" },
-        提交: { text: "提交" }
+        提交: { text: "保存" }
       }
   },
   
@@ -79,7 +79,7 @@ const config: ActionConfigItem = {
       submit:{url:"/org/Announce/submit"},
       btns: {
         关闭: { text: "关闭" },
-        提交: { text: "提交" }
+        提交: { text: "保存" }
       }
   },
 

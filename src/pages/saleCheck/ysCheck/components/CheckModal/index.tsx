@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { MinusCircleOutlined, UnorderedListOutlined, ReadOutlined } from '@ant-design/icons';
+import { MinusCircleOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { Col, Input, InputNumber, Button, Select, Row, Divider } from 'antd';
 
 import styles from './index.less';
 import AppConst from '@/utils/AppConst';
+import { getEnum } from '@/utils/enum';
 
 interface IModal {
     info: any,
@@ -21,7 +22,7 @@ interface IDzItem {
 
 const Modal: React.FC<IModal> = ({ info, onOk, onCancel,onSubmit }) => {
 
-    const suppdct = info['suppdct'] || {}
+    const suppdct = getEnum('SuppDct') || {}
     const xy: {
         'type': { [key: number]: string },
         'amount': { [key: number]: string }

@@ -7,7 +7,7 @@ const config: ActionConfigItem = {
     submit: { url: "/ProductStore/PackageTour/submit" },
     btns: {
       关闭: { text: "关闭" },
-      提交: { text: "提交" }
+      提交: { text: "保存" }
     }
   },
   修改跟团游: {
@@ -17,7 +17,7 @@ const config: ActionConfigItem = {
     submit: { url: "/ProductStore/PackageTour/submit" },
     btns: {
       关闭: { text: "关闭" },
-      提交: { text: "提交" }
+      提交: { text: "保存" }
     }
   },
   复制跟团游: {
@@ -27,7 +27,7 @@ const config: ActionConfigItem = {
     submit: { url: "/ProductStore/PackageTour/submit" },
     btns: {
       关闭: { text: "关闭" },
-      提交: { text: "提交" }
+      提交: { text: "保存" }
     }
   },
   提交跟团游: {
@@ -61,7 +61,7 @@ const config: ActionConfigItem = {
     submit: { url: "/Group/PackageTourGroup/submit",data:{"main_pd_id":"main_pd_id","跟团游开团团期详情":"跟团游开团团期详情"} },
     btns: {
       关闭: { text: "关闭" },
-      提交: { text: "提交" }
+      提交: { text: "保存" }
     }
   },
 

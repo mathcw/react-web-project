@@ -318,7 +318,7 @@ const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [], load }) => {
             <Row className={styles.item}>
                 <Col className={styles.imgBox} xs={24} sm={24} md={3} lg={3}>
                     {
-                        renderImg(data.list_pic, data.id)
+                        renderImg(data.list_pic, data.pd_id)
                     }
                 </Col>
                 <Col xs={24} sm={24} md={15} lg={15}>

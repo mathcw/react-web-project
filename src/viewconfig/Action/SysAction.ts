@@ -8,7 +8,7 @@ const config: ActionConfigItem = {
         submit: { url: "/comm/Flow/submit",data:{"流程编辑":"流程编辑","流程":"流程"} },
         btns: {
           关闭: { text: "关闭" },
-          提交: { text: "提交" }
+          提交: { text: "保存" }
         }
     },
     启停流程: {
