@@ -362,7 +362,7 @@ const ModalForm: React.FC<IModalForm> = ({
                   <DatePicker
                     style={{ width: "100%" }}
                     format="YYYY-MM-DD"
-                    value={moment(data[field])}
+                    value={moment(data[field]).isValid() ? moment(data[field]) : undefined}
                     onChange={(date: moment.Moment | null, value: string)=>{onChange(value,field)}}
                   />
                 </Form.Item>
@@ -378,7 +378,7 @@ const ModalForm: React.FC<IModalForm> = ({
                   <TimePicker
                     style={{ width: "100%" }}
                     format="HH:mm"
-                    value={moment(data[field])}
+                    value={moment(data[field]).isValid() ? moment(data[field]) : undefined}
                     onChange={(date: moment.Moment | null, value: string)=>{onChange(value,field)}}
                   />
                 </Form.Item>
