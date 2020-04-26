@@ -53,7 +53,7 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel,onSubmit }) => {
             if (item.xy_id) {
                 let amount = 0;
                 const xyType = xy.type[item.xy_id];
-                const xyAmount = xy.type[item.xy_id];
+                const xyAmount = xy.amount[item.xy_id];
                 if (xyType === '1') {
                     amount = Number((parseFloat(settle_amount) * (parseFloat(xyAmount) / 100)).toFixed(2));
                 }

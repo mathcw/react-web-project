@@ -8,7 +8,7 @@ interface ISYSCONFIG{
 
 export const sys:ISYSCONFIG = {
     APP_NAME: 'TY_B2B',
-    HOST:'/b2b_api',
+    HOST:'/b2b-back',
     user:{},
     filters: {},
     sid:'',

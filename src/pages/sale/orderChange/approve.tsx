@@ -63,7 +63,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                 '调整费用': [...loadRst['调整费用']],
                 '原名单': [...loadRst['原名单']],
                 '审批记录': loadRst['审批记录'] ? [...loadRst['审批记录']] : [],
-                'flow_id': loadRst['订单信息']['confirm_flow_id'],
+                'flow_id': loadRst['订单信息']['order_change_flow_id'],
                 '变更基础费用': [...loadRst['变更基础费用']],
                 '变更调整费用': [...loadRst['变更调整费用']],
                 '变更名单': [...loadRst['变更名单']],

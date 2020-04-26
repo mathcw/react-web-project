@@ -61,7 +61,7 @@ const plugins: IPlugin[] = [
 
 const productSetting = {};
 if(process.env.NODE_ENV === 'production') {
-  productSetting['publicPath'] = '/react-web-project-build/'
+  productSetting['publicPath'] = '/b2b-front/'
 }
 
 export default {
@@ -79,7 +79,7 @@ export default {
   define: {
     ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION:
       ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION || '', // preview.pro.ant.design only do not use in your production ; preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
-      PUBLICPATH:'/react-web-project-build/'
+      PUBLICPATH:'/b2b-front/'
   },
   ignoreMomentLocale: true,
   lessLoaderOptions: {
@@ -118,22 +118,17 @@ export default {
     },
   },
   manifest: {
-    basePath: '/react-web-project-build',
+    basePath: '/b2b-front/',
   },
-  outputPath:'../react-web-project-build',
-  // base:'/react-web-project-build',
+  // outputPath:'../react-web-project-build',
+  base:'/b2b-front/',
   // chainWebpack: webpackPlugin,
   proxy: {
     '/b2b-back/': {
-      target: 'http://localhost:8080/react-web-project-back/',
+      target: 'http://b2b.tongyeju.com/b2b-back/',
       changeOrigin: true,
       pathRewrite: { '^/b2b-back': '' },
     },
-    '/zhongxing/':{
-      target: 'https://tispfiletest.utourworld.com/upload/op/xml/agentLine/',
-      changeOrigin: true,
-      pathRewrite: { '^/zhongxing': '' },
-    }
   },
   ...productSetting
 } as IConfig;
