@@ -46,7 +46,7 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel,onSubmit }) => {
         const detail = rst['订单对账明细'].map((item) => {
             if (item.type == 2) {
                 if (item.amount) {
-                    dzAccount += item.amount;
+                    dzAccount +=(typeof item.amount === 'number') ? item.amount : parseFloat(item.amount);
                 }
                 return { ...item };
             }
@@ -67,7 +67,6 @@ const Modal: React.FC<IModal> = ({ info, onOk, onCancel,onSubmit }) => {
             return { ...item };
         })
         rst['订单对账明细'] = detail;
-
         rst['订单对账总览'][0].dz_account = dzAccount.toFixed(2);
         rst['订单对账总览'][0].account = parseFloat(settle_amount) - dzAccount;
 
