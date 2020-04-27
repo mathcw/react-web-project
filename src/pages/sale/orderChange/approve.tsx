@@ -10,6 +10,7 @@ import { submit } from '@/utils/req';
 
 import styles from './approve.less';
 import { colDisplay } from '@/utils/utils';
+import { getEnum } from '@/utils/enum';
 const defaultPng = require('@/assets/login-bg.png');
 
 const Page: React.FC<IActionPageProps> = ({ route, location }) => {
@@ -163,7 +164,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                                 <Col span={6}>
                                     <div className={styles.cell}>
                                         <span className={styles.lable}>供应商：</span>
-                                        <span className={[styles.text, 'text-overflow'].join(' ')}>{group.brand}</span>
+                                        <span className={[styles.text, 'text-overflow'].join(' ')}>{getEnum('SupplierBrand')[group.sup_id]}</span>
                                     </div>
                                     <div className={styles.cell}>
                                         <span className={styles.lable}>团&nbsp;&nbsp;&nbsp;号：</span>
