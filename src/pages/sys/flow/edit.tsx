@@ -155,10 +155,10 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
   }, [])
 
   const list = {
-    role: { text: '角色名称', type: 'ArrayEdit', width: 180, editable: true ,edit_path:'审批角色'},
+    role: { text: '角色名称', type: 'ArrayEdit', width: 180, editable: true ,edit_path:data['审批角色']||[]},
     specify: { text: '专人', type: 'Specify', width: 180 },
-    api: { text: '外部接口(本步结束时触发)', type: 'PairEdit', width: 180, editable: true, edit_path:'可选接口'},
-    mod_check: { text: '绑定模块', type: 'PairEdit', width: 180, editable: true,edit_path:'绑定模块'},
+    api: { text: '外部接口(本步结束时触发)', type: 'PairEdit', width: 180, editable: true, edit_path:data['可选接口']||{}},
+    mod_check: { text: '绑定模块', type: 'PairEdit', width: 180, editable: true,edit_path:data['绑定模块']||{}},
     type: { text: '审批类型', type: 'ApproveType', width: 180, editable: true},
   };
 

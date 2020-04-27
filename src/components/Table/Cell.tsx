@@ -148,6 +148,47 @@ const Cell: React.FC<ICell> = ({
   const renderEditing = () => {
     if (type) {
       switch (type) {
+        case 'ArrayEdit':
+          const e = {};
+          restProps['edit_path']?.forEach((item:any)=>{
+            e[item] = item
+          })
+          return (
+            <Select
+              style={{ width: "100%" }}
+              value={value}
+              optionFilterProp="children"
+              showSearch
+              onChange={(v: string | number) => onChange(v)}
+              onDropdownVisibleChange={(status: boolean) => setOpenShow(status)}
+              ref={intputRef}
+            >
+              {Object.keys(e).map(key => (
+                <Option key={key} value={key}>
+                  {e[key]}
+                </Option>
+              ))}
+            </Select>
+          );
+        case 'PairEdit':
+          const edit_path = restProps['edit_path'] || {};
+          return (
+            <Select
+              style={{ width: "100%" }}
+              value={value}
+              optionFilterProp="children"
+              showSearch
+              onChange={(v: string | number) => onChange(v)}
+              onDropdownVisibleChange={(status: boolean) => setOpenShow(status)}
+              ref={intputRef}
+            >
+              {Object.keys(edit_path).map(key => (
+                <Option key={key} value={key}>
+                  {e[key]}
+                </Option>
+              ))}
+            </Select>
+          );
         case 'date':
           return (
             <DatePicker

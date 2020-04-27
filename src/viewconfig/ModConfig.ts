@@ -37,6 +37,7 @@ export interface ICol<T=any> {
   width?: number;
   render?:(record:T, value:string | number, dataIndex:string | number, type:string)=>JSX.Element;
   sorter?:CompareFn<T>
+  edit_path?:Array<any>|Object
 }
 
 export interface ModConfigItem {
