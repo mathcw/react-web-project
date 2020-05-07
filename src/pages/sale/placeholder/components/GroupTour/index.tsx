@@ -115,7 +115,7 @@ const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [], load }) => {
     return <div className={styles.OrderList}>
         <Row className={styles.item}>
             <Col className={styles.imgBox} xs={24} sm={24} md={3} lg={3}>
-                {renderImg(data.list_pic, data.pd_id)}
+                {renderImg(data.pd_pic, data.pd_id)}
             </Col>
             <Col xs={24} sm={24} md={15} lg={15}>
                 <div className={styles.content}>
