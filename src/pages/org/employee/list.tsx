@@ -298,7 +298,7 @@ const setAuth = (reload: () => void) => (ref: any) => {
         auth_id: { text: "权限", required: true, type: "EmpAuth" },
     };
     const onSubmit = (data: object | undefined) => {
-        submit("/org/Employee/set_auth", data).then(r => {
+        submit("/org/Employee/set_auth", {id:ref.id, ...data}).then(r => {
             message.success(r.message);
             modalRef.destroy();
             reload();

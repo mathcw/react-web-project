@@ -51,6 +51,7 @@ const config: ActionConfigItem = {
     confirm:'确认重置员工账号密码吗?',
     submit: {
       url: "/org/Employee/reset_password",
+      data: { id:'id' }
     }
   },
   启停员工: {
