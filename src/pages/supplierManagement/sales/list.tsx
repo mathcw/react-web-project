@@ -224,24 +224,27 @@ const edit = (reload: () => void) => (ref: any) => {
 
 // 设置权限
 const setAuth = (reload: () => void) => (ref: any) => {
-    const modalRef = Modal.info({});
-    const list = {
-        auth_id: {text:"权限", required: true, type:"PairEdit", edit_path:'可选权限'},
-        online: { text:'是否开启线上接单',required: true, type:'OpenOrClose'}
-    };
+    
+    let modalRef:any = null;
     const onSubmit = (data: object | undefined) => {
         submit("/SupplierManagement/Sales/set_auth", {id:ref.id,...data}).then(r => {
             message.success(r.message);
-            modalRef.destroy();
+            modalRef && modalRef.destroy();
             reload();
         });
     };
     const onCancel = () => {
-        modalRef.destroy();
+        modalRef &&  modalRef.destroy();
     };
 
     get("/SupplierManagement/Sales/read_auth", { id: ref.id }).then(res => {
+        modalRef = Modal.info({});
+        const list = {
+            auth_id: {text:"权限", required: true, type:"PairEdit", edit_path:res.data['可选权限']|| {}},
+            online: { text:'是否开启线上接单',required: true, type:'OpenOrClose'}
+        };
         modalRef.update({
+            width:512,
             title: "设置权限",
             icon: null,
             content: (
