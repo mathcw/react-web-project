@@ -234,7 +234,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
 
   useEffect(() => {
     load().then((loadedData: typeof initData) => {
-      setData(loadedData);
+      setData({...data,...loadedData});
       if (loadedData.pdfUrl) {
         setPdfLoading(true);
       }
@@ -519,7 +519,6 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
       </Col>
     );
   }
-
   return (
     <PageHeaderWrapper
       title={cfg.title || ''}
