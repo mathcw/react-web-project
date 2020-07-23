@@ -6,8 +6,10 @@ import styles from './index.less';
 // https://umijs.org/plugin/umi-plugin-react.html#dynamicimport
 const PageLoading: React.FC = () => {
   const { loading } = useRootState();
+  const height = document.getElementById("root")?.clientHeight;
+
   return loading ? (
-    <div className={styles['Spin-box']}><Spin size="large"/></div>
+    <div className={styles['Spin-box']} style={{height:height}}><Spin size="large"/></div>
   ) : null;
 }
 
