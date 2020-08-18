@@ -445,9 +445,9 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                             <Col span={11} className={styles.changeleft}>
                                 <div className={styles.title}>原始明细</div>
                                 <div className={styles.content}>
-                                    <div className={styles.people}>
-                                        <span>报名人数: {detail.num_of_people}</span>
-                                    </div>
+                                    <Row className={styles.people}>
+                                        <Col>报名人数: {detail.num_of_people}</Col>
+                                    </Row>
                                     <div className={styles.teamtake}>基础团费</div>
                                     <Row className={styles.listtable} >
                                         <Col span={6} className={styles.navigation}>价格类型</Col>
