@@ -281,7 +281,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                                     订单人数： <span>{detail.num_of_people}人</span>
                                 </Col>
                                 <Col span={11}>
-                                    <Button style={{maxHeight:'14px'}} type='primary' size='small' onClick={() => lookOver()}>名单详情</Button>
+                                    <Button type='primary' size='small' onClick={() => lookOver()}>名单详情</Button>
                                 </Col>
                             </Row>
                         </Col>

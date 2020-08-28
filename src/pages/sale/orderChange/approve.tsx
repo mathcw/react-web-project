@@ -129,7 +129,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                     <Col className={styles.imgBox} xs={24} sm={24} md={3} lg={3}>
                         <div className={styles.imgWrapper}>
                             <img
-                                src={group.list_pic || defaultPng}
+                                src={group.picture || defaultPng}
                                 className={styles.img}
                                 alt="产品图片"
                             />
