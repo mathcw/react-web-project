@@ -73,11 +73,11 @@ if (pwa) {
   });
 
   // remove all caches
-  if (window.caches && window.caches.keys) {
-    caches.keys().then(keys => {
-      keys.forEach(key => {
-        caches.delete(key);
-      });
-    });
-  }
+  // if (window.caches && window.caches.keys) {
+  //   caches.keys().then(keys => {
+  //     keys.forEach(key => {
+  //       caches.delete(key);
+  //     });
+  //   });
+  // }
 }

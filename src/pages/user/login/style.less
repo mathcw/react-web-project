@@ -1,10 +1,41 @@
-@import '~antd/es/style/themes/default.less';
+@import "~antd/es/style/themes/default.less";
 
 .main {
   width: 368px;
   margin: 0 auto;
   @media screen and (max-width: @screen-sm) {
     width: 95%;
+  }
+
+  .tabs {
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.5715;
+    margin-bottom: 24px;
+  }
+  .tabs-nav {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+  }
+  .tab {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    height: 100%;
+    margin: 0 32px 0 0;
+    padding: 12px 0;
+    cursor: pointer;
+  }
+  .tab-active {
+    color: #1890ff;
+    font-weight: 500;
+    outline: none;
+    border-bottom:3px solid #1890ff
   }
 
   .icon {
@@ -18,12 +49,12 @@
     }
   }
 
-  .input{
-    border-radius:2px;
+  .input {
+    border-radius: 2px;
   }
 
-  .btn{
-    border-radius:20px;
+  .btn {
+    border-radius: 20px;
     width: 40%;
   }
 
@@ -37,7 +68,15 @@
     .ant-form-item {
       margin: 0 2px 24px;
     }
+    .nc-container .errloading{
+      border: #faf1d5 1px solid;
+      text-indent: 3px;
+      background-image: none;
+      font-size: 12px;
+      width: 100%;
+      line-height: 20px;
+      padding: 7px 5px 8px 5px;
+      color: #ef9f06;
+    }
   }
-
-
 }
