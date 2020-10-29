@@ -56,7 +56,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
 
     useEffect(() => {
         load().then((loadedData: typeof initData) => {
-            setData({ ...loadedData });
+            setData({ ...loadedData ,...data});
         });
     }, [])
 
