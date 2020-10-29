@@ -7,6 +7,7 @@ import { Row, Col } from 'antd';
 
 import { ConnectProps, ConnectState } from '@/models/connect';
 import styles from './UserLayout.less';
+import Footer from '@/components/Footer';
 const IconPng = require('@/assets/homepage.png');
 
 export interface UserLayoutProps extends ConnectProps {
@@ -52,6 +53,7 @@ const UserLayout: React.FC<UserLayoutProps> = props => {
             </div>
           </Col>
         </Row>
+        <Footer style={{backgroundColor:'white'}}/>
       </div>
     </>
   );

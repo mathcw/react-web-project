@@ -59,7 +59,7 @@ function init() {
               routes:[
                   {
                   path: '/',
-                  name:'home',
+                  name:'首页',
                   component: './Welcome',
                   },
                   ...routes,

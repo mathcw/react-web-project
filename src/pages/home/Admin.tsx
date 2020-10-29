@@ -229,7 +229,7 @@ const page:React.FC<IModPageProps> = ({ route }) => {
                   <Divider style={{ margin: 0 }} />
                   <Col className={`${styles.content} ${styles.contentc}`}>
                     {data.msg_flow.map((item, index) => (
-                      <Row>
+                      <Row key={index}>
                         <Col span={8} className={styles['times']}>
                           {item.create_at}
                         </Col>
@@ -258,7 +258,7 @@ const page:React.FC<IModPageProps> = ({ route }) => {
                   <Divider style={{ margin: 0 }} />
                   <Col className={`${styles.content} ${styles.contentc}`}>
                     {data.announce.map((item, index) => (
-                      <Row>
+                      <Row key={index}>
                         <Col span={8} className={styles['times']}>
                           {item.create_at}
                         </Col>
@@ -323,7 +323,7 @@ const page:React.FC<IModPageProps> = ({ route }) => {
           <Col xl={14} lg={14} md={24} sm={24} xs={24}  className={styles.infos}>
               <Row className={styles.block}>
                   <Col className={styles['mod-title']}>
-                    <Col span={22} className="mod-text">平台公告</Col>
+                    <Col span={22} className="mod-text">消息通知</Col>
                     <Col span={2} className="mod-more">
                       <Link to="/office/msg/list" className={styles['text-right']}>
                         更多>
@@ -333,7 +333,7 @@ const page:React.FC<IModPageProps> = ({ route }) => {
                   <Divider style={{ margin: 0 }} />
                   <Col className={`${styles.content} ${styles.contentc}`}>
                     {data.msg.map((item, index) => (
-                      <Row>
+                      <Row key={index}>
                         <Col span={8} className={styles['times']}>
                           {item.create_at}
                         </Col>

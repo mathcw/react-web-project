@@ -69,14 +69,31 @@ export const Extra = (pageSize?:number, pageSizeOptions?: string[], total?: numb
     />
 
 export const Content = (query:object, setQuery:React.Dispatch<React.SetStateAction<object>>
-    , reload:()=>void, btns:IModBtn[],dropDownSearch?:object,textSearch?:object) =>
-    <MainContent headerButton={btns}
-        dropDownSearch={dropDownSearch}
-        textSearch={textSearch}
-        reload={reload}
-        query={query}
-        setQuery={setQuery}
-    />
+    , reload:()=>void, btns:IModBtn[],dropDownSearch?:object,textSearch?:object) =>{
+        if(textSearch){
+            const QueryType = Object.keys(textSearch)[0];
+            return (
+                <MainContent headerButton={btns}
+                defaultTextSearch={QueryType}
+                dropDownSearch={dropDownSearch}
+                textSearch={textSearch}
+                reload={reload}
+                query={query}
+                setQuery={setQuery}
+            />
+            ) 
+        }
+        return (
+            <MainContent headerButton={btns}
+            dropDownSearch={dropDownSearch}
+            textSearch={textSearch}
+            reload={reload}
+            query={query}
+            setQuery={setQuery}
+        />
+        )
+    }
+
 
 export default wrapper;
 

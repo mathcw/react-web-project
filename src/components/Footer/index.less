@@ -1,0 +1,28 @@
+@import '~antd/es/style/themes/default.less';
+
+.footer {
+  padding: 12px 0;
+  margin-top: 24px;
+  box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  .link {
+    margin-bottom: 8px;
+
+    a {
+      color: @text-color-secondary;
+      transition: all 0.3s;
+
+      &:not(:last-child) {
+        margin-right: 40px;
+      }
+
+      &:hover {
+        color: @text-color;
+      }
+    }
+  }
+  .copyright {
+    color: @text-color-secondary;
+    font-size: @font-size-base;
+  }
+}

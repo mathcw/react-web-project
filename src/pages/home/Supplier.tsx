@@ -156,7 +156,7 @@ const page: React.FC<IModPageProps> = ({ route }) => {
   }
 
   const modalProfileOk = () => {
-    submit('/org/Account/set_emp_profile_photo', { 'profile': data.profile }).then((r) => {
+    submit('/org/Account/set_supp_profile_photo', { 'profile': data.profile }).then((r) => {
       data.profileModal = false;
       setData({ ...data });
       message.success(r.message);
@@ -572,7 +572,7 @@ const page: React.FC<IModPageProps> = ({ route }) => {
           </Col>
         </Col>
 
-        <Col className={styles.List}>
+        <Col className={styles.List} style={{ marginLeft: '8px', marginRight: '8px' }}>
           <Col className={styles.itemBox}>{data.recently_order.map(item => renderOrder(item))}</Col>
         </Col>
       </Col>

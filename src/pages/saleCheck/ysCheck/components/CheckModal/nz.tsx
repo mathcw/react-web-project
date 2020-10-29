@@ -21,7 +21,7 @@ interface IDzItem {
 
 const Modal: React.FC<IModal> = ({ info, onOk, onCancel, onSubmit }) => {
 
-    const suppdct = info['suppdct'] || {}
+    const suppdct = getEnum('SuppDct') || {}
     const xy: {
         'type': { [key: number]: string },
         'amount': { [key: number]: string }

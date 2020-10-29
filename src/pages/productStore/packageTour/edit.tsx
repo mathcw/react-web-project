@@ -234,7 +234,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
 
   useEffect(() => {
     load().then((loadedData: typeof initData) => {
-      setData(loadedData);
+      setData({...initData,...loadedData});
       if (loadedData.pdfUrl) {
         setPdfLoading(true);
       }

@@ -7,7 +7,7 @@ const config: ActionConfigItem = {
         submit: { url: "/SupplierManagement/Company/submit"},
         btns: {
           关闭: { text: "关闭" },
-          提交: { text: "提交" }
+          提交: { text: "保存" }
         }
     },
 
@@ -18,7 +18,7 @@ const config: ActionConfigItem = {
         submit: { url: "/SupplierManagement/Company/submit"},
         btns: {
           关闭: { text: "关闭" },
-          提交: { text: "提交" }
+          提交: { text: "保存" }
         }
     },
     提交供应商公司: { 
@@ -42,8 +42,7 @@ const config: ActionConfigItem = {
         read: {url:'/SupplierManagement/Company/read_approve',data:{id:'id'}},
         submit: {url:'/comm/Flow/approve_by_post/供应商审批',data:{flow_id:'flow_id',opinion:'opinion',comment:'comment'}},
         btns:{
-            关闭:{'text':"关闭"},
-            提交:{'text':"保存"},
+            关闭:{'text':"关闭"}
         }
     },
 
@@ -54,7 +53,7 @@ const config: ActionConfigItem = {
         submit: { url: "/SupplierManagement/Company/weihu"},
         btns: {
           关闭: { text: "关闭" },
-          提交: { text: "提交" }
+          提交: { text: "保存" }
         }
     },
 
@@ -65,7 +64,7 @@ const config: ActionConfigItem = {
         submit: {url:"/SupplierManagement/ErpCompany/submit"},
         btns: {
           关闭: {text:"关闭"},
-          提交: {text:"提交"}
+          提交: {text:"保存"}
         }
     },
 
@@ -128,7 +127,7 @@ const config: ActionConfigItem = {
         submit: { url: "/org/Auth/submit", data: "auth" },
         btns: {
             关闭: { text: "关闭" },
-            提交: { text: "提交" }
+            提交: { text: "保存" }
         }
     },
 
@@ -139,7 +138,7 @@ const config: ActionConfigItem = {
         submit: { url: "/org/Auth/submit", data: "auth" },
         btns: {
             关闭: { text: "关闭" },
-            提交: { text: "提交" }
+            提交: { text: "保存" }
         }
     },
 
@@ -150,7 +149,7 @@ const config: ActionConfigItem = {
         submit: { url: "/org/Auth/copy_submit", data: "auth" },
         btns: {
             关闭: { text: "关闭" },
-            提交: { text: "提交" }
+            提交: { text: "保存" }
         }
     },
     启停供应商权限: { 

@@ -14,7 +14,6 @@ import Link from "umi/link";
 import { Dispatch } from "redux";
 import { connect } from "dva";
 import { Result, Button } from "antd";
-import { formatMessage } from "umi-plugin-react/locale";
 
 import Authorized from "@/utils/Authorized";
 import Footer from "@/components/Footer";
@@ -111,10 +110,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
       breadcrumbRender={(routers = []) => [
         {
           path: "/",
-          breadcrumbName: formatMessage({
-            id: "menu.home",
-            defaultMessage: "Home"
-          })
+          breadcrumbName: '首页'
         },
         ...routers
       ]}
@@ -128,7 +124,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
       }}
       footerRender={footerRender}
       menuDataRender={menuDataRender}
-      formatMessage={formatMessage}
+      // formatMessage={formatMessage}
       rightContentRender={rightProps => <RightContent {...rightProps} />}
       // contentStyle={{ padding: "0px 175px"}}
       contentStyle={{ margin:'0'}}

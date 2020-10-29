@@ -10,6 +10,7 @@ import { submit } from '@/utils/req';
 
 import styles from './approve.less';
 import { colDisplay } from '@/utils/utils';
+import { getEnum } from '@/utils/enum';
 const defaultPng = require('@/assets/login-bg.png');
 
 const Page: React.FC<IActionPageProps> = ({ route, location }) => {
@@ -63,7 +64,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                 '调整费用': [...loadRst['调整费用']],
                 '原名单': [...loadRst['原名单']],
                 '审批记录': loadRst['审批记录'] ? [...loadRst['审批记录']] : [],
-                'flow_id': loadRst['订单信息']['confirm_flow_id'],
+                'flow_id': loadRst['订单信息']['order_change_flow_id'],
                 '变更基础费用': [...loadRst['变更基础费用']],
                 '变更调整费用': [...loadRst['变更调整费用']],
                 '变更名单': [...loadRst['变更名单']],
@@ -128,7 +129,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                     <Col className={styles.imgBox} xs={24} sm={24} md={3} lg={3}>
                         <div className={styles.imgWrapper}>
                             <img
-                                src={group.list_pic || defaultPng}
+                                src={group.picture || defaultPng}
                                 className={styles.img}
                                 alt="产品图片"
                             />
@@ -163,7 +164,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                                 <Col span={6}>
                                     <div className={styles.cell}>
                                         <span className={styles.lable}>供应商：</span>
-                                        <span className={[styles.text, 'text-overflow'].join(' ')}>{group.brand}</span>
+                                        <span className={[styles.text, 'text-overflow'].join(' ')}>{getEnum('SupplierBrand')[group.sup_id]}</span>
                                     </div>
                                     <div className={styles.cell}>
                                         <span className={styles.lable}>团&nbsp;&nbsp;&nbsp;号：</span>
@@ -444,9 +445,9 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                             <Col span={11} className={styles.changeleft}>
                                 <div className={styles.title}>原始明细</div>
                                 <div className={styles.content}>
-                                    <div className={styles.people}>
-                                        <span>报名人数: {detail.num_of_people}</span>
-                                    </div>
+                                    <Row className={styles.people}>
+                                        <Col>报名人数: {detail.num_of_people}</Col>
+                                    </Row>
                                     <div className={styles.teamtake}>基础团费</div>
                                     <Row className={styles.listtable} >
                                         <Col span={6} className={styles.navigation}>价格类型</Col>

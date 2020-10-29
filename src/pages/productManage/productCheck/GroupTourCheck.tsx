@@ -324,7 +324,12 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
             <Row>
             <Col xs={24} sm={24} md={10} lg={10} className={styles.imgWrapper}>
               <Col className={styles.imgBox}>
-                <img src={data['产品图片'][0]} alt="图片" className={styles.picUpload} />
+                {
+                  data['产品图片'] && <img src={data['产品图片'][0]} alt="图片" className={styles.picUpload} />
+                }
+                {
+                  ! data['产品图片'] && <p style={{textAlign:'center'}}>暂无图片</p>
+                }
               </Col>
             </Col>
             {/* 产品信息 */}

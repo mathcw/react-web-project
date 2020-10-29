@@ -232,7 +232,6 @@ interface GroupTourProps {
 const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [], load }) => {
     const [more, setMore] = useState(false);
     const [detail, setDetail] = useState<any>(null);
-
     const orderStateFun = (item: { state: string | number; }) => {
         let Color = {}
         switch (item.state) {
@@ -313,7 +312,7 @@ const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [], load }) => {
             <Row className={styles.item}>
                 <Col className={styles.imgBox} xs={24} sm={24} md={3} lg={3}>
                     {
-                        renderImg(data.list_pic, data.id)
+                        renderImg(data.pd_pic, data.pd_id)
                     }
                 </Col>
                 <Col xs={24} sm={24} md={18} lg={18}>

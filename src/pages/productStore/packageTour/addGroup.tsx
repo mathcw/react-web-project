@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MinusCircleFilled, PlusCircleFilled } from '@ant-design/icons';
+import { MinusCircleFilled, PlusCircleFilled, QuestionCircleOutlined } from '@ant-design/icons';
 import { Icon as LegacyIcon } from '@ant-design/compatible';
 import { Col, Divider, Button, Modal } from 'antd';
 import { v4 as uuid } from 'uuid';
@@ -167,7 +167,18 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
   const [calendarModal, setCalendarModal] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const actionMap = {
-    提交: onOk,
+    提交: ()=>{
+      const modal = Modal.confirm({});
+      const m = {
+        icon:<QuestionCircleOutlined />,
+        content: '点击此按钮之后您所设定的团期价格即将进入分销平台，您确定要继续操作吗？',
+        title: "请确认",
+        cancelText: "取消",
+        okText: "确定",
+        onOk
+      };
+      modal.update(m);
+    },
     关闭: onCancel,
   }
 

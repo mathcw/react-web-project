@@ -115,7 +115,7 @@ const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [], load }) => {
     return <div className={styles.OrderList}>
         <Row className={styles.item}>
             <Col className={styles.imgBox} xs={24} sm={24} md={3} lg={3}>
-                {renderImg(data.list_pic, data.id)}
+                {renderImg(data.pd_pic, data.pd_id)}
             </Col>
             <Col xs={24} sm={24} md={15} lg={15}>
                 <div className={styles.content}>
@@ -147,7 +147,7 @@ const GroupTour: React.FC<GroupTourProps> = ({ data, btns = [], load }) => {
                             </div>
                             <div className={styles.cell}>
                                 <span className={styles.lable}>回团日期：</span>
-                                <span className={[styles.text, 'text-overflow'].join(' ')}>D0{data.back_date}</span>
+                                <span className={[styles.text, 'text-overflow'].join(' ')}>{data.back_date}</span>
                             </div>
                             <div className={styles.cell}>
                                 <span className={styles.lable}>出发城市： </span>

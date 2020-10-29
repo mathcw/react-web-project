@@ -119,7 +119,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                     <Col className={styles.imgBox} xs={24} sm={24} md={3} lg={3}>
                         <div className={styles.imgWrapper}>
                             <img
-                                src={group.list_pic || defaultPng}
+                                src={group.picture || defaultPng}
                                 className={styles.img}
                                 alt="产品图片"
                             />
@@ -154,7 +154,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                                 <Col span={6}>
                                     <div className={styles.cell}>
                                         <span className={styles.lable}>供应商：</span>
-                                        <span className={[styles.text, 'text-overflow'].join(' ')}>{group.brand}</span>
+                                        <span className={[styles.text, 'text-overflow'].join(' ')}>{group.sup_brand}</span>
                                     </div>
                                     <div className={styles.cell}>
                                         <span className={styles.lable}>团&nbsp;&nbsp;&nbsp;号：</span>
@@ -311,7 +311,7 @@ const Page: React.FC<IActionPageProps> = ({ route, location }) => {
                         <Col span={6}>应转金额： {detail.settle_amount}</Col>
                         <Col span={6}>已转金额： {detail.settled_amount}</Col>
                         <Col span={6}>未转金额： {detail.settle_amount - detail.settled_amount}</Col>
-                        <span className={styles.detail} onClick={() => setOpen(!open)}> {open ? '收起1' : '详情1'}</span>
+                        <span className={styles.detail} onClick={() => setOpen(!open)}> {open ? '收起' : '详情'}</span>
                     </Row>
                     <div className={styles.childrenother} style={open ? { display: 'block' } : { display: 'none' }}>
                         <Row className={[styles.cTitle, 'clear'].join(' ')}>

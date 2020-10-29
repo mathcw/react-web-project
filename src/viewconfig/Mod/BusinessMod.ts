@@ -75,8 +75,8 @@ const config: ModConfigItem = {
         read: { url: "/business/CruiseShip/read" },
         title: "船舶名称",
         textSearch: {
+            cruise_company_name: { text: '邮轮公司' },
             name: { text: '船舶名称' },
-            company_name: { text: '邮轮公司' },
         },
         dropDownSearch: {
         },

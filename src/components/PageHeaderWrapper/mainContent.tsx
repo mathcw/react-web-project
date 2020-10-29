@@ -57,6 +57,7 @@ class MainContent extends React.Component<
   static propTypes: {
     headerButton: PropTypes.Requireable<IModBtn[]>;
     dropDownSearch: PropTypes.Requireable<{[key:string]:IEnumCfg}>;
+    defaultTextSearch?:String,
     textSearch: PropTypes.Requireable<object>;
     reload: PropTypes.Requireable<() => void>;
     query: PropTypes.Requireable<object>;
@@ -78,10 +79,11 @@ class MainContent extends React.Component<
 
   constructor(props: PropTypes.InferProps<typeof MainContent.propTypes>) {
     super(props);
+    const {defaultTextSearch} = props;
     this.state = {
       curType: "lg",
       more: false,
-      textQueryType: "",
+      textQueryType: defaultTextSearch?defaultTextSearch:"",
       textQuery: ""
     };
 
