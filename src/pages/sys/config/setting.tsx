@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Input, Button, Row, Col, message } from 'antd';
+import { Input, Button, Row, Col, message,Switch } from 'antd';
 import { IModPageProps } from '@/viewconfig/ModConfig';
 import PageHeaderWrapper from "@/components/PageHeaderWrapper";
 import { getModConfig } from '@/utils/utils';
@@ -12,14 +12,16 @@ const ConfigPage: React.FC<IModPageProps> = ({ route }) => {
     const initData = {
         系统配置:'',
         系统参数:{
-            'libreoffice':'',
-            'libreoffice_port':'',
-            'libreoffice_restart':'',
+            'pdf_cvt_url':'',
             'gs':'',
             'exiftool':'',
             'cpdf':'',
             'dispatcher':'',
-            'dispatcher_port':''
+            'dispatcher_port':'',
+            'afsKey':'',
+            'afsSecret':'',
+            'frontAfsSecret':'',
+            'enableAfs':false
         }
     }
     const [data,setData] = useState<typeof initData>(initData);
@@ -53,24 +55,13 @@ const ConfigPage: React.FC<IModPageProps> = ({ route }) => {
             <div className={styles.Config}>
                 <Row className={styles.cellBox}>
                     <Col span={24} className={styles.cell}>
-                        <Col className={`${styles.title} ${styles.rowtitle}`}>libreoffice</Col>
+                        <Col className={`${styles.title} ${styles.rowtitle}`}>pdf_cvt_url</Col>
                         <Row gutter={8} className={styles.row}>
                             <Col span={10}>
                                 <Input
-                                    value={data['系统参数'].libreoffice || ''}
-                                    onChange={e => changeSysParams('libreoffice', e.target.value)}
-                                />
-                            </Col>
-                            <Col span={7}>
-                                <Input
-                                    value={data['系统参数'].libreoffice_port || ''}
-                                    onChange={e => changeSysParams('libreoffice_port', e.target.value)}
-                                />
-                            </Col>
-                            <Col span={7}>
-                                <Input
-                                    value={data['系统参数'].libreoffice_restart || ''}
-                                    onChange={e => changeSysParams('libreoffice_restart', e.target.value)}
+                                    value={data['系统参数'].pdf_cvt_url || ''}
+                                    onChange={e => changeSysParams('pdf_cvt_url', e.target.value)}
+                                    placeholder='pdf_cvt_url'
                                 />
                             </Col>
                         </Row>
@@ -121,8 +112,42 @@ const ConfigPage: React.FC<IModPageProps> = ({ route }) => {
                                 <Input
                                     value={data['系统参数'].dispatcher_port || ''}
                                     onChange={e => changeSysParams('dispatcher_port', e.target.value)}
+                                    placeholder='port'
                                 />
                             </Col>
+                        </Row>
+                    </Col>
+                    <Col span={24} className={styles.cell}>
+                        <Col className={`${styles.title} ${styles.rowtitle}`}>阿里云afs</Col>
+                        <Row gutter={8} className={styles.row}>
+                            <Col span={2}>
+                                <Switch checked={data['系统参数'].enableAfs} onChange={(checked)=>changeSysParams('enableAfs', checked)} />
+                            </Col>
+                            <Col span={5}>
+                                <Input
+                                    value={data['系统参数'].afsKey || ''}
+                                    onChange={e => changeSysParams('afsKey', e.target.value)}
+                                    placeholder='afsKey'
+                                    disabled={!data['系统参数'].enableAfs}
+                                />
+                            </Col>
+                            <Col span={5}>
+                                <Input
+                                    value={data['系统参数'].afsSecret || ''}
+                                    onChange={e => changeSysParams('afsSecret', e.target.value)}
+                                    placeholder='afsSecret'
+                                    disabled={!data['系统参数'].enableAfs}
+                                />
+                            </Col>
+                            <Col span={5}>
+                                <Input
+                                    value={data['系统参数'].frontAfsSecret || ''}
+                                    onChange={e => changeSysParams('frontAfsSecret', e.target.value)}
+                                    placeholder='frontAfsSecret'
+                                    disabled={!data['系统参数'].enableAfs}
+                                />
+                            </Col>
+
                         </Row>
                     </Col>
                 </Row>
